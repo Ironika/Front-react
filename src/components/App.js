@@ -19,4 +19,4 @@ export const App = () => (
     </Provider>
 );
 
-export const DOMAIN_API = 'http://symfony4.fr/';
+export const DOMAIN_API = 'http://ineluctable.fr/';

@@ -1,5 +1,6 @@
 import {
     GET_BLOGS,
+    GET_BLOG,
 } from '../actions/BlogActions';
 
 
@@ -7,6 +8,7 @@ import {
 
 const initialState = {
     blogs: [],
+    blog: {}
 };
 
 
@@ -18,6 +20,11 @@ export const BlogReducer = (state = initialState, action) => {
             return {
                 ...state,
                 blogs: action.payload,
+            };
+        case GET_BLOG:
+            return {
+                ...state,
+                blog: action.payload,
             };
         default:
             return state;

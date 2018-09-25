@@ -10,7 +10,6 @@ import { Footer } from '../modules/Footer/Footer';
 import { HomePage } from '../pages/HomePage';
 import { ShopPage } from '../pages/ShopPage';
 import { BlogPage } from '../pages/BlogPage';
-import { BlogDetailPage } from '../pages/BlogDetailPage';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactPage } from '../pages/ContactPage';
 import { ZipCodesPage } from '../pages/ZipCodesPage';
@@ -25,7 +24,7 @@ export const AppRouter = () => (
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
                 <Route path='/shop' component={ShopPage} />
-                <Route path="/blogs/:slug" component={BlogDetailPage}/>
+                <Route path="/blogs/:slug" component={BlogPage}/>
                 <Route path='/blogs' component={BlogPage} />
                 <Route path='/zipcodes' component={ZipCodesPage} />
                 <Route path='/about' component={AboutPage} />

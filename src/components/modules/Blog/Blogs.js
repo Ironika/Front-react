@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 // IMPORT PROJECT REFERENCES
 import { getBlogs } from '../../state/actions/BlogActions';
-import { Blog } from './Blog';
+import { BlogsItem } from './BlogsItem';
 
 
 // COMPONENT
@@ -25,7 +25,7 @@ class Blogs extends Component {
         return (
             <div>
                 { this.props.blogs.map(blog => 
-                    <Blog blog={blog} key={blog.id}/>
+                    <BlogsItem blog={blog} key={blog.id}/>
                 )}
             </div>
         );

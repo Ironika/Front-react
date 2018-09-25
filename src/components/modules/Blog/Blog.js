@@ -1,97 +1,145 @@
 // IMPORT PACKAGE REFERENCES
-
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+// IMPORT PROJECT REFERENCES
+import { getBlog } from '../../state/actions/BlogActions';
 import { Img } from '../../shared/Img/Img';
-import { Link } from 'react-router-dom';
 
 
 // COMPONENT
 
-function formatDateInDay(date) {
-    var newDate = new Date(date);
-    var day = newDate.getDay();
-    return day;
-}
+class Blog extends Component {
 
-function formatDateInMonth(date) {
-    var months = [
-        'Jan',
-        'Fev',
-        'Mars',
-        'Avr',
-        'Mai',
-        'Juin',
-        'Jui',
-        'Aout',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-    ];
-    var newDate = new Date(date);
-    var month = months[newDate.getMonth()];
-    return month;
-}
+    constructor(props) {
+        super(props);
+    }
 
-function formatDateInYear(date) {
-    var newDate = new Date(date);
-    var year = newDate.getFullYear();
-    return year;
-}
+    componentWillMount() {
+        this.props.getBlog(this.props.slug);
+    }
 
-const Blog = (props) => (
-    <div className='p-b-63'>
-        <Link to={'/blogs/' + props.blog.slug } className="hov-img0 how-pos5-parent">
-            <Img className={'list-blog-img'} imgName={props.blog.media.provider_reference } />
+    formatDateInDay(date) {
+        var newDate = new Date(date);
+        var day = newDate.getDay();
+        return day;
+    }
 
-            <div className='flex-col-c-m size-123 bg9 how-pos5'>
-                <span className='ltext-107 cl2 txt-center'>
-                    { formatDateInDay(props.blog.created_at) }
-                </span>
-                <span className='stext-109 cl3 txt-center'>
-                    {  formatDateInMonth(props.blog.created_at) + '/' + formatDateInYear(props.blog.created_at) }
-                </span>
-            </div>
-        </Link>
+    formatDateInMonth(date) {
+        var months = [
+            'Janvier',
+            'Fevrier',
+            'Mars',
+            'Avril',
+            'Mai',
+            'Juin',
+            'Juillet',
+            'Aout',
+            'Septembre',
+            'Octobre',
+            'Novembre',
+            'Decembre'
+        ];
+        var newDate = new Date(date);
+        var month = months[newDate.getMonth()];
+        return month;
+    }
 
-        <div className='p-t-32'>
-            <h4 className='p-b-15'>
-                <Link to={'/blogs/' + props.blog.slug } className="ltext-108 cl2 hov-cl1 trans-04">{ props.blog.title }</Link>
-            </h4>
+    formatDateInYear(date) {
+        var newDate = new Date(date);
+        var year = newDate.getFullYear();
+        return year;
+    }
 
-            <p className='stext-117 cl6'>
-                { props.blog.content }
-            </p>
+    insertImg() {
+        if(this.props.blog.media)
+            return (<Img className={'list-blog-img'} imgName={ this.props.blog.media.provider_reference } />);
+    }
 
-            <div className='flex-w flex-sb-m p-t-18'>
-                <span className='flex-w flex-m stext-111 cl2 p-r-30 m-tb-10'>
-                    <span>
-                        <span className='cl4'>By</span> Admin  
-                        <span className='cl12 m-l-4 m-r-6'>|</span>
+    insertTags() {
+        if(this.props.blog.tags)
+            return (this.props.blog.tags.map(tag => 
+                <a key={tag.id} href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+                    {tag.name + ' '} 
+                </a>
+            ));
+    }
+
+    render() {
+        return (
+            <div className="p-r-45 p-r-0-lg">
+                <div className="wrap-pic-w how-pos5-parent">
+                    { this.insertImg() }
+
+                    <div className="flex-col-c-m size-123 bg9 how-pos5">
+                        <span className="ltext-107 cl2 txt-center">
+                            { this.formatDateInDay(this.props.blog.created_at) }
+                        </span>
+
+                        <span className="stext-109 cl3 txt-center">
+                            { this.formatDateInMonth(this.props.blog.created_at) }
+                        </span>
+                    </div>
+                </div>
+
+                <div className="p-t-32">
+                    <span className="flex-w flex-m stext-111 cl2 p-b-19">
+                        <span>
+                            <span className="cl4">By</span> Admin  
+                            <span className="cl12 m-l-4 m-r-6">|</span>
+                        </span>
+
+                        <span>
+                            { this.formatDateInDay(this.props.blog.created_at) + ' ' + this.formatDateInMonth(this.props.blog.created_at) + ', ' + this.formatDateInYear(this.props.blog.created_at)}
+                        </span>
                     </span>
 
-                    <span>
-                        { props.blog.tags.map(tag => 
-                            tag.name + ' '
-                        )}
+                    <h4 className="ltext-109 cl2 p-b-28">
+                        { this.props.blog.title }
+                    </h4>
+
+                    <p className="stext-117 cl6 p-b-26">
+                        { this.props.blog.content }
+                    </p>
+                </div>
+
+                <div className="flex-w flex-t p-t-16">
+                    <span className="size-216 stext-116 cl8 p-t-4">
+                        Tags
                     </span>
-                </span>
 
-                <Link to={'/blogs/' + props.blog.slug } className="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-
-                    Continue Reading
-
-                    <i className='fa fa-long-arrow-right m-l-9'></i>
-                </Link>
+                    <div className="flex-w size-217">
+                        { this.insertTags() }
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-);
+        );
+    }
+}
 
 Blog.propTypes = {
-    blog: PropTypes.object.isRequired,
+    slug: PropTypes.string.isRequired,
+    getBlog: PropTypes.func.isRequired,
+    blog: PropTypes.object,
 };
 
-export { Blog };
+
+// CONFIGURE REACT REDUX
+
+const mapStateToProps = state => {
+    const { blog } = state.blogs;
+    return { blog };
+};
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ getBlog }, dispatch)
+);
+
+const hoc = connect(mapStateToProps, mapDispatchToProps)(Blog);
+
+
+// EXPORT COMPONENT
+
+export { hoc as Blog };
