@@ -1,6 +1,8 @@
 import {
     GET_BLOGS,
     GET_BLOG,
+    GET_TAGS,
+    PENDING
 } from '../actions/BlogActions';
 
 
@@ -8,7 +10,9 @@ import {
 
 const initialState = {
     blogs: [],
-    blog: {}
+    blog: {},
+    tags: [],
+    fetching: true
 };
 
 
@@ -20,11 +24,25 @@ export const BlogReducer = (state = initialState, action) => {
             return {
                 ...state,
                 blogs: action.payload,
+                fetching: false
             };
         case GET_BLOG:
             return {
                 ...state,
                 blog: action.payload,
+                fetching: false
+            };
+        case GET_TAGS:
+            return {
+                ...state,
+                tags: action.payload,
+                fetching: false
+            };
+        case PENDING:
+            return {
+                ...state,
+                blog: {},
+                fetching: true
             };
         default:
             return state;

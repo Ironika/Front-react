@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 // IMPORT PROJECT REFERENCES
 import { getBlogs } from '../../state/actions/BlogActions';
 import { BlogsItem } from './BlogsItem';
+import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
+
 
 
 // COMPONENT
@@ -21,12 +23,19 @@ class Blogs extends Component {
         this.props.getBlogs();
     }
 
+    blogsOrLoading() {
+        if(!this.props.fetching)
+            return (this.props.blogs.map(blog => 
+                <BlogsItem blog={blog} key={blog.id}/>
+            ));
+        else 
+            return (<LoadingIndicator busy={this.props.fetching} />);
+    }
+
     render() {
         return (
             <div>
-                { this.props.blogs.map(blog => 
-                    <BlogsItem blog={blog} key={blog.id}/>
-                )}
+                { this.blogsOrLoading() }
             </div>
         );
     }
@@ -35,14 +44,15 @@ class Blogs extends Component {
 Blogs.propTypes = {
     getBlogs: PropTypes.func.isRequired,
     blogs: PropTypes.array.isRequired,
+    fetching: PropTypes.bool.isRequired,
 };
 
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { blogs } = state.blogs;
-    return { blogs };
+    const { fetching, blogs } = state.blogs;
+    return { fetching, blogs };
 };
 
 const mapDispatchToProps = dispatch => (

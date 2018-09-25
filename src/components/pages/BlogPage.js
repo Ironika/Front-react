@@ -1,9 +1,14 @@
 // IMPORT PACKAGE REFERENCES
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Blogs } from '../modules/Blog/Blogs';
 import { Blog } from '../modules/Blog/Blog';
-
+import { Tags } from '../modules/Blog/Tags';
+import { NavLink } from 'react-router-dom';
+import { getTags } from '../state/actions/BlogActions';
+import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 
 
 // COMPONENT
@@ -15,7 +20,7 @@ class BlogPage extends Component {
     }
 
     componentDidMount() {
-
+        this.props.getTags();
     }
 
     blogOrBlogs() {
@@ -26,6 +31,29 @@ class BlogPage extends Component {
         }
     }
 
+    breadCrumb() {
+        if(this.props.match.params.slug)
+            return (
+                <Fragment>
+                    <NavLink to='/blog' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                        Blog
+                        <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+                    </NavLink>
+                    <span className="stext-109 cl4"> { this.props.match.params.slug } </span> 
+                </Fragment>
+            );
+        else {
+            return (<span className="stext-109 cl4"> Blog </span> );
+        }
+    }
+
+    tagsOrLoading() {
+        if(!this.props.fetching)
+            return (<Tags tags={this.props.tags}/>);
+        else 
+            return (<LoadingIndicator busy={this.props.fetching} />);
+    }
+
     render() {
         return (
             <main>
@@ -34,6 +62,17 @@ class BlogPage extends Component {
                         Blog
                     </h2>
                 </section>
+                
+                <div className="container">
+                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                            Home
+                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+                        </NavLink>
+                        { this.breadCrumb() }
+                    </div>
+                </div>
+
                 <section className="bg0 p-t-62 p-b-60">
                     <div className="container">
                         <div className="row layout-blog">
@@ -48,10 +87,7 @@ class BlogPage extends Component {
                                         <h4 className="mtext-112 cl2 p-b-27">
                                             Tags
                                         </h4>
-
-                                        <div className="flex-w m-r--5">
-                                            
-                                        </div>
+                                        { this.tagsOrLoading() }
                                     </div>
 
                                     <div className="p-t-65">
@@ -76,8 +112,24 @@ class BlogPage extends Component {
 
 BlogPage.propTypes = {
     match: PropTypes.object,
+    getTags: PropTypes.func.isRequired,
+    tags: PropTypes.array,
+    fetching: PropTypes.bool.isRequired,
 };
+
+// CONFIGURE REACT REDUX
+
+const mapStateToProps = state => {
+    const { fetching, tags } = state.blogs;
+    return { fetching, tags };
+};
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ getTags }, dispatch)
+);
+
+const hoc = connect(mapStateToProps, mapDispatchToProps)(BlogPage);
 
 // EXPORT COMPONENT
 
-export { BlogPage };
+export { hoc as BlogPage };

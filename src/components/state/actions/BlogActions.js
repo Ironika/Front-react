@@ -2,8 +2,11 @@ import axios from 'axios';
 
 export const GET_BLOGS = 'GET_BLOGS';
 export const GET_BLOG = 'GET_BLOG';
+export const PENDING = 'BLOG_PENDING';
 
-import { DOMAIN_API } from '../../App';
+export const GET_TAGS = 'GET_TAGS';
+
+import { DOMAIN_API, CLIENT_ID, CLIENT_SECRET } from '../../App';
 
 // ACTION GENERATORS
 
@@ -17,6 +20,15 @@ const getBlogAction = (response) => ({
     payload: response
 });
 
+const pendingAction = () => ({
+    type: PENDING,
+});
+
+const getTagsAction = (response) => ({
+    type: GET_TAGS,
+    payload: response
+});
+
 // EXPORT FUNCTION
 
 export function getBlogs() {
@@ -27,8 +39,8 @@ export function getBlogs() {
             headers: {'Content-Type': 'application/json'},
             data: {
                 grant_type: 'client_credentials',
-                client_id: '2_6cssq2234mckk4ok4ocg80os8osg800ggw84s8osk0wkosc444',
-                client_secret: '21yz2yx6479c4cscwsco0co80k4wg04w4gow8k4wc4gosks8ws'
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
             }
         }).then(function(response) {
             const token = response.data.access_token;
@@ -45,14 +57,15 @@ export function getBlogs() {
 
 export function getBlog(slug) {
     return dispatch => {
+        dispatch(pendingAction());
         axios({
             method: 'post',
             url: DOMAIN_API + 'oauth/v2/token',
             headers: {'Content-Type': 'application/json'},
             data: {
                 grant_type: 'client_credentials',
-                client_id: '2_6cssq2234mckk4ok4ocg80os8osg800ggw84s8osk0wkosc444',
-                client_secret: '21yz2yx6479c4cscwsco0co80k4wg04w4gow8k4wc4gosks8ws'
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
             }
         }).then(function(response) {
             const token = response.data.access_token;
@@ -62,6 +75,31 @@ export function getBlog(slug) {
                 headers: {'Authorization': 'Bearer ' + token},
             }).then(function(response) {
                 dispatch(getBlogAction(response.data));
+            }.bind(this));
+        }.bind(this));
+    };
+}
+
+export function getTags() {
+    return dispatch => {
+        dispatch(pendingAction());
+        axios({
+            method: 'post',
+            url: DOMAIN_API + 'oauth/v2/token',
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                grant_type: 'client_credentials',
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
+            }
+        }).then(function(response) {
+            const token = response.data.access_token;
+            axios({
+                method: 'get',
+                url: DOMAIN_API + 'api/tags',
+                headers: {'Authorization': 'Bearer ' + token},
+            }).then(function(response) {
+                dispatch(getTagsAction(response.data));
             }.bind(this));
         }.bind(this));
     };
