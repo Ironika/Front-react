@@ -45,9 +45,7 @@ const BlogsItem = (props) => (
 
                     <span>
                         { props.blog.tags.map(tag => 
-                            <a key={tag.id} href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5" style={{'display': 'inline-block'}}>
-                                {tag.name + ' '} 
-                            </a>
+                            <Link to={'/blog/tag/' + tag.slug } key={tag.id} className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5" style={{'display': 'inline-block'}}>{tag.name + ' '} </Link>
                         )}
                     </span>
                 </span>

@@ -20,5 +20,5 @@ export const App = () => (
 );
 
 export const DOMAIN_API = 'http://symfony4.fr/';
-export const CLIENT_ID = '6_224j4urwenwgs0gc4o88ks04gkccgg4w040gw40kgk4so8wg00';
-export const CLIENT_SECRET = '1uqjyoqoez34ggwg84kc40kg8kcwoo44sg4wswcgk4sogkksg8';
+export const CLIENT_ID = '7_4jbi53j6z8ys4s8gkokk48oc84s48s8sgcg0cg488o8c0w40w4';
+export const CLIENT_SECRET = '38dnxypt0okkcswk0gokokc0koc4s8oo8oo84csscwws0s8ggk';

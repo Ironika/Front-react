@@ -24,12 +24,24 @@ class Blogs extends Component {
     }
 
     blogsOrLoading() {
-        if(!this.props.fetching)
-            return (this.props.blogs.map(blog => 
-                <BlogsItem blog={blog} key={blog.id}/>
-            ));
+        if(!this.props.fetching_blog)
+            if(this.props.tag) {
+                let blogs = [];
+                this.props.blogs.map(blog => 
+                    blog.tags.map(tag => {
+                        if(tag.slug == this.props.tag)
+                            blogs.push(blog);
+                    })
+                );
+                return (blogs.map(blog => 
+                    <BlogsItem blog={blog} key={blog.id}/>
+                ));
+            } else
+                return (this.props.blogs.map(blog => 
+                    <BlogsItem blog={blog} key={blog.id}/>
+                ));
         else 
-            return (<LoadingIndicator busy={this.props.fetching} />);
+            return (<LoadingIndicator busy={this.props.fetching_blog} />);
     }
 
     render() {
@@ -44,15 +56,16 @@ class Blogs extends Component {
 Blogs.propTypes = {
     getBlogs: PropTypes.func.isRequired,
     blogs: PropTypes.array.isRequired,
-    fetching: PropTypes.bool.isRequired,
+    fetching_blog: PropTypes.bool.isRequired,
+    tag : PropTypes.string
 };
 
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { fetching, blogs } = state.blogs;
-    return { fetching, blogs };
+    const { fetching_blog, blogs } = state.blogs;
+    return { fetching_blog, blogs };
 };
 
 const mapDispatchToProps = dispatch => (

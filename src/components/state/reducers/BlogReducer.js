@@ -2,7 +2,9 @@ import {
     GET_BLOGS,
     GET_BLOG,
     GET_TAGS,
-    PENDING
+    GET_PRODUCTS,
+    PENDING,
+    PENDING_BLOG
 } from '../actions/BlogActions';
 
 
@@ -10,9 +12,11 @@ import {
 
 const initialState = {
     blogs: [],
-    blog: {},
     tags: [],
-    fetching: true
+    products: [],
+    blog: {},
+    fetching: true,
+    fetching_blog: true
 };
 
 
@@ -24,13 +28,13 @@ export const BlogReducer = (state = initialState, action) => {
             return {
                 ...state,
                 blogs: action.payload,
-                fetching: false
+                fetching_blog: false
             };
         case GET_BLOG:
             return {
                 ...state,
                 blog: action.payload,
-                fetching: false
+                fetching_blog: false
             };
         case GET_TAGS:
             return {
@@ -38,11 +42,21 @@ export const BlogReducer = (state = initialState, action) => {
                 tags: action.payload,
                 fetching: false
             };
+        case GET_PRODUCTS:
+            return {
+                ...state,
+                products: action.payload,
+                fetching: false
+            };
         case PENDING:
             return {
                 ...state,
-                blog: {},
                 fetching: true
+            };
+        case PENDING_BLOG:
+            return {
+                ...state,
+                fetching_blog: true
             };
         default:
             return state;

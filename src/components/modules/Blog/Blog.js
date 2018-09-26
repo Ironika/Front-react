@@ -23,10 +23,10 @@ class Blog extends Component {
     }
 
     blogOrLoading() {
-        if(!this.props.fetching)
+        if(!this.props.fetching_blog)
             return (<BlogItem blog={this.props.blog} />);
         else
-            return (<LoadingIndicator busy={this.props.fetching} />);
+            return (<LoadingIndicator busy={this.props.fetching_blog} />);
     }
 
     render() {
@@ -42,15 +42,15 @@ Blog.propTypes = {
     slug: PropTypes.string.isRequired,
     getBlog: PropTypes.func.isRequired,
     blog: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
+    fetching_blog: PropTypes.bool.isRequired,
 };
 
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { fetching, blog } = state.blogs;
-    return { fetching, blog };
+    const { fetching_blog, blog } = state.blogs;
+    return { fetching_blog, blog };
 };
 
 const mapDispatchToProps = dispatch => (

@@ -6,8 +6,10 @@ import PropTypes from 'prop-types';
 import { Blogs } from '../modules/Blog/Blogs';
 import { Blog } from '../modules/Blog/Blog';
 import { Tags } from '../modules/Blog/Tags';
+import { Products } from '../modules/Blog/Products';
 import { NavLink } from 'react-router-dom';
 import { getTags } from '../state/actions/BlogActions';
+import { getProducts } from '../state/actions/BlogActions';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 
 
@@ -21,13 +23,17 @@ class BlogPage extends Component {
 
     componentDidMount() {
         this.props.getTags();
+        this.props.getProducts();
     }
 
     blogOrBlogs() {
         if(this.props.match.params.slug) {
             return (<Blog slug={this.props.match.params.slug} />);
         } else {
-            return (<Blogs />);
+            if(this.props.match.params.tag)
+                return (<Blogs tag={this.props.match.params.tag}/>);
+            else
+                return (<Blogs />);
         }
     }
 
@@ -47,9 +53,25 @@ class BlogPage extends Component {
         }
     }
 
-    tagsOrLoading() {
+    sideMenuOrLoading() {
         if(!this.props.fetching)
-            return (<Tags tags={this.props.tags}/>);
+            return (
+                <div className="side-menu">
+                    <div className="p-t-50 tags">
+                        <h4 className="mtext-112 cl2 p-b-27">
+                            Tags
+                        </h4>
+                        <Tags tags={this.props.tags}/>
+                    </div>
+
+                    <div className="p-t-65">
+                        <h4 className="mtext-112 cl2 p-b-33">
+                            Last Products
+                        </h4>
+                        <Products products={this.props.products}/>
+                    </div>
+                </div>
+            );
         else 
             return (<LoadingIndicator busy={this.props.fetching} />);
     }
@@ -76,31 +98,12 @@ class BlogPage extends Component {
                 <section className="bg0 p-t-62 p-b-60">
                     <div className="container">
                         <div className="row layout-blog">
-                            <div className="col-md-8 col-lg-9 p-b-80">
+                            <div className="col-md-8 col-lg-9 p-b-80 blogs">
                                 { this.blogOrBlogs() }
                             </div>
 
                             <div className="col-md-4 col-lg-3 p-b-80 blog-side-menu">
-                                <div className="side-menu">
-                                    
-                                    <div className="p-t-50">
-                                        <h4 className="mtext-112 cl2 p-b-27">
-                                            Tags
-                                        </h4>
-                                        { this.tagsOrLoading() }
-                                    </div>
-
-                                    <div className="p-t-65">
-                                        <h4 className="mtext-112 cl2 p-b-33">
-                                            Last Products
-                                        </h4>
-
-                                        <ul>
-                                            
-                                        </ul>
-                                    </div>
-
-                                </div>
+                                {this.sideMenuOrLoading()}
                             </div>
                         </div>
                     </div>
@@ -114,18 +117,20 @@ BlogPage.propTypes = {
     match: PropTypes.object,
     getTags: PropTypes.func.isRequired,
     tags: PropTypes.array,
+    getProducts: PropTypes.func.isRequired,
+    products: PropTypes.array,
     fetching: PropTypes.bool.isRequired,
 };
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { fetching, tags } = state.blogs;
-    return { fetching, tags };
+    const { fetching, tags, products } = state.blogs;
+    return { fetching, tags, products };
 };
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ getTags }, dispatch)
+    bindActionCreators({ getTags, getProducts }, dispatch)
 );
 
 const hoc = connect(mapStateToProps, mapDispatchToProps)(BlogPage);

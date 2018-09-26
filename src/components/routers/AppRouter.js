@@ -24,6 +24,7 @@ export const AppRouter = () => (
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
                 <Route path='/shop' component={ShopPage} />
+                <Route path="/blog/tag/:tag" component={BlogPage}/>
                 <Route path="/blog/:slug" component={BlogPage}/>
                 <Route path='/blog' component={BlogPage} />
                 <Route path='/zipcodes' component={ZipCodesPage} />

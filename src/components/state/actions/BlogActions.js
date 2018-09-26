@@ -2,9 +2,10 @@ import axios from 'axios';
 
 export const GET_BLOGS = 'GET_BLOGS';
 export const GET_BLOG = 'GET_BLOG';
-export const PENDING = 'BLOG_PENDING';
-
+export const PENDING_BLOG = 'PENDING_BLOG';
+export const PENDING = 'PENDING';
 export const GET_TAGS = 'GET_TAGS';
+export const GET_PRODUCTS = 'GET_PRODUCTS';
 
 import { DOMAIN_API, CLIENT_ID, CLIENT_SECRET } from '../../App';
 
@@ -20,12 +21,21 @@ const getBlogAction = (response) => ({
     payload: response
 });
 
+const pendingBlogAction = () => ({
+    type: PENDING_BLOG,
+});
+
 const pendingAction = () => ({
     type: PENDING,
 });
 
 const getTagsAction = (response) => ({
     type: GET_TAGS,
+    payload: response
+});
+
+const getProductsAction = (response) => ({
+    type: GET_PRODUCTS,
     payload: response
 });
 
@@ -57,7 +67,7 @@ export function getBlogs() {
 
 export function getBlog(slug) {
     return dispatch => {
-        dispatch(pendingAction());
+        dispatch(pendingBlogAction());
         axios({
             method: 'post',
             url: DOMAIN_API + 'oauth/v2/token',
@@ -100,6 +110,31 @@ export function getTags() {
                 headers: {'Authorization': 'Bearer ' + token},
             }).then(function(response) {
                 dispatch(getTagsAction(response.data));
+            }.bind(this));
+        }.bind(this));
+    };
+}
+
+export function getProducts() {
+    return dispatch => {
+        dispatch(pendingAction());
+        axios({
+            method: 'post',
+            url: DOMAIN_API + 'oauth/v2/token',
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                grant_type: 'client_credentials',
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
+            }
+        }).then(function(response) {
+            const token = response.data.access_token;
+            axios({
+                method: 'get',
+                url: DOMAIN_API + 'api/products',
+                headers: {'Authorization': 'Bearer ' + token},
+            }).then(function(response) {
+                dispatch(getProductsAction(response.data));
             }.bind(this));
         }.bind(this));
     };
