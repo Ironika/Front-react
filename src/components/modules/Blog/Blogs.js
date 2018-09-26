@@ -20,7 +20,8 @@ class Blogs extends Component {
     }
 
     componentDidMount() {
-        this.props.getBlogs();
+        if(this.props.blogs < 1)
+            this.props.getBlogs();
     }
 
     blogsOrLoading() {

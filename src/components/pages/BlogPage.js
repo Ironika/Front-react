@@ -22,8 +22,10 @@ class BlogPage extends Component {
     }
 
     componentDidMount() {
-        this.props.getTags();
-        this.props.getProducts();
+        if(this.props.tags.length < 1)
+            this.props.getTags();
+        if(this.props.products < 1)
+            this.props.getProducts();
     }
 
     blogOrBlogs() {
@@ -79,7 +81,7 @@ class BlogPage extends Component {
     render() {
         return (
             <main>
-                <section className="bg-img1 txt-center p-lr-15 p-tb-92">
+                <section className="bg-img2 txt-center p-lr-15 p-tb-92">
                     <h2 className="ltext-105 cl0 txt-center">
                         Blog
                     </h2>
