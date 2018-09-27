@@ -12,8 +12,6 @@ import { ShopPage } from '../pages/ShopPage';
 import { BlogPage } from '../pages/BlogPage';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactPage } from '../pages/ContactPage';
-import { ZipCodesPage } from '../pages/ZipCodesPage';
-
 
 // COMPONENT
 
@@ -27,7 +25,6 @@ export const AppRouter = () => (
                 <Route path="/blog/tag/:tag" component={BlogPage}/>
                 <Route path="/blog/:slug" component={BlogPage}/>
                 <Route path='/blog' component={BlogPage} />
-                <Route path='/zipcodes' component={ZipCodesPage} />
                 <Route path='/about' component={AboutPage} />
                 <Route path='/contact' component={ContactPage} />
                 <Redirect to="/" />
