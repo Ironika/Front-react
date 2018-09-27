@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 // IMPORT PROJECT REFERENCES
 import { BlogItem } from './BlogItem';
-import { getBlog } from '../../state/actions/BlogActions';
+import { getBlog } from '../../../services/BlogService';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
 
 
@@ -19,7 +19,9 @@ class Blog extends Component {
     }
 
     componentDidMount() {
-        this.props.getBlog(this.props.slug);
+        let token = window.localStorage.getItem('token');
+        if(token)
+            this.props.getBlog(token, this.props.slug);
     }
 
     blogOrLoading() {

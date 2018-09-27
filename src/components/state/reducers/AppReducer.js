@@ -8,7 +8,6 @@ import { combineReducers } from 'redux';
 import { FetchZipCodesReducer } from '../reducers/FetchZipCodesReducer';
 import { BlogReducer } from '../reducers/BlogReducer';
 
-
 // EXPORT APP REDUCER
 
 export const AppReducer = combineReducers({

@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // IMPORT PROJECT REFERENCES
-import { getBlogs } from '../../state/actions/BlogActions';
+import { getBlogs } from '../../../services/BlogService';
 import { BlogsItem } from './BlogsItem';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
-
-
 
 // COMPONENT
 
@@ -20,8 +18,10 @@ class Blogs extends Component {
     }
 
     componentDidMount() {
-        if(this.props.blogs < 1)
-            this.props.getBlogs();
+        let token = window.localStorage.getItem('token');
+        if(token)
+            if(this.props.blogs < 1)
+                this.props.getBlogs(token);
     }
 
     blogsOrLoading() {
@@ -58,7 +58,7 @@ Blogs.propTypes = {
     getBlogs: PropTypes.func.isRequired,
     blogs: PropTypes.array.isRequired,
     fetching_blog: PropTypes.bool.isRequired,
-    tag : PropTypes.string
+    tag : PropTypes.string,
 };
 
 

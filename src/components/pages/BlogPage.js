@@ -8,8 +8,7 @@ import { Blog } from '../modules/Blog/Blog';
 import { Tags } from '../modules/Blog/Tags';
 import { Products } from '../modules/Blog/Products';
 import { NavLink } from 'react-router-dom';
-import { getTags } from '../state/actions/BlogActions';
-import { getProducts } from '../state/actions/BlogActions';
+import { getTags, getProducts } from '../../services/BlogService';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 
 
@@ -21,11 +20,14 @@ class BlogPage extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        if(this.props.tags.length < 1)
-            this.props.getTags();
-        if(this.props.products < 1)
-            this.props.getProducts();
+    componentDidMount() { 
+        let token = window.localStorage.getItem('token');
+        if(token) {
+            if(this.props.tags.length < 1)
+                this.props.getTags(token);
+            if(this.props.products < 1)
+                this.props.getProducts(token);
+        }
     }
 
     blogOrBlogs() {
