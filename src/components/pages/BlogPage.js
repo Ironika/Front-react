@@ -20,12 +20,13 @@ class BlogPage extends Component {
         super(props);
     }
 
-    componentDidMount() { 
+    componentDidMount() {
+        window.scrollTo(0, 0);
         let token = window.localStorage.getItem('token');
         if(token) {
             if(this.props.tags.length < 1)
                 this.props.getTags(token);
-            if(this.props.products < 1)
+            if(this.props.products.length < 1)
                 this.props.getProducts(token);
         }
     }

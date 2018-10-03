@@ -14,7 +14,7 @@ class Products extends Component {
     }
 
     render() {
-        this.props.products.length = 4;
+        this.props.products.length = 8;
         return (
             this.props.products.map(product =>
                 <div className="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>

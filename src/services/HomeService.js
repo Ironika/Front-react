@@ -3,7 +3,11 @@ import {
     getHomeBlogsAction, 
     pendingHomeBlogsAction, 
     getHomeProductsAction,
-    pendingHomeProductsAction 
+    pendingHomeProductsAction,
+    getHomeCollectionsAction,
+    pendingHomeCollectionsAction,
+    getHomeSlidesAction,
+    pendingHomeSlidesAction
 } from '../components/state/actions/HomeActions';
 
 import axios from 'axios';
@@ -32,6 +36,32 @@ export function getHomeProducts(token) {
             headers: {'Authorization': 'Bearer ' + token},
         }).then(function(response) {
             dispatch(getHomeProductsAction(response.data));
+        }.bind(this));
+    };
+}
+
+export function getHomeCollections(token) {
+    return dispatch => {
+        dispatch(pendingHomeCollectionsAction());
+        axios({
+            method: 'get',
+            url: DOMAIN_API + 'api/collections',
+            headers: {'Authorization': 'Bearer ' + token},
+        }).then(function(response) {
+            dispatch(getHomeCollectionsAction(response.data));
+        }.bind(this));
+    };
+}
+
+export function getHomeSlides(token) {
+    return dispatch => {
+        dispatch(pendingHomeSlidesAction());
+        axios({
+            method: 'get',
+            url: DOMAIN_API + 'api/slides',
+            headers: {'Authorization': 'Bearer ' + token},
+        }).then(function(response) {
+            dispatch(getHomeSlidesAction(response.data));
         }.bind(this));
     };
 }
