@@ -14,7 +14,18 @@
 		    width: 60px;
 		}
 	}
-	.slick3, .wrap-slick3-dots {
+	.slick3 {
 		max-height: 700px;
+	}
+
+	.wrap-slick3-dots {
+		max-height: 700px;
+		.slick-current {
+			border: 1px solid black;
+		}
+		.slick-slide {
+			height: 85px;
+			margin-bottom: 10px;
+		}
 	}
 }

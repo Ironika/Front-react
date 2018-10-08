@@ -10,6 +10,7 @@ import { Img } from '../../shared/Img/Img';
 import { Link } from 'react-router-dom';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
 import { ProductGallery } from './ProductGallery';
+import Select2 from 'react-select2-wrapper';
 
 
 // COMPONENT
@@ -62,6 +63,16 @@ class Product extends Component {
         ));
     }
 
+    fillSelect(datas) {
+        let current_datas = [];
+        datas.map(data => {
+            current_datas.push({text: data.name, id: data.id });
+        });
+        return current_datas;
+    }
+
+
+
     render() {
         if(!this.props.fetching_product)
             return (
@@ -95,13 +106,7 @@ class Product extends Component {
 
                                                 <div className="size-204 respon6-next">
                                                     <div className="rs1-select2 bor8 bg0">
-                                                        <select className="js-select2" name="time" id="size">
-                                                            <option value="null">Choose an option</option>
-                                                            {/*% for size in product.sizes %}
-                                                                <option value="{{ size.id }}">{{ size.name }}</option>
-                                                            {% endfor %*/}
-                                                        </select>
-                                                        <div className="dropDownSelect2"></div>
+                                                        <Select2 data={this.fillSelect(this.props.product.sizes)} options={{ placeholder: 'Choose a size' }} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,13 +119,7 @@ class Product extends Component {
 
                                                 <div className="size-204 respon6-next">
                                                     <div className="rs1-select2 bor8 bg0">
-                                                        <select className="js-select2" name="time" id="shape">
-                                                            <option value="null">Choose an option</option>
-                                                            {/*% for shape in product.shapes %}
-                                                                <option value="{{ shape.id }}">{{ shape.name }}</option>
-                                                            {% endfor %*/}
-                                                        </select>
-                                                        <div className="dropDownSelect2"></div>
+                                                        <Select2 data={this.fillSelect(this.props.product.shapes)} options={{ placeholder: 'Choose a shape' }} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,13 +131,7 @@ class Product extends Component {
 
                                                 <div className="size-204 respon6-next">
                                                     <div className="rs1-select2 bor8 bg0">
-                                                        <select className="js-select2" name="time" id="material">
-                                                            <option value="null">Choose an option</option>
-                                                            {/*% for material in product.materials %}
-                                                                <option value="{{ material.id }}">{{ material.name }}</option>
-                                                            {% endfor %*/}
-                                                        </select>
-                                                        <div className="dropDownSelect2"></div>
+                                                        <Select2 data={this.fillSelect(this.props.product.materials)} options={{ placeholder: 'Choose a material' }} />
                                                     </div>
                                                 </div>
                                             </div>
