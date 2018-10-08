@@ -9,6 +9,7 @@ import { getProduct } from '../../../services/ShopService';
 import { Img } from '../../shared/Img/Img';
 import { Link } from 'react-router-dom';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
+import { ProductGallery } from './ProductGallery';
 
 
 // COMPONENT
@@ -25,29 +26,6 @@ class Product extends Component {
             this.props.getProduct(token, this.props.slug);
     }
 
-    insertGallery() {
-        this.props.product.medias.length = 1;
-        return (
-            <div className="p-l-25 p-r-30 p-lr-0-lg">
-                <div className="wrap-slick3 flex-sb flex-w">
-                    <div className="wrap-slick3-dots"></div>
-                    <div className="wrap-slick3-arrows flex-sb-m flex-w"></div>
-                    <div className="slick3 gallery-lb">
-                        {this.props.product.medias.map(media =>
-                            <div className="item-slick3" data-thumb={ media.provider_reference} key={media.id}>
-                                <div className="wrap-pic-w pos-relative">
-                                    <Img className="" imgName={ media.provider_reference } />
-                                    <Link to={ media.provider_reference} className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04">
-                                        <i className="fa fa-expand"></i>
-                                    </Link>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     insertRelatedProducts() {
         let products = [];
@@ -92,7 +70,7 @@ class Product extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6 col-lg-7 p-b-30">
-                                    { this.insertGallery() }
+                                    <ProductGallery medias={this.props.product.medias}/>
                                 </div>
                                     
                                 <div className="col-md-6 col-lg-5 p-b-30">
@@ -205,7 +183,7 @@ class Product extends Component {
                             </div>
                         </div>
 
-                        <div className="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
+                        <div className="bg6 flex-c-m flex-w size-302 p-tb-15">
                             <span className="stext-107 cl6 p-lr-25">
                                 Collection : { this.props.product.collection.name }
                             </span>
