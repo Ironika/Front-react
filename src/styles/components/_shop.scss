@@ -1,0 +1,17 @@
+.shop {
+	min-height: 500px;
+	.hov-img0 img {
+		height: 255px;
+		object-fit:cover;
+	}
+	.item-slick2 {
+		width: 25%;
+		display: inline-block;
+		.block2-txt-child1 {
+		    width: calc(100% - 60px);
+		}
+		.block2-txt-child2 {
+		    width: 60px;
+		}
+	}
+}
