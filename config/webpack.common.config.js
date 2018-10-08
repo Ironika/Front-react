@@ -48,7 +48,10 @@ const config = {
                 loader: 'url-loader',
                 exclude: /node_modules/
             },
-            { test: /\.(woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+            { 
+                test: /\.(woff|woff2|eot|ttf|svg|gif)$/, 
+                loader: 'url-loader?limit=100000' 
+            }
         ]
     },
     plugins: [

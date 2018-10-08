@@ -13,4 +13,10 @@
 		height: 255px;
 		object-fit:cover;
 	}
+	.my-slide {
+		height: calc(100vh - 84px);
+	}
+	.slick-dots {
+		bottom: 5px;
+	}
 }

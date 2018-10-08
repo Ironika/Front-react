@@ -5,6 +5,9 @@
 @import 'main.css';
 @import 'utils.css';
 
+@import '~slick-carousel/slick/slick.css'; 
+@import '~slick-carousel/slick/slick-theme.css';
+
 @import '_settings.scss';
 @import '_base.scss';
 @import './components/_header.scss';
