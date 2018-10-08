@@ -1,0 +1,37 @@
+// IMPORT PACKAGE REFERENCES
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import Select2 from 'react-select2-wrapper';
+
+
+// COMPONENT
+
+const Select = (props) => (
+    <div className="flex-w flex-r-m p-b-10">
+        <div className="size-203 flex-c-m respon6">
+            {props.label}
+        </div>
+
+        <div className="size-204 respon6-next">
+            <div className="rs1-select2 bor8 bg0">
+                <Select2 data={fillSelect(props.datas)} options={{ placeholder: 'Choose a ' + props.label }} />
+            </div>
+        </div>
+    </div>
+);
+
+function fillSelect(datas) {
+    let current_datas = [];
+    datas.map(data => {
+        current_datas.push({text: data.name, id: data.id });
+    });
+    return current_datas;
+}
+
+Select.propTypes = {
+    label: PropTypes.string.isRequired,
+    datas: PropTypes.array.isRequired
+};
+
+export { Select };

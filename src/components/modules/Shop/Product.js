@@ -10,7 +10,7 @@ import { Img } from '../../shared/Img/Img';
 import { Link } from 'react-router-dom';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
 import { ProductGallery } from './ProductGallery';
-import Select2 from 'react-select2-wrapper';
+import { Select } from '../../shared/Select/Select';
 
 
 // COMPONENT
@@ -99,42 +99,11 @@ class Product extends Component {
                                         </p>
                                         
                                         <div className="p-t-33">
-                                            <div className="flex-w flex-r-m p-b-10">
-                                                <div className="size-203 flex-c-m respon6">
-                                                    Size
-                                                </div>
+                                            <Select datas={this.props.product.sizes} label="Size" />
 
-                                                <div className="size-204 respon6-next">
-                                                    <div className="rs1-select2 bor8 bg0">
-                                                        <Select2 data={this.fillSelect(this.props.product.sizes)} options={{ placeholder: 'Choose a size' }} />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <Select datas={this.props.product.shapes} label="Shapes" />
 
-
-                                            <div className="flex-w flex-r-m p-b-10">
-                                                <div className="size-203 flex-c-m respon6">
-                                                    Shape
-                                                </div>
-
-                                                <div className="size-204 respon6-next">
-                                                    <div className="rs1-select2 bor8 bg0">
-                                                        <Select2 data={this.fillSelect(this.props.product.shapes)} options={{ placeholder: 'Choose a shape' }} />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex-w flex-r-m p-b-10">
-                                                <div className="size-203 flex-c-m respon6">
-                                                    Material
-                                                </div>
-
-                                                <div className="size-204 respon6-next">
-                                                    <div className="rs1-select2 bor8 bg0">
-                                                        <Select2 data={this.fillSelect(this.props.product.materials)} options={{ placeholder: 'Choose a material' }} />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <Select datas={this.props.product.materials} label="Materials" />
 
                                             <div className="flex-w flex-r-m p-b-10">
                                                 <div className="size-204 flex-w flex-m respon6-next">
