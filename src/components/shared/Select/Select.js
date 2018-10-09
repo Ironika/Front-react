@@ -15,7 +15,7 @@ const Select = (props) => (
 
         <div className="size-204 respon6-next">
             <div className="rs1-select2 bor8 bg0">
-                <Select2 data={fillSelect(props.datas)} options={{ placeholder: 'Choose a ' + props.label }} />
+                <Select2 data={fillSelect(props.datas)} options={{ placeholder: 'Choose one option' }} value={props.value} onChange={props.change} />
             </div>
         </div>
     </div>
@@ -31,7 +31,9 @@ function fillSelect(datas) {
 
 Select.propTypes = {
     label: PropTypes.string.isRequired,
-    datas: PropTypes.array.isRequired
+    datas: PropTypes.array.isRequired,
+    change: PropTypes.func,
+    value: PropTypes.string
 };
 
 export { Select };

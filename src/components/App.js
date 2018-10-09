@@ -21,6 +21,7 @@ class App extends Component {
 
     componentDidMount() {
         getToken();
+        // window.localStorage.setItem('cart', JSON.stringify([]));
     }
 
     render() {

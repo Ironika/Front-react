@@ -6,11 +6,12 @@ import { bindActionCreators } from 'redux';
 
 // IMPORT PROJECT REFERENCES
 import { getProduct } from '../../../services/ShopService';
-import { Img } from '../../shared/Img/Img';
-import { Link } from 'react-router-dom';
 import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
 import { ProductGallery } from './ProductGallery';
+import { RelatedProducts } from './RelatedProducts';
 import { Select } from '../../shared/Select/Select';
+
+import { addToCart } from '../../../services/CartService';
 
 
 // COMPONENT
@@ -19,59 +20,90 @@ class Product extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            quantity: 1,
+            size: {
+                text: null,
+                value: null
+            },
+            shape: {
+                text: null,
+                value: null
+            },
+            material: {
+                text: null,
+                value: null
+            }
+        };
     }
 
     componentDidMount() {
         let token = window.localStorage.getItem('token');
         if(token)
             this.props.getProduct(token, this.props.slug);
+
+        this.handleClickQuantity = this.handleClickQuantity.bind(this);
+        this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
+        this.handleClickCart = this.handleClickCart.bind(this);
+        this.handleChangeSizes = this.handleChangeSizes.bind(this);
     }
 
-
-    insertRelatedProducts() {
-        let products = [];
-        this.props.products.map(product => {
-            if(product.id != this.props.product.id && product.collection.id == this.props.product.collection.id)
-                products.push(product);
-        });
-        products.length = 4;
-        return (products.map(product =>
-            <div className="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>
-                <div className="block2">
-                    <div className="block2-pic hov-img0">
-                        <Img className="" imgName={ product.medias[0].provider_reference } />
-                        <Link to={'/shop/' + product.slug} className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                            View
-                        </Link>
-                    </div>
-
-                    <div className="block2-txt flex-w flex-t p-t-14">
-                        <div className="block2-txt-child1 flex-col-l ">
-                            <Link to={'/shop/' + product.slug} className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                { product.name }
-                            </Link>
-                        </div>
-
-                        <div className="block2-txt-child2 flex-r p-t-3">
-                            <span className="stext-105 cl3">
-                                ${ product.price }
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        ));
+    handleClickQuantity(operator) {
+        if(operator == '+')
+            this.setState({quantity: this.state.quantity + 1});
+        else
+            this.setState({quantity: this.state.quantity - 1});
     }
 
-    fillSelect(datas) {
-        let current_datas = [];
-        datas.map(data => {
-            current_datas.push({text: data.name, id: data.id });
-        });
-        return current_datas;
+    handleChangeQuantity(event) {
+        this.setState({quantity: event.target.value});
     }
 
+    handleChangeSizes(event) {
+        let size = {
+            text: event.target.textContent,
+            value: event.target.value
+        };
+        this.setState({size: size});
+    }
 
+    handleChangeShapes(event) {
+        let shape = {
+            text: event.target.textContent,
+            value: event.target.value
+        };
+        this.setState({shape: shape});
+    }
+
+    handleChangeMaterials(event) {
+        let material = {
+            text: event.target.textContent,
+            value: event.target.value
+        };
+        this.setState({material: material});
+    }
+
+    handleClickCart() {
+        let orderProduct = {
+            product : {
+                id : this.props.product.id,
+                name: this.props.product.name,
+                price : this.props.product.price,
+                media : this.props.product.medias[0],
+            },
+            quantity : this.state.quantity
+        };
+
+        if(this.state.size.value != null)
+            orderProduct.size = this.state.size;
+        if(this.state.shape.value != null)
+            orderProduct.shape = this.state.shape;
+        if(this.state.material.value != null)
+            orderProduct.material = this.state.material;
+
+        console.log(orderProduct);
+        this.props.addToCart(orderProduct);
+    }
 
     render() {
         if(!this.props.fetching_product)
@@ -99,26 +131,26 @@ class Product extends Component {
                                         </p>
                                         
                                         <div className="p-t-33">
-                                            <Select datas={this.props.product.sizes} label="Size" />
+                                            <Select datas={this.props.product.sizes} label="Sizes" value={this.state.size.value} change={this.handleChangeSizes.bind(this)}/>
 
-                                            <Select datas={this.props.product.shapes} label="Shapes" />
+                                            <Select datas={this.props.product.shapes} label="Shapes" value={this.state.shape.value} change={this.handleChangeShapes.bind(this)} />
 
-                                            <Select datas={this.props.product.materials} label="Materials" />
+                                            <Select datas={this.props.product.materials} label="Materials" value={this.state.material.value} change={this.handleChangeMaterials.bind(this)} />
 
                                             <div className="flex-w flex-r-m p-b-10">
                                                 <div className="size-204 flex-w flex-m respon6-next">
                                                     <div className="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                        <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onClick={this.handleClickQuantity.bind(this, '-')}>
                                                             <i className="fs-16 zmdi zmdi-minus"></i>
                                                         </div>
 
-                                                        <input className="mtext-104 cl3 txt-center num-product" type="number" name="num-product" defaultValue="1"/>
+                                                        <input className="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value={this.state.quantity} onChange={this.handleChangeQuantity}/>
 
-                                                        <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onClick={this.handleClickQuantity.bind(this, '+')}>
                                                             <i className="fs-16 zmdi zmdi-plus"></i>
                                                         </div>
                                                     </div>
-                                                    <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" data-product="{{ product.id }}">
+                                                    <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" onClick={this.handleClickCart.bind(this)}>
                                                         Add to cart
                                                     </button>
                                                 </div>
@@ -157,19 +189,7 @@ class Product extends Component {
                     </section>
 
                     <section className="sec-relate-product bg0 p-t-45 p-b-105">
-                        <div className="container">
-                            <div className="p-b-45">
-                                <h3 className="ltext-106 cl5 txt-center">
-                                    Related Products
-                                </h3>
-                            </div>
-
-                            <div className="wrap-slick2">
-                                <div className="slick2">
-                                    { this.insertRelatedProducts() }
-                                </div>
-                            </div>
-                        </div>
+                        <RelatedProducts products={this.props.products} product={this.props.product}/>
                     </section>
                 </Fragment>
             );
@@ -183,7 +203,8 @@ Product.propTypes = {
     getProduct: PropTypes.func.isRequired,
     product: PropTypes.object,
     fetching_product: PropTypes.bool.isRequired,
-    products: PropTypes.array
+    products: PropTypes.array,
+    addToCart: PropTypes.func
 };
 
 
@@ -195,7 +216,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ getProduct }, dispatch)
+    bindActionCreators({ getProduct, addToCart }, dispatch)
 );
 
 const hoc = connect(mapStateToProps, mapDispatchToProps)(Product);

@@ -7,11 +7,13 @@ import { combineReducers } from 'redux';
 import { HomeReducer } from '../reducers/HomeReducer';
 import { BlogReducer } from '../reducers/BlogReducer';
 import { ShopReducer } from '../reducers/ShopReducer';
+import { CartReducer } from '../reducers/CartReducer';
 
 // EXPORT APP REDUCER
 
 export const AppReducer = combineReducers({
     home: HomeReducer,
     blogs: BlogReducer,
-    products: ShopReducer
+    products: ShopReducer,
+    cart: CartReducer
 });

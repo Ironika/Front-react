@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import { Img } from '../../shared/Img/Img';
@@ -21,7 +21,7 @@ class ProductGallery extends Component {
 
     render() {
         return (
-            <div>
+            <Fragment>
                 <div className="p-l-25 p-r-30 p-lr-0-lg">
                     <div className="wrap-slick3 flex-sb flex-w">
                         <div className="wrap-slick3-dots">
@@ -49,7 +49,7 @@ class ProductGallery extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }
