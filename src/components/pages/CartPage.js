@@ -1,11 +1,12 @@
 // IMPORT PACKAGE REFERENCES
 import React, { Component } from 'react';
-//import { connect } from 'react-redux';
-//import { bindActionCreators } from 'redux';
-//import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 //import { NavLink } from 'react-router-dom';
 import { Img } from '../shared/Img/Img';
-
+import { Counter } from '../shared/Counter/Counter';
+import { editCart } from '../../services/CartService';
 
 // COMPONENT
 
@@ -13,13 +14,20 @@ class CartPage extends Component {
 
     constructor(props) {
         super(props);
+
+        let cart = JSON.parse(window.localStorage.getItem('cart'));
         this.state = {
-            cart: JSON.parse(window.localStorage.getItem('cart'))
+            cart: cart,
+            subTotal: this.getSubTotal()
         };
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
+
+        this.handleClickQuantity = this.handleClickQuantity.bind(this);
+        this.handleClickRemove = this.handleClickRemove.bind(this);
+        this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
         // let token = window.localStorage.getItem('token');
         // if(token) {
         //     if(this.props.products.length < 1)
@@ -27,47 +35,67 @@ class CartPage extends Component {
         // }
     }
 
-    handleQuantity() {
+    getSubTotal() {
+        let subTotal = 0;
+        let cart = JSON.parse(window.localStorage.getItem('cart'));
+        cart.map(orderProduct => {
+            subTotal += orderProduct.product.price * orderProduct.quantity;
+        });
+        return subTotal;
+    }
 
+    handleClickQuantity(operator, index) {
+        let cart = this.state.cart;
+        if(operator == '+') {
+            cart[index].quantity = cart[index].quantity + 1;
+            window.localStorage.setItem('cart', JSON.stringify(cart));
+            this.setState({cart: cart, subTotal: this.getSubTotal()});
+        }
+        else {
+            if(cart[index].quantity - 1 > 0) {
+                cart[index].quantity = cart[index].quantity - 1;
+                window.localStorage.setItem('cart', JSON.stringify(cart));
+                this.setState({cart: cart, subTotal: this.getSubTotal()});
+            }
+        }
+    }
+
+    handleChangeQuantity(index, event) {
+        let cart = this.state.cart;
+        cart[index].quantity = event.target.value;
+        window.localStorage.setItem('cart', JSON.stringify(cart));
+        this.setState({cart: cart, subTotal: this.getSubTotal()});
+    }
+
+    handleClickRemove(index) {
+        let cart = this.state.cart;
+        cart.splice(index, 1);
+        window.localStorage.setItem('cart', JSON.stringify(cart));
+        this.setState({cart: cart, subTotal: this.getSubTotal()});
+        this.props.editCart(cart);
     }
 
     insertOrderProduct() {
-        return (this.state.cart.map(orderProduct =>
-            <tr className="table_row resume-cart" key={orderProduct.product.id}>
+        return (this.state.cart.map((orderProduct, index) =>
+            <tr className="table_row resume-cart" key={ orderProduct.product.id }>
                 <td className="column-1">
-                    <div className="how-itemcart1">
+                    <div className="how-itemcart1" onClick={this.handleClickRemove.bind(this, index)}>
                         <Img className="" imgName={ orderProduct.product.media.provider_reference } />
                     </div>
                 </td>
                 <td className="column-2">
-                    {orderProduct.product.name}
-                    {/*% if orderProduct.size %}
-                        <br>
-                        {{ orderProduct.size.name }}
-                    {% endif %}
-                    {% if orderProduct.shape %}
-                        <br>
-                        {{ orderProduct.shape.name }}
-                    {% endif %}
-                    {% if orderProduct.material %}
-                        <br>
-                        {{ orderProduct.material.name }}
-                    {% endif %*/}
+                    { orderProduct.product.name }
+                    <br />
+                    { orderProduct.size ? orderProduct.size.text : '' }
+                    { orderProduct.size ? <br /> : '' }
+                    { orderProduct.shape ? orderProduct.shape.text : ''}
+                    { orderProduct.shape ? <br /> : '' }
+                    { orderProduct.material ? orderProduct.material.text : ''}
+                    { orderProduct.material ? <br /> : '' }
                 </td>
                 <td className="column-3">$ <span className="product-price">{orderProduct.product.price}</span></td>
                 <td className="column-4">
-                    <div className="wrap-num-product flex-w m-l-auto m-r-0">
-                        <div className="btn-num-cart-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                            <i className="fs-16 zmdi zmdi-minus"></i>
-                        </div>
-
-                        <input className="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value={orderProduct.quantity} onChange={this.handleQuantity.bind(this)}/>
-
-                        <div className="btn-num-cart-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                            <i className="fs-16 zmdi zmdi-plus"></i>
-                        </div>
-                    </div>
-                    <a className="remove-item" href="#"><i className="fs-16 zmdi zmdi-delete"></i></a>
+                    <Counter class={'flex-w m-l-auto m-r-0'} clickMinus={this.handleClickQuantity.bind(this, '-', index)} clickPlus={this.handleClickQuantity.bind(this, '+', index)} change={this.handleChangeQuantity.bind(this, index)} inputValue={orderProduct.quantity.toString()}/>
                 </td>
                 <td className="column-5">
                     $ <span className="total-product-price">{orderProduct.product.price * orderProduct.quantity}</span>
@@ -124,7 +152,7 @@ class CartPage extends Component {
 
                                         <div className="size-209">
                                             <span className="mtext-110 cl2">
-                                                $ subTotal 
+                                                $ { this.state.subTotal }
                                             </span>
                                         </div>
                                     </div>
@@ -183,7 +211,7 @@ class CartPage extends Component {
 
                                         <div className="size-209 p-t-1">
                                             <span className="mtext-110 cl2">
-                                                $ subTotal
+                                                $ { this.state.subTotal }
                                             </span>
                                         </div>
                                     </div>
@@ -202,26 +230,18 @@ class CartPage extends Component {
 
 }
 
-// ShopPage.propTypes = {
-//     match: PropTypes.object,
-//     getProducts: PropTypes.func.isRequired,
-//     products: PropTypes.array,
-//     fetching_products: PropTypes.bool.isRequired,
-// };
+CartPage.propTypes = {
+    editCart: PropTypes.func.isRequired
+};
 
 // CONFIGURE REACT REDUX
 
-// const mapStateToProps = state => {
-//     const { fetching_products, products } = state.products;
-//     return { fetching_products, products };
-// };
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ editCart }, dispatch)
+);
 
-// const mapDispatchToProps = dispatch => (
-//     bindActionCreators({ getProducts }, dispatch)
-// );
-
-// const hoc = connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+const hoc = connect(null, mapDispatchToProps)(CartPage);
 
 // EXPORT COMPONENT
 
-export { CartPage };
+export { hoc as CartPage };

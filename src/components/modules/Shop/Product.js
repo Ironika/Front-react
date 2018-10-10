@@ -10,6 +10,7 @@ import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator
 import { ProductGallery } from './ProductGallery';
 import { RelatedProducts } from './RelatedProducts';
 import { Select } from '../../shared/Select/Select';
+import { Counter } from '../../shared/Counter/Counter';
 
 import { addToCart } from '../../../services/CartService';
 
@@ -51,8 +52,10 @@ class Product extends Component {
     handleClickQuantity(operator) {
         if(operator == '+')
             this.setState({quantity: this.state.quantity + 1});
-        else
-            this.setState({quantity: this.state.quantity - 1});
+        else {
+            if(this.state.quantity - 1 > 0)
+                this.setState({quantity: this.state.quantity - 1});
+        }
     }
 
     handleChangeQuantity(event) {
@@ -139,17 +142,7 @@ class Product extends Component {
 
                                             <div className="flex-w flex-r-m p-b-10">
                                                 <div className="size-204 flex-w flex-m respon6-next">
-                                                    <div className="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                        <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onClick={this.handleClickQuantity.bind(this, '-')}>
-                                                            <i className="fs-16 zmdi zmdi-minus"></i>
-                                                        </div>
-
-                                                        <input className="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value={this.state.quantity} onChange={this.handleChangeQuantity}/>
-
-                                                        <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onClick={this.handleClickQuantity.bind(this, '+')}>
-                                                            <i className="fs-16 zmdi zmdi-plus"></i>
-                                                        </div>
-                                                    </div>
+                                                    <Counter class={'flex-w m-r-20 m-tb-10'} clickMinus={this.handleClickQuantity.bind(this, '-')} clickPlus={this.handleClickQuantity.bind(this, '+')} change={this.handleChangeQuantity} inputValue={this.state.quantity.toString()}/>
                                                     <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" onClick={this.handleClickCart.bind(this)}>
                                                         Add to cart
                                                     </button>

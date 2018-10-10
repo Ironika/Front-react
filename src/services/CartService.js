@@ -1,6 +1,7 @@
 // import { DOMAIN_API } from '../components/App';
 import { 
-    addToCartAction, 
+    addToCartAction,
+    editCartAction 
 } from '../components/state/actions/CartActions';
 
 
@@ -12,5 +13,11 @@ export function addToCart(orderProduct) {
         let cart = JSON.parse(window.localStorage.getItem('cart'));
         cart.push(orderProduct);
         window.localStorage.setItem('cart', JSON.stringify(cart));
+    };
+}
+
+export function editCart(cart) {
+    return dispatch => {
+        dispatch(editCartAction(cart));
     };
 }

@@ -1,5 +1,6 @@
 import {
     ADD_TO_CART,
+    EDIT_CART
 } from '../actions/CartActions';
 
 
@@ -18,6 +19,11 @@ export const CartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cart: [...state.cart, action.payload]
+            };
+        case EDIT_CART:
+            return {
+                ...state,
+                cart: action.payload
             };
         default:
             return state;
