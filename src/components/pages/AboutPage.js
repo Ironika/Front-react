@@ -3,6 +3,7 @@
 import React from 'react';
 import img1 from '../../images/about-01.jpg';
 import img2 from '../../images/about-02.jpg';
+import { NavLink } from 'react-router-dom';
 
 
 // COMPONENT
@@ -16,6 +17,16 @@ const AboutPage = () => {
                     About
                 </h2>
             </section>
+
+            <div className="container">
+                <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+                    <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                        Home
+                        <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+                    </NavLink>
+                    <span className="stext-109 cl4"> About </span>
+                </div>
+            </div>
 
             <section className="bg0 p-t-75 p-b-120">
                 <div className="container">

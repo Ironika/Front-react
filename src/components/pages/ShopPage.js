@@ -9,6 +9,7 @@ import { Product } from '../modules/Shop/Product';
 import { getProducts } from '../../services/ShopService';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { NavLink } from 'react-router-dom';
+import { Filters } from '../modules/Shop/Filters';
 
 
 // COMPONENT
@@ -44,6 +45,16 @@ class ShopPage extends Component {
         }
     }
 
+    filtersProducts(){
+        let products = JSON.parse(JSON.stringify(this.props.products));
+        if(this.props.filters.sort == 'priceLowToHigh')
+            products.sort((a, b) => a.price > b.price);
+        if(this.props.filters.sort == 'priceHighToLow')
+            products.sort((a, b) => a.price < b.price);
+
+        return products;
+    }
+
     productsOrLoading() {
         if(!this.props.fetching_products) {
             if(this.props.match.params.slug) {
@@ -53,8 +64,10 @@ class ShopPage extends Component {
                     let products = this.props.products.filter(product => product.collection.slug == this.props.match.params.collection);
                     return (<Products products={products} />);
                 }
-                else 
-                    return (<Products products={this.props.products} />);
+                else {
+                    let products = this.filtersProducts();
+                    return (<Products products={products} />);
+                }
             }
         }
         else 
@@ -80,7 +93,12 @@ class ShopPage extends Component {
                     </div>
                 </div>
 
-                {this.productsOrLoading()}
+                <div className="bg0 m-t-23 p-b-140">
+                    <div className="container">
+                        <Filters />
+                        {this.productsOrLoading()}
+                    </div>
+                </div>
 
             </main>
         );
@@ -93,20 +111,21 @@ ShopPage.propTypes = {
     getProducts: PropTypes.func.isRequired,
     products: PropTypes.array,
     fetching_products: PropTypes.bool.isRequired,
+    filters: PropTypes.object
 };
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { fetching_products, products } = state.products;
-    return { fetching_products, products };
+    const { fetching_products, products, filters } = state.products;
+    return { fetching_products, products, filters };
 };
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ getProducts }, dispatch)
 );
 
-const hoc = connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+const hoc = connect(mapStateToProps, mapDispatchToProps ,null, { pure: false })(ShopPage);
 
 // EXPORT COMPONENT
 

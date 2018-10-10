@@ -1,6 +1,9 @@
 // IMPORT PACKAGE REFERENCES
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setFilters } from '../../../services/ShopService';
 
 //import { Link } from 'react-router-dom';
 // COMPONENT
@@ -10,12 +13,26 @@ class Filters extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            filters: {
+                sort: 'newness',
+                size: null,
+                shape: null,
+                material: null,
+                collecction: null
+            }
         };
     }
 
     componentDidMount() {
         
+    }
+
+    handleClickSort(sort) {
+        let filters = this.state.filters;
+        filters.sort = sort;
+        this.props.setFilters(filters);
+        this.setState({filters: filters});
     }
 
     openFilters() {
@@ -42,27 +59,21 @@ class Filters extends Component {
 
                             <ul>
                                 <li className="p-b-6">
-                                    <a href="#" className="filter-link stext-106 trans-04">
-                                        Default
-                                    </a>
-                                </li>
-
-                                <li className="p-b-6">
-                                    <a href="#" className="filter-link stext-106 trans-04 filter-link-active">
+                                    <span className={'filter-link stext-106 trans-04 ' + ((this.state.filters.sort == 'newness') ? 'filter-link-active' : '')} onClick={this.handleClickSort.bind(this, 'newness')}>
                                         Newness
-                                    </a>
+                                    </span>
                                 </li>
 
                                 <li className="p-b-6">
-                                    <a href="#" className="filter-link stext-106 trans-04">
+                                    <span className={'filter-link stext-106 trans-04 ' + ((this.state.filters.sort == 'priceLowToHigh') ? 'filter-link-active' : '')} onClick={this.handleClickSort.bind(this, 'priceLowToHigh')}>
                                         Price: Low to High
-                                    </a>
+                                    </span>
                                 </li>
 
                                 <li className="p-b-6">
-                                    <a href="#" className="filter-link stext-106 trans-04">
+                                    <span className={'filter-link stext-106 trans-04 ' + ((this.state.filters.sort == 'priceHighToLow') ? 'filter-link-active' : '')} onClick={this.handleClickSort.bind(this, 'priceHighToLow')}>
                                         Price: High to Low
-                                    </a>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -123,10 +134,16 @@ class Filters extends Component {
     }
 }
 
-// Filters.propTypes = {
-    
-// };
+Filters.propTypes = {
+    setFilters: PropTypes.func.isRequired
+};
 
-// EXPORT COMPONENT
+// CONFIGURE REACT REDUX
 
-export { Filters };
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ setFilters }, dispatch)
+);
+
+const hoc = connect(null, mapDispatchToProps)(Filters);
+
+export { hoc as Filters };

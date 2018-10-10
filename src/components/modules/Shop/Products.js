@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Img } from '../../shared/Img/Img';
-import { Filters } from './Filters';
 
 // COMPONENT
 
@@ -37,13 +36,8 @@ function insertProducts(products) {
 }
 
 const Products = (props) => (
-    <div className="bg0 m-t-23 p-b-140">
-        <div className="container">
-            <Filters />
-            <div className="row isotope-grid">
-                { insertProducts(props.products) }
-            </div>
-        </div>
+    <div className="row isotope-grid">
+        { insertProducts(props.products) }
     </div>
 );
 

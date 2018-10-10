@@ -3,7 +3,8 @@ import {
     pendingProductsAction,  
     getProductsAction,
     pendingProductAction,  
-    getProductAction 
+    getProductAction,
+    setFiltersAction 
 } from '../components/state/actions/ShopActions';
 
 import axios from 'axios';
@@ -33,5 +34,11 @@ export function getProduct(token, slug) {
         }).then(function(response) {
             dispatch(getProductAction(response.data));
         }.bind(this));
+    };
+}
+
+export function setFilters(filters) {
+    return dispatch => {
+        dispatch(setFiltersAction(filters));
     };
 }

@@ -2,7 +2,8 @@ import {
     GET_PRODUCTS,
     PENDING_PRODUCTS,
     GET_PRODUCT,
-    PENDING_PRODUCT
+    PENDING_PRODUCT,
+    SET_FILTERS
 } from '../actions/ShopActions';
 
 
@@ -13,6 +14,7 @@ const initialState = {
     fetching_products: true,
     product: {},
     fetching_product: true,
+    filters: {}
 };
 
 
@@ -41,6 +43,11 @@ export const ShopReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetching_product: true
+            };
+        case SET_FILTERS:
+            return {
+                ...state,
+                filters: action.payload
             };
         default:
             return state;

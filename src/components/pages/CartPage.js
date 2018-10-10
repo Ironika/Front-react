@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Img } from '../shared/Img/Img';
 import { Counter } from '../shared/Counter/Counter';
 import { editCart } from '../../services/CartService';
+import { NavLink } from 'react-router-dom';
 
 // COMPONENT
 
@@ -111,6 +112,16 @@ class CartPage extends Component {
                         Cart
                     </h2>
                 </section>
+
+                <div className="container">
+                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                            Home
+                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+                        </NavLink>
+                        <span className="stext-109 cl4"> Cart </span>
+                    </div>
+                </div>
 
                 <section className="bg0 p-t-75 p-b-85">
                     <div className="container">
