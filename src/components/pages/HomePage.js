@@ -81,7 +81,7 @@ class HomePage extends Component {
                     { this.collectionsOrLoading() }
                 </section>
 
-                <section className="sec-product bg0 p-t-100 p-b-50">
+                <section className="sec-product bg0 p-t-30 p-b-50">
                     { this.productsOrLoading() }
                 </section>
 

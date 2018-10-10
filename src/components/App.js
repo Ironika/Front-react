@@ -10,8 +10,8 @@ import { getToken } from '../services/TokenService';
 // COMPONENT
 
 export const DOMAIN_API = 'http://symfony4.fr/';
-export const CLIENT_ID = '1_2s774kzvcu0w0kosg8wgoggwo4oow488wko4s4cogoggkwsk84';
-export const CLIENT_SECRET = '21lr6ywngwdckcwgk8ko4848c8wo04oo0cokgs4kg4kk0g40kc';
+export const CLIENT_ID = '2_4obiq38pia68kcogs40wgokowksgso04840c4s0ggg4w0cgsog';
+export const CLIENT_SECRET = 'qyf3hm1q0pc8wk8oc0ok4g004wk4c08sg80k4cwc8ks0ccwgw';
 
 class App extends Component {
 

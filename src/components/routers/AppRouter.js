@@ -22,6 +22,7 @@ export const AppRouter = () => (
             <Header />
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
+                <Route path="/shop/collection/:collection" component={ShopPage}/>
                 <Route path="/shop/:slug" component={ShopPage}/>
                 <Route path='/shop' component={ShopPage} />
                 <Route path="/blog/tag/:tag" component={BlogPage}/>

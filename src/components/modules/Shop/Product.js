@@ -39,6 +39,7 @@ class Product extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         let token = window.localStorage.getItem('token');
         if(token)
             this.props.getProduct(token, this.props.slug);
@@ -88,6 +89,7 @@ class Product extends Component {
 
     handleClickCart() {
         let orderProduct = {
+            id: new Date().getTime() + Math.floor((Math.random()*10000)+1).toString(16),
             product : {
                 id : this.props.product.id,
                 name: this.props.product.name,

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-//import { NavLink } from 'react-router-dom';
 import { Img } from '../shared/Img/Img';
 import { Counter } from '../shared/Counter/Counter';
 import { editCart } from '../../services/CartService';
@@ -77,7 +76,7 @@ class CartPage extends Component {
 
     insertOrderProduct() {
         return (this.state.cart.map((orderProduct, index) =>
-            <tr className="table_row resume-cart" key={ orderProduct.product.id }>
+            <tr className="table_row resume-cart" key={ orderProduct.id }>
                 <td className="column-1">
                     <div className="how-itemcart1" onClick={this.handleClickRemove.bind(this, index)}>
                         <Img className="" imgName={ orderProduct.product.media.provider_reference } />
@@ -98,7 +97,7 @@ class CartPage extends Component {
                     <Counter class={'flex-w m-l-auto m-r-0'} clickMinus={this.handleClickQuantity.bind(this, '-', index)} clickPlus={this.handleClickQuantity.bind(this, '+', index)} change={this.handleChangeQuantity.bind(this, index)} inputValue={orderProduct.quantity.toString()}/>
                 </td>
                 <td className="column-5">
-                    $ <span className="total-product-price">{orderProduct.product.price * orderProduct.quantity}</span>
+                    $ <span className="total-product-price">{parseFloat(Math.round((orderProduct.product.price * orderProduct.quantity) * 100) / 100).toFixed(2)}</span>
                 </td>
             </tr>
         ));
@@ -152,7 +151,7 @@ class CartPage extends Component {
 
                                         <div className="size-209">
                                             <span className="mtext-110 cl2">
-                                                $ { this.state.subTotal }
+                                                $ { parseFloat(Math.round((this.state.subTotal) * 100) / 100).toFixed(2) }
                                             </span>
                                         </div>
                                     </div>
@@ -211,7 +210,7 @@ class CartPage extends Component {
 
                                         <div className="size-209 p-t-1">
                                             <span className="mtext-110 cl2">
-                                                $ { this.state.subTotal }
+                                                $ { parseFloat(Math.round((this.state.subTotal) * 100) / 100).toFixed(2) }
                                             </span>
                                         </div>
                                     </div>
