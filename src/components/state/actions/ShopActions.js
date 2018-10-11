@@ -3,6 +3,10 @@ export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const PENDING_PRODUCT = 'PENDING_PRODUCT';
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const SET_FILTERS = 'SET_FILTERS';
+export const GET_MATERIALS = 'GET_MATERIALS';
+export const GET_SIZES = 'GET_SIZES';
+export const GET_SHAPES = 'GET_SHAPES';
+export const GET_COLLECTIONS = 'GET_COLLECTIONS';
 
 // ACTION GENERATORS
 
@@ -26,5 +30,25 @@ export const getProductAction = (response) => ({
 
 export const setFiltersAction = (response) => ({
     type: SET_FILTERS,
+    payload: response
+});
+
+export const getMaterialsAction = (response) => ({
+    type: GET_MATERIALS,
+    payload: response
+});
+
+export const getSizesAction = (response) => ({
+    type: GET_SIZES,
+    payload: response
+});
+
+export const getShapesAction = (response) => ({
+    type: GET_SHAPES,
+    payload: response
+});
+
+export const getCollectionsAction = (response) => ({
+    type: GET_COLLECTIONS,
     payload: response
 });

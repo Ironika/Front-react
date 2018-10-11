@@ -45,8 +45,31 @@ class ShopPage extends Component {
         }
     }
 
+    haveData(datas, id) {
+        let checkedData = null;
+        datas.map(data => {
+            if(data.id == id)
+                checkedData = data.id;
+        });
+        return checkedData;
+    }
+
     filtersProducts(){
         let products = JSON.parse(JSON.stringify(this.props.products));
+
+        if(this.props.filters.collection != 'all') {
+            products = products.filter(product => product.collection.id == this.props.filters.collection);
+        }
+        if(this.props.filters.material != 'all') {
+            products = products.filter(product => this.haveData(product.materials, this.props.filters.material) == this.props.filters.material);
+        }
+        if(this.props.filters.size != 'all') {
+            products = products.filter(product => this.haveData(product.sizes, this.props.filters.size) == this.props.filters.size);
+        }
+        if(this.props.filters.shape != 'all') {
+            products = products.filter(product => this.haveData(product.shapes, this.props.filters.shape) == this.props.filters.shape);
+        }
+
         if(this.props.filters.sort == 'priceLowToHigh')
             products.sort((a, b) => a.price > b.price);
         if(this.props.filters.sort == 'priceHighToLow')

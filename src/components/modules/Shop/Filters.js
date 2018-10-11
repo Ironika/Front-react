@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setFilters } from '../../../services/ShopService';
+import { setFilters, getFilters } from '../../../services/ShopService';
+import Select2 from 'react-select2-wrapper';
 
 //import { Link } from 'react-router-dom';
 // COMPONENT
@@ -16,16 +17,52 @@ class Filters extends Component {
             open: false,
             filters: {
                 sort: 'newness',
-                size: null,
-                shape: null,
-                material: null,
-                collecction: null
+                size: 'all',
+                shape: 'all',
+                material: 'all',
+                collection: 'all'
             }
         };
+        
+        this.handleChangeSelect = this.handleChangeSelect.bind(this);
     }
 
     componentDidMount() {
-        
+        let token = window.localStorage.getItem('token');
+        if(token) {
+            if(this.props.materials.length < 1 || this.props.sizes.length < 1 || this.props.shapes.length < 1 || this.props.collections.length < 1)
+                this.props.getFilters(token);
+        }
+
+        if(this.props.filters.collection && this.props.filters.collection != 'all')
+            this.setState({filters: this.props.filters});
+    }
+
+    handleChangeSelect(filter, event){
+        let filters = this.state.filters;
+
+        if(filter == 'material')
+            filters.material = event.target.value;
+        if(filter == 'size')
+            filters.size = event.target.value;
+        if(filter == 'shape')
+            filters.shape = event.target.value;
+        if(filter == 'collection')
+            filters.collection = event.target.value;
+
+        this.props.setFilters(filters);
+        this.setState({filters: filters});
+    }
+
+    insertFilters(datas, value, onchange) {
+        let current_datas = [];
+        current_datas.push({text: 'All', id: 'all' });
+        datas.map(data => {
+            current_datas.push({text: data.name, id: data.id });
+        });
+        return ( 
+            <Select2 data={current_datas} options={{ placeholder: 'Choose one option' }} value={value} onChange={onchange} />
+        );
     }
 
     handleClickSort(sort) {
@@ -46,7 +83,7 @@ class Filters extends Component {
                     <div className="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter" onClick={this.openFilters.bind(this)}>
                         <i className="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
                         <i className="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                         Filter
+                         Filters
                     </div>
                 </div>
 
@@ -82,50 +119,28 @@ class Filters extends Component {
                             <div className="mtext-102 cl2 p-b-15">
                                 Materials
                             </div>
-
-                            <select name="material">
-                                <option value="all">All</option>
-                                <option value="material.id">material.name</option>
-                            </select>
+                            { this.insertFilters(this.props.materials, this.state.filters.material, this.handleChangeSelect.bind(this, 'material')) }
                         </div>
 
                         <div className="filter-col3 p-r-15 p-b-27">
                             <div className="mtext-102 cl2 p-b-15">
-                                Shapes
+                                Sizes
                             </div>
-
-                            <select name="shape">
-                                <option value="all">All</option>
-                                <option value="shape.id">shape.name</option>
-                            </select>
+                            { this.insertFilters(this.props.sizes, this.state.filters.size, this.handleChangeSelect.bind(this, 'size')) }
                         </div>
 
-                        <div className="filter-col4 p-b-27">
+                        <div className="filter-col4 p-r-15 p-b-27">
+                            <div className="mtext-102 cl2 p-b-15">
+                                Shapes
+                            </div>
+                            { this.insertFilters(this.props.shapes, this.state.filters.shape, this.handleChangeSelect.bind(this, 'shape')) }
+                        </div>
+
+                        <div className="filter-col5 p-b-27">
                             <div className="mtext-102 cl2 p-b-15">
                                 Collections
                             </div>
-
-                            <div className="flex-w p-t-4 m-r--5">
-                                <a href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Fashion
-                                </a>
-
-                                <a href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Lifestyle
-                                </a>
-
-                                <a href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Denim
-                                </a>
-
-                                <a href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Streetstyle
-                                </a>
-
-                                <a href="#" className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Crafts
-                                </a>
-                            </div>
+                            { this.insertFilters(this.props.collections, this.state.filters.collection, this.handleChangeSelect.bind(this, 'collection')) }
                         </div>
                     </div>
                 </div>
@@ -135,15 +150,27 @@ class Filters extends Component {
 }
 
 Filters.propTypes = {
-    setFilters: PropTypes.func.isRequired
+    setFilters: PropTypes.func,
+    getFilters: PropTypes.func,
+    materials: PropTypes.array,
+    sizes: PropTypes.array,
+    shapes: PropTypes.array,
+    collections: PropTypes.array,
+    filters: PropTypes.object
 };
 
 // CONFIGURE REACT REDUX
 
+const mapStateToProps = state => {
+    const { materials, sizes, shapes, collections, filters } = state.products;
+    return { materials, sizes, shapes, collections, filters };
+};
+
+
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ setFilters }, dispatch)
+    bindActionCreators({ setFilters, getFilters }, dispatch)
 );
 
-const hoc = connect(null, mapDispatchToProps)(Filters);
+const hoc = connect(mapStateToProps, mapDispatchToProps)(Filters);
 
 export { hoc as Filters };

@@ -31,4 +31,12 @@
 	.filter-link {
 		cursor: pointer;
 	}
+	.wrap-filter {
+		.select2-container {
+			min-width: 100px;
+		}
+	}
+	.filter-col1, .filter-col2, .filter-col3, .filter-col4, .filter-col5 {
+		width: 20%;
+	}
 }

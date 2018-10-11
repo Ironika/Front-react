@@ -3,7 +3,11 @@ import {
     PENDING_PRODUCTS,
     GET_PRODUCT,
     PENDING_PRODUCT,
-    SET_FILTERS
+    SET_FILTERS,
+    GET_MATERIALS,
+    GET_SIZES,
+    GET_SHAPES,
+    GET_COLLECTIONS
 } from '../actions/ShopActions';
 
 
@@ -14,7 +18,11 @@ const initialState = {
     fetching_products: true,
     product: {},
     fetching_product: true,
-    filters: {}
+    filters: {},
+    materials: [],
+    sizes: [],
+    shapes: [],
+    collections: []
 };
 
 
@@ -48,6 +56,26 @@ export const ShopReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filters: action.payload
+            };
+        case GET_MATERIALS:
+            return {
+                ...state,
+                materials: action.payload,
+            };
+        case GET_SIZES:
+            return {
+                ...state,
+                sizes: action.payload,
+            };
+        case GET_SHAPES:
+            return {
+                ...state,
+                shapes: action.payload,
+            };
+        case GET_COLLECTIONS:
+            return {
+                ...state,
+                collections: action.payload,
             };
         default:
             return state;
