@@ -11,6 +11,8 @@ export function addToCart(orderProduct) {
     return dispatch => {
         dispatch(addToCartAction(orderProduct));
         let cart = JSON.parse(window.localStorage.getItem('cart'));
+        if(!cart)
+            cart = [];
         cart.push(orderProduct);
         window.localStorage.setItem('cart', JSON.stringify(cart));
     };
