@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import logo from '../../../images/logo.png';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 // COMPONENT
 
@@ -12,15 +13,41 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            open: false,
+            search: '',
+            redirect: false
+        };
     }
 
     componentDidMount() {
+        this.handleClickSearch = this.handleClickSearch.bind(this);
+        this.handleChangeSearch = this.handleChangeSearch.bind(this);
+    }
 
+    handleClickSearch() {
+        this.setState({open: !this.state.open});
+    }
+
+    handleChangeSearch(event) {
+        this.setState({redirect: false});
+        console.log(this.state.redirect);
+        this.setState({search: event.target.value});
+        if(this.state.search.length >= 3) {
+            this.setState({redirect: true});
+        }
+    }
+
+    renderRedirect() {
+        if (this.state.redirect) {
+            return (<Redirect to='/search' />);
+        }
     }
 
     render() {
         return (
-            <header className="header-v2">
+            <header className="header-v2 header">
+                {this.renderRedirect()}
                 <div className="container-menu-desktop trans-03">
                     <div className="wrap-menu-desktop">
                         <nav className="limiter-menu-desktop p-l-45">      
@@ -48,7 +75,8 @@ class Header extends Component {
                             </div>  
                             <div className="wrap-icon-header flex-w flex-r-m h-full">
                                 <div className="flex-c-m h-full p-r-24">
-                                    <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+                                    { this.state.open ? <input type="text" className="search" value={this.state.search} onChange={this.handleChangeSearch.bind(this)}/> : ''}
+                                    <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={this.handleClickSearch.bind(this)}>
                                         <i className="zmdi zmdi-search"></i>
                                     </div>
                                 </div>

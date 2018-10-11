@@ -13,6 +13,7 @@ import { BlogPage } from '../pages/BlogPage';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactPage } from '../pages/ContactPage';
 import { CartPage } from '../pages/CartPage';
+import { SearchPage } from '../pages/SearchPage';
 
 // COMPONENT
 
@@ -30,6 +31,7 @@ export const AppRouter = () => (
                 <Route path='/blog' component={BlogPage} />
                 <Route path='/about' component={AboutPage} />
                 <Route path='/contact' component={ContactPage} />
+                <Route path='/search' component={SearchPage} />
                 <Route path='/cart' component={CartPage} />
                 <Redirect to="/" />
             </Switch>

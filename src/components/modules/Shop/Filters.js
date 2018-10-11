@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { setFilters, getFilters } from '../../../services/ShopService';
 import Select2 from 'react-select2-wrapper';
 
-//import { Link } from 'react-router-dom';
 // COMPONENT
 
 class Filters extends Component {
@@ -23,6 +22,10 @@ class Filters extends Component {
                 collection: 'all'
             }
         };
+
+        if(Object.keys(this.props.filters).length > 0 && this.props.filters.collection != 'all') {
+            this.state.filters = this.props.filters;
+        }
         
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
     }
@@ -33,13 +36,10 @@ class Filters extends Component {
             if(this.props.materials.length < 1 || this.props.sizes.length < 1 || this.props.shapes.length < 1 || this.props.collections.length < 1)
                 this.props.getFilters(token);
         }
-
-        if(this.props.filters.collection && this.props.filters.collection != 'all')
-            this.setState({filters: this.props.filters});
     }
 
     handleChangeSelect(filter, event){
-        let filters = this.state.filters;
+        let filters = JSON.parse(JSON.stringify(this.state.filters));
 
         if(filter == 'material')
             filters.material = event.target.value;
@@ -47,8 +47,10 @@ class Filters extends Component {
             filters.size = event.target.value;
         if(filter == 'shape')
             filters.shape = event.target.value;
-        if(filter == 'collection')
+        if(filter == 'collection' && event.target.value != '')
             filters.collection = event.target.value;
+        else
+            return;
 
         this.props.setFilters(filters);
         this.setState({filters: filters});

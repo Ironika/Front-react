@@ -28,8 +28,9 @@ class Collections extends Component {
             size: 'all',
             shape: 'all',
             material: 'all',
-            collection: id
+            collection: id.toString()
         };
+
         this.props.setFilters(filters);
         this.setState({redirect: true});
     }

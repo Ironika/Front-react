@@ -28,11 +28,6 @@ class CartPage extends Component {
         this.handleClickQuantity = this.handleClickQuantity.bind(this);
         this.handleClickRemove = this.handleClickRemove.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
-        // let token = window.localStorage.getItem('token');
-        // if(token) {
-        //     if(this.props.products.length < 1)
-        //         this.props.getProducts(token);
-        // }
     }
 
     getSubTotal() {

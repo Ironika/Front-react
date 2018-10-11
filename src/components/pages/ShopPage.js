@@ -83,14 +83,8 @@ class ShopPage extends Component {
             if(this.props.match.params.slug) {
                 return (<Product slug={this.props.match.params.slug} products={this.props.products}/>);
             } else {
-                if(this.props.match.params.collection) {
-                    let products = this.props.products.filter(product => product.collection.slug == this.props.match.params.collection);
-                    return (<Products products={products} />);
-                }
-                else {
-                    let products = this.filtersProducts();
-                    return (<Products products={products} />);
-                }
+                let products = this.filtersProducts();
+                return (<Products products={products} />);
             }
         }
         else 

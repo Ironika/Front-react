@@ -1,17 +1,23 @@
-.menu.selected {
-    color: tomato;
-    font-weight: bolder;
-    border-bottom: 2px solid tomato;
-    text-decoration: none;
-}
-.icon-header-item {
-	a {
-		color: black;
-		&:hover {
+.header {
+	.menu.selected {
+	    color: tomato;
+	    font-weight: bolder;
+	    border-bottom: 2px solid tomato;
+	    text-decoration: none;
+	}
+	.icon-header-item {
+		a {
+			color: black;
+			&:hover {
+				color: #007bff;
+			}
+		}
+		.active-menu {
 			color: #007bff;
 		}
 	}
-	.active-menu {
-		color: #007bff;
+	.search {
+		border: 1px solid black;
+    	padding: 5px;
 	}
 }
