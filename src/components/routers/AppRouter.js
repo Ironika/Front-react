@@ -14,6 +14,8 @@ import { AboutPage } from '../pages/AboutPage';
 import { ContactPage } from '../pages/ContactPage';
 import { CartPage } from '../pages/CartPage';
 import { SearchPage } from '../pages/SearchPage';
+import { ProfilePage } from '../pages/ProfilePage';
+import { LoginPage } from '../pages/LoginPage';
 
 // COMPONENT
 
@@ -23,7 +25,6 @@ export const AppRouter = () => (
             <Header />
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
-                <Route path="/shop/collection/:collection" component={ShopPage}/>
                 <Route path="/shop/:slug" component={ShopPage}/>
                 <Route path='/shop' component={ShopPage} />
                 <Route path="/blog/tag/:tag" component={BlogPage}/>
@@ -33,6 +34,8 @@ export const AppRouter = () => (
                 <Route path='/contact' component={ContactPage} />
                 <Route path='/search' component={SearchPage} />
                 <Route path='/cart' component={CartPage} />
+                <Route path='/login' component={LoginPage} />
+                <Route path='/profile' component={ProfilePage} />
                 <Redirect to="/" />
             </Switch>
             <Footer />

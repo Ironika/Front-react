@@ -1,0 +1,18 @@
+.search {
+	.item-slick2 {
+		width: 25%;
+		display: inline-block;
+		.block2-txt-child1 {
+		    width: calc(100% - 60px);
+		}
+		.block2-txt-child2 {
+		    width: 60px;
+		}
+	}
+	.search-results {
+	    text-align: center;
+	    display: block;
+	    width: 100%;
+	    padding-bottom: 45px;
+	}
+}

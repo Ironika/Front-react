@@ -4,8 +4,11 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../../images/logo.png';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { setSearch, getSearch } from '../../../services/SearchService';
+
 
 // COMPONENT
 
@@ -16,7 +19,7 @@ class Header extends Component {
         this.state = {
             open: false,
             search: '',
-            redirect: false
+            token: window.localStorage.getItem('token')
         };
     }
 
@@ -30,24 +33,17 @@ class Header extends Component {
     }
 
     handleChangeSearch(event) {
-        this.setState({redirect: false});
-        console.log(this.state.redirect);
+        this.props.setSearch(event.target.value);
         this.setState({search: event.target.value});
-        if(this.state.search.length >= 3) {
-            this.setState({redirect: true});
-        }
-    }
-
-    renderRedirect() {
-        if (this.state.redirect) {
-            return (<Redirect to='/search' />);
+        this.props.getSearch(this.state.token, event.target.value);
+        if(this.props.location.pathname != '/search') {
+            this.props.history.push('/search');
         }
     }
 
     render() {
         return (
             <header className="header-v2 header">
-                {this.renderRedirect()}
                 <div className="container-menu-desktop trans-03">
                     <div className="wrap-menu-desktop">
                         <nav className="limiter-menu-desktop p-l-45">      
@@ -77,7 +73,7 @@ class Header extends Component {
                                 <div className="flex-c-m h-full p-r-24">
                                     { this.state.open ? <input type="text" className="search" value={this.state.search} onChange={this.handleChangeSearch.bind(this)}/> : ''}
                                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={this.handleClickSearch.bind(this)}>
-                                        <i className="zmdi zmdi-search"></i>
+                                        <i className={'zmdi zmdi-search ' + ((this.props.location.pathname == '/search') ? 'active-menu' : '')}></i>
                                     </div>
                                 </div>
                                     
@@ -91,9 +87,9 @@ class Header extends Component {
                                     
                                 <div className="flex-c-m h-full p-lr-19">
                                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
-                                        <a href="">
+                                        <NavLink to='/profile' activeClassName='active-menu'>
                                             <i className="zmdi zmdi-account icon-account"></i>
-                                        </a>
+                                        </NavLink>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +102,11 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    cart: PropTypes.array
+    cart: PropTypes.array,
+    location: PropTypes.object.isRequired,
+    setSearch: PropTypes.func.isRequired,
+    getSearch: PropTypes.func.isRequired,
+    history: PropTypes.object,
 };
 
 // CONFIGURE REACT REDUX
@@ -116,6 +116,10 @@ const mapStateToProps = state => {
     return { cart };
 };
 
-const hoc = connect(mapStateToProps, null, null, { pure: false })(Header);
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ setSearch, getSearch }, dispatch)
+);
+
+const hoc = withRouter(connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(Header));
 
 export { hoc as Header };

@@ -1,14 +1,15 @@
 import { DOMAIN_API } from '../components/App';
 import { 
-    searchAction, 
-    pendingAction,  
+    getSearchAction, 
+    pendingAction,
+    setSearchAction
 } from '../components/state/actions/SearchActions';
 
 import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function search(token, search) {
+export function getSearch(token, search) {
     return dispatch => {
         dispatch(pendingAction());
         axios({
@@ -19,7 +20,13 @@ export function search(token, search) {
                 search: search
             }
         }).then(function(response) {
-            dispatch(searchAction(response.data));
+            dispatch(getSearchAction(response.data));
         }.bind(this));
+    };
+}
+
+export function setSearch(search) {
+    return dispatch => {
+        dispatch(setSearchAction(search));
     };
 }

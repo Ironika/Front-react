@@ -43,11 +43,11 @@ class Filters extends Component {
 
         if(filter == 'material')
             filters.material = event.target.value;
-        if(filter == 'size')
+        else if(filter == 'size')
             filters.size = event.target.value;
-        if(filter == 'shape')
+        else if(filter == 'shape')
             filters.shape = event.target.value;
-        if(filter == 'collection' && event.target.value != '')
+        else if(filter == 'collection' && event.target.value != '')
             filters.collection = event.target.value;
         else
             return;
