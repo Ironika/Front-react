@@ -9,6 +9,7 @@ import { BlogReducer } from '../reducers/BlogReducer';
 import { ShopReducer } from '../reducers/ShopReducer';
 import { CartReducer } from '../reducers/CartReducer';
 import { SearchReducer } from '../reducers/SearchReducer';
+import { UserReducer } from '../reducers/UserReducer';
 
 // EXPORT APP REDUCER
 
@@ -17,5 +18,6 @@ export const AppReducer = combineReducers({
     blogs: BlogReducer,
     products: ShopReducer,
     cart: CartReducer,
-    search: SearchReducer
+    search: SearchReducer,
+    user: UserReducer
 });
