@@ -2,7 +2,8 @@
 
 import React from 'react';
 import img from '../../images/icons/icon-email.png';
-import { NavLink } from 'react-router-dom';
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 
 // COMPONENT
 
@@ -10,21 +11,9 @@ const ContactPage = () => {
     window.scrollTo(0, 0);
     return (
         <main className="animated fadeIn">
-            <section className="bg-img1 txt-center p-lr-15 p-tb-92">
-                <h2 className="ltext-105 cl0 txt-center">
-                    Contact
-                </h2>
-            </section>
+            <Banner title={'Contact'} className={'bg-img1'}/>
 
-            <div className="container">
-                <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                    <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                        Home
-                        <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                    </NavLink>
-                    <span className="stext-109 cl4"> Contact </span>
-                </div>
-            </div>  
+            <Breadcrumb title={'Contact'} haveSub={false}/>  
 
             <section className="bg0 p-t-104 p-b-116">
                 <div className="container">

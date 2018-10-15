@@ -1,9 +1,12 @@
-.account {
+.profile {
 	.logout {
 		padding:10px;
 	}
 	.dashboard {
 		padding:10px; 
 		margin-right: 5px;
+	}
+	.actions {
+		float: right;
 	}
 }

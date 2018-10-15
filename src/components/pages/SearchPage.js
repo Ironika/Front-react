@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Img } from '../shared/Img/Img';
 import { Day, MonthFull, Year } from '../shared/Date/Date';
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
+
 
 // COMPONENT
 
@@ -142,21 +145,9 @@ class SearchPage extends Component {
     render() {
         return (
             <main className="search">
-                <section className="bg-img2 txt-center p-lr-15 p-tb-92">
-                    <h2 className="ltext-105 cl0 txt-center">
-                        Search
-                    </h2>
-                </section>
+                <Banner title={'Search'} className={'bg-img2'}/>
                 
-                <div className="container">
-                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                            Home
-                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                        </NavLink>
-                        <span className="stext-109 cl4"> Search </span>
-                    </div>
-                </div>
+                <Breadcrumb title={'Search'} haveSub={false}/>
 
                 <section className="sec-blog bg0 p-t-60">
                     <div className="container">

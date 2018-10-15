@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { login } from '../../services/UserService';
-import { NavLink } from 'react-router-dom';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { Redirect } from 'react-router-dom';
-
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 
 // COMPONENT
 
@@ -43,15 +43,16 @@ class LoginPage extends Component {
     }
 
     insertLogin() {
-        if(this.props.fetching)
-            return (<LoadingIndicator busy={this.props.fetching} />);
-        else if(!this.props.fetching && Object.keys(this.props.user).length > 0)
+        if(!this.props.fetching && typeof this.props.user != 'string' && Object.keys(this.props.user).length > 0) {
             return (<Redirect to='/profile' />);
-        else
+        }
+        else {
             return (
                 <section className="content">
+                    {this.props.fetching ? <LoadingIndicator busy={this.props.fetching} /> : ''}
                     <div className="login-container size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
                         <h1 className="mtext-105 cl2 txt-center p-b-30">Login to Your Account</h1><br/>
+                        {this.props.user && typeof this.props.user == 'string' ? <p className='login-error'>{this.props.user}</p> : ''}
                         <div className="form-signin">
                             <div className="bor8 m-b-20 how-pos4-parent">
                                 <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="username" name="_username" value={this.state.username} placeholder="Username" onChange={this.handleChange.bind(this, 'username')}/>
@@ -67,26 +68,15 @@ class LoginPage extends Component {
                     </div>
                 </section>
             );
+        }
     }
 
     render() {
         return (
             <main className="login">
-                <section className="bg-img1 txt-center p-lr-15 p-tb-92">
-                    <h2 className="ltext-105 cl0 txt-center">
-                        Login
-                    </h2>
-                </section>
+                <Banner title={'Login'} className={'bg-img1'}/>
 
-                <div className="container">
-                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                            Home
-                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                        </NavLink>
-                        <span className="stext-109 cl4"> Login </span>
-                    </div>
-                </div> 
+                <Breadcrumb title={'Contact'} haveSub={false}/> 
 
                 { this.insertLogin() }
             </main>
@@ -98,7 +88,10 @@ LoginPage.propTypes = {
     login: PropTypes.func.isRequired,
     history: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+    ]),
 };
 
 const mapStateToProps = state => {

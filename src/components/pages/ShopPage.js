@@ -10,6 +10,8 @@ import { getProducts } from '../../services/ShopService';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { NavLink } from 'react-router-dom';
 import { Filters } from '../modules/Shop/Filters';
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 
 
 // COMPONENT
@@ -92,23 +94,16 @@ class ShopPage extends Component {
     }
 
     render() {
+        let haveSub, subTitle = '';
+        if(this.props.match.params.slug) {
+            haveSub = true;
+            subTitle = this.props.match.params.slug;
+        }
         return (
             <main className="shop">
-                <section className="bg-img1 txt-center p-lr-15 p-tb-92">
-                    <h2 className="ltext-105 cl0 txt-center">
-                        Shop
-                    </h2>
-                </section>
+                <Banner title={'Shop'} className={'bg-img1'}/>
 
-                <div className="container">
-                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                            Home
-                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                        </NavLink>
-                        { this.breadCrumb() }
-                    </div>
-                </div>
+                <Breadcrumb title={'Shop'} haveSub={haveSub} subTitle={subTitle}/>
 
                 <div className="bg0 m-t-23 p-b-140">
                     <div className="container">

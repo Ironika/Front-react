@@ -10,6 +10,7 @@ import { ShopReducer } from '../reducers/ShopReducer';
 import { CartReducer } from '../reducers/CartReducer';
 import { SearchReducer } from '../reducers/SearchReducer';
 import { UserReducer } from '../reducers/UserReducer';
+import { OrderReducer } from '../reducers/OrderReducer';
 
 // EXPORT APP REDUCER
 
@@ -19,5 +20,6 @@ export const AppReducer = combineReducers({
     products: ShopReducer,
     cart: CartReducer,
     search: SearchReducer,
-    user: UserReducer
+    user: UserReducer,
+    orders: OrderReducer
 });

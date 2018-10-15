@@ -4,9 +4,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { logout } from '../../services/UserService';
+import { DOMAIN_API } from '../../components/App';
+import { Day, MonthFull, Year } from '../shared/Date/Date';
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
+
 
 // COMPONENT
 
@@ -18,14 +23,13 @@ class ProfilePage extends Component {
         this.state = {
             user : this.props.user
         };
+        let user = JSON.parse(window.localStorage.getItem('user'));
+        if(user)
+            this.state.user = user;
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
-
-        let user = JSON.parse(window.localStorage.getItem('user'));
-        if(user)
-            this.setState({user : user});
         this.handleClickLogout = this.handleClickLogout.bind(this);
     }
 
@@ -34,6 +38,7 @@ class ProfilePage extends Component {
             return(                                        
                 <div className="col-12 col-md-6">
                     <h4>Delivery Address</h4>
+                    <p>{this.state.user.address_delivery.first_name + ' ' + this.state.user.address_delivery.last_name}</p>
                     <p>{this.state.user.address_delivery.street}</p>
                     <p>{this.state.user.address_delivery.street_add}</p>
                     <p>{this.state.user.address_delivery.city + ' / ' + this.state.user.address_delivery.zipcode}</p>
@@ -48,6 +53,7 @@ class ProfilePage extends Component {
             return(                                        
                 <div className="col-12 col-md-6">
                     <h4>Billing Address</h4>
+                    <p>{this.state.user.address_billing.first_name + ' ' + this.state.user.address_billing.last_name}</p>
                     <p>{this.state.user.address_billing.street}</p>
                     <p>{this.state.user.address_billing.street_add}</p>
                     <p>{this.state.user.address_billing.city + ' / ' + this.state.user.address_billing.zipcode}</p>
@@ -58,7 +64,7 @@ class ProfilePage extends Component {
     }
 
     insertOrders() {
-        if(this.state.user.orders.length > 0)
+        if(this.state.user.orders && this.state.user.orders.length > 0)
             return(
                 <Fragment>
                     <h4>Orders</h4>
@@ -78,9 +84,9 @@ class ProfilePage extends Component {
                                 <tr key={order.uniq_id}>
                                     <td>{order.uniq_id}</td>
                                     <td>{order.state}</td>
-                                    <td>{order.created_at}</td>
+                                    <td><Day date={order.created_at} />&nbsp;<MonthFull date={order.created_at} />&nbsp;<Year date={order.created_at} />&nbsp;</td>
                                     <td>{order.total} €</td>
-                                    <td><a href="#">Detail</a></td>
+                                    <td><Link to={'/profile/order/' + order.id} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Detail</Link></td>
                                 </tr>
                             )}
                         </tbody>
@@ -93,50 +99,40 @@ class ProfilePage extends Component {
         window.localStorage.setItem('user', null);
         this.props.logout();
         this.setState({user: null});
-        console.log(this.state.user);
+    }
+
+    isAdmin() {
+        let isAdmin = false;
+        if(this.state.user.roles.length > 0)
+            this.state.user.roles.map(role => {
+                if(role == 'ROLE_SUPER_ADMIN')
+                    isAdmin = true;
+            });
+        return isAdmin;
     }
 
     render() {
-        if(this.state.user == null || Object.keys(this.state.user).length == 0) {
+        if(this.state.user == null || typeof this.state.user == 'string' || Object.keys(this.state.user).length == 0) {
             return (<Redirect to='/login' />);
         }
         else {
             return (
-                <main className="account">
-                    <section className="bg-img1 txt-center p-lr-15 p-tb-92">
-                        <h2 className="ltext-105 cl0 txt-center">
-                            Profile
-                        </h2>
-                    </section>
+                <main className="profile">
+                    <Banner title={'Profile'} className={'bg-img1'}/>
 
-                    <div className="container">
-                        <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                            <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                                Home
-                                <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                            </NavLink>
-                            <span className="stext-109 cl4"> Profile </span>
-                        </div>
-                    </div>  
+                    <Breadcrumb title={'Profile'} haveSub={false}/>  
+
+                    <div className="actions">
+                        { this.isAdmin() ? <a href={DOMAIN_API + 'admin/dashboard'} className="cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04 dashboard">Go to Dashboard</a> : ''}
+                        <a href="#" className="cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04 dashboard">Edit Profile</a>
+                        <span onClick={this.handleClickLogout.bind(this)} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Logout</span>
+                    </div>
 
                     <section className="bg0 p-t-104 p-b-116">
                         <div className="container">
                             <div className="content">
-                                <div>
-                                    { this.state.user.username }
-                                    |
-                                    <a href="#" className="cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04 dashboard">
-                                        Go to Dashboard
-                                    </a>
-                                    |
-                                    <span onClick={this.handleClickLogout.bind(this)} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">
-                                        logout
-                                    </span>
-                                </div>
-                                <a href="#">Edit Profile</a>
                                 <div className="fos_user_user_show">
-                                    <br/>
-                                    <p>Name: {this.state.user.first_name + ' ' + this.state.user.last_name}</p>
+                                    <p>Name: { this.state.user.username }</p>
                                     <p>Email: {this.state.user.email} </p>
                                     <br/>
                                     {(this.state.user.have_subscribe_newsletter) ? <p>You have subscribe to the newsletter</p> : ''}
@@ -159,7 +155,10 @@ class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+    ]),
     logout: PropTypes.func.isRequired
 };
 

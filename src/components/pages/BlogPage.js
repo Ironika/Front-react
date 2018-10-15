@@ -1,5 +1,5 @@
 // IMPORT PACKAGE REFERENCES
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -7,9 +7,10 @@ import { Blogs } from '../modules/Blog/Blogs';
 import { Blog } from '../modules/Blog/Blog';
 import { Tags } from '../modules/Blog/Tags';
 import { Products } from '../modules/Blog/Products';
-import { NavLink } from 'react-router-dom';
 import { getTags, getProducts } from '../../services/BlogService';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
+import { Banner } from '../shared/Banner/Banner';
+import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 
 
 // COMPONENT
@@ -42,22 +43,6 @@ class BlogPage extends Component {
         }
     }
 
-    breadCrumb() {
-        if(this.props.match.params.slug)
-            return (
-                <Fragment>
-                    <NavLink to='/blog' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                        Blog
-                        <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                    </NavLink>
-                    <span className="stext-109 cl4"> { this.props.match.params.slug } </span> 
-                </Fragment>
-            );
-        else {
-            return (<span className="stext-109 cl4"> Blog </span> );
-        }
-    }
-
     sideMenuOrLoading() {
         if(!this.props.fetching)
             return (
@@ -82,23 +67,16 @@ class BlogPage extends Component {
     }
 
     render() {
+        let haveSub, subTitle = '';
+        if(this.props.match.params.slug) {
+            haveSub = true;
+            subTitle = this.props.match.params.slug;
+        }
         return (
             <main>
-                <section className="bg-img2 txt-center p-lr-15 p-tb-92">
-                    <h2 className="ltext-105 cl0 txt-center">
-                        Blog
-                    </h2>
-                </section>
+                <Banner title={'Blog'} className={'bg-img2'}/>
                 
-                <div className="container">
-                    <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-                        <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
-                            Home
-                            <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                        </NavLink>
-                        { this.breadCrumb() }
-                    </div>
-                </div>
+                <Breadcrumb title={'Blog'} haveSub={haveSub} subTitle={subTitle}/>
 
                 <section className="bg0 p-t-62 p-b-60">
                     <div className="container">
