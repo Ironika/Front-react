@@ -24,7 +24,8 @@ class AccountPage extends Component {
             email: '',
             password: '',
             plainPassword: '',
-            token: window.localStorage.getItem('token')
+            token: window.localStorage.getItem('token'),
+            error: ''
         };
     }
 
@@ -47,13 +48,21 @@ class AccountPage extends Component {
     }
 
     handleClickLogin() {
-        let token = window.localStorage.getItem('token');
-        this.props.login(token, this.state.username, this.state.password);
+        if(this.state.username != '' && this.state.password != '') {
+            let token = window.localStorage.getItem('token');
+            this.props.login(token, this.state.username, this.state.password);
+        } else {
+            this.setState({error: 'You must fill all fields'});
+        }
     }
 
     handleClickRegister() {
-        let token = window.localStorage.getItem('token');
-        this.props.register(token, this.state.email, this.state.username, this.state.password, this.state.plainPassword);
+        if(this.state.username != '' && this.state.password != '' && this.state.email != '' && this.state.plainPassword != '') {
+            let token = window.localStorage.getItem('token');
+            this.props.register(token, this.state.email, this.state.username, this.state.password, this.state.plainPassword);
+        } else {
+            this.setState({error: 'You must fill all fields'});
+        }
     }
 
     render() {
@@ -80,6 +89,7 @@ class AccountPage extends Component {
                                 passwordValue={this.state.password} 
                                 passwordChange={this.handleChange.bind(this, 'password')} 
                                 submit={this.handleClickLogin.bind(this)} 
+                                error={this.state.error}
                             /> : 
                             <Register 
                                 user={this.props.user} 
@@ -91,7 +101,8 @@ class AccountPage extends Component {
                                 passwordChange={this.handleChange.bind(this, 'password')} 
                                 plainPasswordValue={this.state.plainPassword} 
                                 plainPasswordChange={this.handleChange.bind(this, 'plainPassword')} 
-                                submit={this.handleClickRegister.bind(this)} 
+                                submit={this.handleClickRegister.bind(this)}
+                                error={this.state.error}
                             />
                         }
                     </section>

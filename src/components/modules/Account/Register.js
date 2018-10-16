@@ -11,6 +11,7 @@ export const Register = (props) => (
     <div className="login-container size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
         <h2 className="mtext-105 cl2 txt-center p-b-30">Create an Account</h2>
         {props.user && typeof props.user == 'string' ? <p className='login-error'>{props.user}</p> : ''}
+        {props.error != '' ? <p className='login-error'>{props.error}</p> : ''}
         <div className="form-group" id="fos_user_registration_form">
             <div className="bor8 m-b-20 how-pos4-parent">
                 <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" placeholder="Email" type="text" value={props.emailValue} onChange={props.emailChange}/>
@@ -44,5 +45,6 @@ Register.propTypes = {
     passwordChange:         PropTypes.func.isRequired,
     plainPasswordValue:     PropTypes.string.isRequired,
     plainPasswordChange:    PropTypes.func.isRequired,
-    submit:                 PropTypes.func.isRequired
+    submit:                 PropTypes.func.isRequired,
+    error:                  PropTypes.string.isRequired
 };
