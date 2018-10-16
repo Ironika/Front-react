@@ -174,8 +174,8 @@ class SearchPage extends Component {
 }
 
 SearchPage.propTypes = {
-    search: PropTypes.string.isRequired,
-    results: PropTypes.array.isRequired
+    search:     PropTypes.string.isRequired,
+    results:    PropTypes.array.isRequired
 };
 
 // CONFIGURE REACT REDUX

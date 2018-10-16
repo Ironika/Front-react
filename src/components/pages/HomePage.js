@@ -94,18 +94,18 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-    getHomeBlogs: PropTypes.func.isRequired,
-    fetching_blogs: PropTypes.bool.isRequired,
-    blogs: PropTypes.array,
-    getHomeProducts: PropTypes.func.isRequired,
-    fetching_products: PropTypes.bool.isRequired,
-    products: PropTypes.array,
-    getHomeCollections: PropTypes.func.isRequired,
-    fetching_collections: PropTypes.bool.isRequired,
-    collections: PropTypes.array,
-    getHomeSlides: PropTypes.func.isRequired,
-    fetching_slides: PropTypes.bool.isRequired,
-    slides: PropTypes.array
+    getHomeBlogs:           PropTypes.func.isRequired,
+    fetching_blogs:         PropTypes.bool.isRequired,
+    blogs:                  PropTypes.array,
+    getHomeProducts:        PropTypes.func.isRequired,
+    fetching_products:      PropTypes.bool.isRequired,
+    products:               PropTypes.array,
+    getHomeCollections:     PropTypes.func.isRequired,
+    fetching_collections:   PropTypes.bool.isRequired,
+    collections:            PropTypes.array,
+    getHomeSlides:          PropTypes.func.isRequired,
+    fetching_slides:        PropTypes.bool.isRequired,
+    slides:                 PropTypes.array
 };
 
 // CONFIGURE REACT REDUX

@@ -125,10 +125,10 @@ class OrderPage extends Component {
 }
 
 OrderPage.propTypes = {
-    match: PropTypes.object,
-    logout: PropTypes.func.isRequired,
-    getOrder: PropTypes.func.isRequired,
-    order: PropTypes.object.isRequired,
+    match:          PropTypes.object,
+    logout:         PropTypes.func.isRequired,
+    getOrder:       PropTypes.func.isRequired,
+    order:          PropTypes.object.isRequired,
     fetching_order: PropTypes.bool.isRequired,
 };
 

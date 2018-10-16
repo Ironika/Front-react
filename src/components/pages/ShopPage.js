@@ -124,11 +124,11 @@ class ShopPage extends Component {
 }
 
 ShopPage.propTypes = {
-    match: PropTypes.object,
-    getProducts: PropTypes.func.isRequired,
-    products: PropTypes.array,
-    fetching_products: PropTypes.bool.isRequired,
-    filters: PropTypes.object
+    match:              PropTypes.object,
+    getProducts:        PropTypes.func.isRequired,
+    products:           PropTypes.array,
+    fetching_products:  PropTypes.bool.isRequired,
+    filters:            PropTypes.object
 };
 
 // CONFIGURE REACT REDUX

@@ -98,12 +98,12 @@ class BlogPage extends Component {
 }
 
 BlogPage.propTypes = {
-    match: PropTypes.object,
-    getTags: PropTypes.func.isRequired,
-    tags: PropTypes.array,
-    getProducts: PropTypes.func.isRequired,
-    products: PropTypes.array,
-    fetching: PropTypes.bool.isRequired,
+    match:          PropTypes.object,
+    getTags:        PropTypes.func.isRequired,
+    tags:           PropTypes.array,
+    getProducts:    PropTypes.func.isRequired,
+    products:       PropTypes.array,
+    fetching:       PropTypes.bool.isRequired,
 };
 
 // CONFIGURE REACT REDUX
