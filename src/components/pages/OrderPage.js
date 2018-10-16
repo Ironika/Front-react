@@ -101,7 +101,8 @@ class OrderPage extends Component {
     }
 
     render() {
-        let haveSub, subTitle = '';
+        let haveSub = false;
+        let subTitle = '';
         if(this.props.match.params.orderid) {
             haveSub = true;
             subTitle = 'Order - ' + this.props.order.uniq_id;

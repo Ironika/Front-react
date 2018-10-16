@@ -1,4 +1,5 @@
 export const LOGIN = 'LOGIN';
+export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
 export const PENDING = 'PENDING';
 
@@ -6,6 +7,11 @@ export const PENDING = 'PENDING';
 
 export const loginAction = (response) => ({
     type: LOGIN,
+    payload: response
+});
+
+export const registerAction = (response) => ({
+    type: REGISTER,
     payload: response
 });
 

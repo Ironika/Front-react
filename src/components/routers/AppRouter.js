@@ -15,7 +15,7 @@ import { ContactPage } from '../pages/ContactPage';
 import { CartPage } from '../pages/CartPage';
 import { SearchPage } from '../pages/SearchPage';
 import { ProfilePage } from '../pages/ProfilePage';
-import { LoginPage } from '../pages/LoginPage';
+import { AccountPage } from '../pages/AccountPage';
 import { OrderPage } from '../pages/OrderPage';
 
 // COMPONENT
@@ -35,7 +35,8 @@ export const AppRouter = () => (
                 <Route path='/contact' component={ContactPage} />
                 <Route path='/search' component={SearchPage} />
                 <Route path='/cart' component={CartPage} />
-                <Route path='/login' component={LoginPage} />
+                <Route path='/login' component={AccountPage} />
+                <Route path='/register' component={AccountPage} />
                 <Route path='/profile/order/:orderid' component={OrderPage} />
                 <Route path='/profile' component={ProfilePage} />
                 <Redirect to="/" />

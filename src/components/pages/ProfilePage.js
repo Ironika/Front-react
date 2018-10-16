@@ -83,7 +83,7 @@ class ProfilePage extends Component {
                             {this.state.user.orders.map(order =>
                                 <tr key={order.uniq_id}>
                                     <td>{order.uniq_id}</td>
-                                    <td>{order.state}</td>
+                                    <td className={order.state == 'DONE' ? 'order-done' : ''}>{order.state}</td>
                                     <td><Day date={order.created_at} />&nbsp;<MonthFull date={order.created_at} />&nbsp;<Year date={order.created_at} />&nbsp;</td>
                                     <td>{order.total} €</td>
                                     <td><Link to={'/profile/order/' + order.id} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Detail</Link></td>

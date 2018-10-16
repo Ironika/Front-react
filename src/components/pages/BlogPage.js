@@ -67,7 +67,8 @@ class BlogPage extends Component {
     }
 
     render() {
-        let haveSub, subTitle = '';
+        let haveSub = false; 
+        let subTitle = '';
         if(this.props.match.params.slug) {
             haveSub = true;
             subTitle = this.props.match.params.slug;

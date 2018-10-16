@@ -86,7 +86,12 @@ class ShopPage extends Component {
                 return (<Product slug={this.props.match.params.slug} products={this.props.products}/>);
             } else {
                 let products = this.filtersProducts();
-                return (<Products products={products} />);
+                return (
+                    <Fragment>
+                        <Filters />
+                        <Products products={products} />
+                    </Fragment>
+                );
             }
         }
         else 
@@ -94,7 +99,8 @@ class ShopPage extends Component {
     }
 
     render() {
-        let haveSub, subTitle = '';
+        let haveSub = false; 
+        let subTitle = '';
         if(this.props.match.params.slug) {
             haveSub = true;
             subTitle = this.props.match.params.slug;
@@ -107,7 +113,6 @@ class ShopPage extends Component {
 
                 <div className="bg0 m-t-23 p-b-140">
                     <div className="container">
-                        <Filters />
                         {this.productsOrLoading()}
                     </div>
                 </div>

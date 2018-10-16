@@ -23,7 +23,7 @@ const haveSub = (haveSub, title, subTitle) => {
     if(haveSub)
         return (
             <Fragment>
-                <NavLink to='/blog' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                <NavLink to={'/' + title.toLowerCase()} className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
                     {title}
                     <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
                 </NavLink>

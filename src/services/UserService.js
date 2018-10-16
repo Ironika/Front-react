@@ -1,6 +1,7 @@
 import { DOMAIN_API } from '../components/App';
 import { 
     loginAction,
+    registerAction,
     logoutAction,
     pendingAction
 } from '../components/state/actions/UserActions';
@@ -22,6 +23,26 @@ export function login(token, username, password) {
             }
         }).then(function(response) {
             dispatch(loginAction(response.data));
+            window.localStorage.setItem('user', JSON.stringify(response.data));
+        }.bind(this));
+    };
+}
+
+export function register(token, email, username, password, plainPassword) {
+    return dispatch => {
+        dispatch(pendingAction());
+        axios({
+            method: 'post',
+            url: DOMAIN_API + 'api/register',
+            headers: {'Authorization': 'Bearer ' + token},
+            data: {
+                email: email,
+                username: username,
+                password: password,
+                plainPassword: plainPassword
+            }
+        }).then(function(response) {
+            dispatch(registerAction(response.data));
             window.localStorage.setItem('user', JSON.stringify(response.data));
         }.bind(this));
     };

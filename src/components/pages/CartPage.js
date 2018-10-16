@@ -33,10 +33,12 @@ class CartPage extends Component {
 
     getSubTotal() {
         let subTotal = 0;
-        let cart = JSON.parse(window.localStorage.getItem('cart'));
-        cart.map(orderProduct => {
-            subTotal += orderProduct.product.price * orderProduct.quantity;
-        });
+        if(window.localStorage.getItem('cart')) {
+            let cart = JSON.parse(window.localStorage.getItem('cart'));
+            cart.map(orderProduct => {
+                subTotal += orderProduct.product.price * orderProduct.quantity;
+            });
+        }
         return subTotal;
     }
 
@@ -124,7 +126,7 @@ class CartPage extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                { this.insertOrderProduct() }
+                                                { this.state.cart && this.insertOrderProduct() }
                                             </tbody>
                                         </table>
                                     </div>

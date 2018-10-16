@@ -15,11 +15,15 @@ const Select = (props) => (
 
         <div className="size-204 respon6-next">
             <div className="rs1-select2 bor8 bg0">
-                <Select2 data={fillSelect(props.datas)} options={{ placeholder: 'Choose one option' }} value={props.value} onChange={props.change} />
+                <Select2 data={fillSelect(props.datas)} defaultValue={defaultValue(props.datas)} options={{ placeholder: 'Choose one option' }} value={props.value} onChange={props.change} />
             </div>
         </div>
     </div>
 );
+
+function defaultValue(datas){
+    return datas[0].id;
+}
 
 function fillSelect(datas) {
     let current_datas = [];
