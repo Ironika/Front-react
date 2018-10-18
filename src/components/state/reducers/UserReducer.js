@@ -2,7 +2,8 @@ import {
     LOGIN,
     LOGOUT,
     REGISTER,
-    PENDING
+    PENDING,
+    EDIT
 } from '../actions/UserActions';
 
 
@@ -10,7 +11,7 @@ import {
 
 const initialState = {
     user: {},
-    fetching: false
+    fetching: false,
 };
 
 
@@ -25,6 +26,12 @@ export const UserReducer = (state = initialState, action) => {
                 fetching: false
             };
         case REGISTER:
+            return {
+                ...state,
+                user: action.payload,
+                fetching: false
+            };
+        case EDIT:
             return {
                 ...state,
                 user: action.payload,

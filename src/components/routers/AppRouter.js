@@ -38,6 +38,7 @@ export const AppRouter = () => (
                 <Route path='/login' component={AccountPage} />
                 <Route path='/register' component={AccountPage} />
                 <Route path='/profile/order/:orderid' component={OrderPage} />
+                <Route path='/profile/edit' component={ProfilePage} />
                 <Route path='/profile' component={ProfilePage} />
                 <Redirect to="/" />
             </Switch>

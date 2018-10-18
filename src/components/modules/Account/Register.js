@@ -36,7 +36,6 @@ export const Register = (props) => (
 );
 
 Register.propTypes = {
-    user:                   PropTypes.object.isRequired,
     usernameValue:          PropTypes.string.isRequired,
     usernameChange:         PropTypes.func.isRequired,
     emailValue:             PropTypes.string.isRequired,
@@ -46,5 +45,9 @@ Register.propTypes = {
     plainPasswordValue:     PropTypes.string.isRequired,
     plainPasswordChange:    PropTypes.func.isRequired,
     submit:                 PropTypes.func.isRequired,
-    error:                  PropTypes.string.isRequired
+    error:                  PropTypes.string.isRequired,
+    user:                   PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+    ])
 };

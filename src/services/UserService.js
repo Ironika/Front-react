@@ -3,7 +3,9 @@ import {
     loginAction,
     registerAction,
     logoutAction,
-    pendingAction
+    editAction,
+    pendingAction,
+    removeRedirectAction
 } from '../components/state/actions/UserActions';
 
 import axios from 'axios';
@@ -48,8 +50,31 @@ export function register(token, email, username, password, plainPassword) {
     };
 }
 
+export function edit(token, user) {
+    return dispatch => {
+        dispatch(pendingAction());
+        axios({
+            method: 'put',
+            url: DOMAIN_API + 'api/user/update',
+            headers: {'Authorization': 'Bearer ' + token},
+            data: {
+                user: user,
+            }
+        }).then(function(response) {
+            dispatch(editAction(response.data));
+            window.localStorage.setItem('user', JSON.stringify(response.data));
+        }.bind(this));
+    };
+}
+
 export function logout() {
     return dispatch => {
         dispatch(logoutAction());
+    };
+}
+
+export function removeRedirect() {
+    return dispatch => {
+        dispatch(removeRedirectAction());
     };
 }

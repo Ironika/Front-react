@@ -44,11 +44,12 @@ class AccountPage extends Component {
             this.setState({password: event.target.value});
         else if(input == 'plainPassword')
             this.setState({plainPassword: event.target.value});
-        
     }
 
     handleClickLogin() {
+        window.scrollTo(0, 0);
         if(this.state.username != '' && this.state.password != '') {
+            this.setState({error: ''});
             let token = window.localStorage.getItem('token');
             this.props.login(token, this.state.username, this.state.password);
         } else {
@@ -57,7 +58,9 @@ class AccountPage extends Component {
     }
 
     handleClickRegister() {
+        window.scrollTo(0, 0);
         if(this.state.username != '' && this.state.password != '' && this.state.email != '' && this.state.plainPassword != '') {
+            this.setState({error: ''});
             let token = window.localStorage.getItem('token');
             this.props.register(token, this.state.email, this.state.username, this.state.password, this.state.plainPassword);
         } else {
