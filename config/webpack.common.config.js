@@ -7,7 +7,7 @@ const commonPaths = require('./common-paths');
 const config = {
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.min.js',
         path: commonPaths.outputPath,
         publicPath: '/'
     },
@@ -58,7 +58,7 @@ const config = {
         new webpack.ProgressPlugin(),
         new ExtractTextWebpackPlugin('styles.css'),
         new webpack.optimize.CommonsChunkPlugin({
-            filename: 'common.js',
+            filename: 'common.min.js',
             minChunks: 3,
             name: 'common'
         }),
@@ -66,7 +66,22 @@ const config = {
         new HtmlWebPackPlugin({
             template: commonPaths.template,
             favicon: commonPaths.favicon,
-            inject: true
+            inject: true,
+              minify   : {
+                html5                          : true,
+                collapseWhitespace             : true,
+                minifyCSS                      : true,
+                minifyJS                       : true,
+                minifyURLs                     : false,
+                removeAttributeQuotes          : true,
+                removeComments                 : true,
+                removeEmptyAttributes          : true,
+                removeOptionalTags             : true,
+                removeRedundantAttributes      : true,
+                removeScriptTypeAttributes     : true,
+                removeStyleLinkTypeAttributese : true,
+                useShortDoctype                : true
+            }
         })
     ]
 };

@@ -35,8 +35,8 @@ class Blogs extends Component {
                         <div className="col-sm-6 col-md-4 p-b-40" key={blog.id}>
                             <div className="blog-item">
                                 <div className="hov-img0">
-                                    <Link to={'/blog/' + blog.slug }>
-                                        <Img imgName={ blog.media.provider_reference } />
+                                    <Link to={'/blog/' + blog.slug } title={blog.slug}>
+                                        <Img imgName={ blog.media.provider_reference } alt={blog.slug}/>
                                     </Link>
                                 </div>
 
@@ -63,7 +63,7 @@ class Blogs extends Component {
                                     </div>
 
                                     <h4 className="p-b-12">
-                                        <Link to={'/blog/' + blog.slug } className="mtext-101 cl2 hov-cl1 trans-04" >
+                                        <Link to={'/blog/' + blog.slug } className="mtext-101 cl2 hov-cl1 trans-04" title={blog.slug}>
                                             { blog.title }
                                         </Link>
                                     </h4>
@@ -77,7 +77,7 @@ class Blogs extends Component {
                     )}
                 </div>
                 <div className="flex-c-m flex-w w-full p-t-45">
-                    <Link to={'/blog'} className="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" >
+                    <Link to={'/blog'} className="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" title='blog'>
                         See more
                     </Link>
                 </div>

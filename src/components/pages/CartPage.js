@@ -8,6 +8,7 @@ import { Counter } from '../shared/Counter/Counter';
 import { editCart } from '../../services/CartService';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 // COMPONENT
 
@@ -19,8 +20,14 @@ class CartPage extends Component {
         let cart = JSON.parse(window.localStorage.getItem('cart'));
         this.state = {
             cart: cart,
-            subTotal: this.getSubTotal()
+            subTotal: this.getSubTotal(),
+            shipping: 15.99,
+            user : this.props.user
         };
+
+        if(Object.keys(this.state.user).length == 0)
+            this.state.user = JSON.parse(window.localStorage.getItem('user'));
+
     }
 
     componentDidMount() {
@@ -29,6 +36,7 @@ class CartPage extends Component {
         this.handleClickQuantity = this.handleClickQuantity.bind(this);
         this.handleClickRemove = this.handleClickRemove.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
+        this.handleClickCheckout = this.handleClickCheckout.bind(this);
     }
 
     getSubTotal() {
@@ -93,13 +101,59 @@ class CartPage extends Component {
                 </td>
                 <td className="column-3">$ <span className="product-price">{orderProduct.product.price}</span></td>
                 <td className="column-4">
-                    <Counter class={'flex-w m-l-auto m-r-0'} clickMinus={this.handleClickQuantity.bind(this, '-', index)} clickPlus={this.handleClickQuantity.bind(this, '+', index)} change={this.handleChangeQuantity.bind(this, index)} inputValue={orderProduct.quantity.toString()}/>
+                    {
+                        this.props.location.pathname == '/cart' ? <Counter class={'flex-w m-l-auto m-r-0'} clickMinus={this.handleClickQuantity.bind(this, '-', index)} clickPlus={this.handleClickQuantity.bind(this, '+', index)} change={this.handleChangeQuantity.bind(this, index)} inputValue={orderProduct.quantity.toString()}/> : orderProduct.quantity.toString()
+                    }
                 </td>
                 <td className="column-5">
                     $ <span className="total-product-price">{parseFloat(Math.round((orderProduct.product.price * orderProduct.quantity) * 100) / 100).toFixed(2)}</span>
                 </td>
             </tr>
         ));
+    }
+
+    insertUserInfos() {
+        return(
+            <div className="m-l-25 m-r--38 m-lr-0-xl wrap-table-shopping-cart addresses">
+                <div className="row">
+                    <div className="col-md-6 address">
+                        <h4>Delivery Address</h4>
+                        { this.state.user.address_delivery ?
+                            <div>
+                                <p>{this.state.user.address_delivery.last_name} {this.state.user.address_delivery.first_name}</p>
+                                <p>{this.state.user.address_delivery.street}</p>
+                                <p>{this.state.user.address_delivery.street_add}</p>
+                                <p>{this.state.user.address_delivery.city} / {this.state.user.address_delivery.zipcode}</p>
+                                <p>{this.state.user.address_delivery.state}</p>
+                                <p>{this.state.user.address_delivery.country}</p>
+                            </div> :
+                            <Link to='/profile/edit'>Add Delivery Address</Link>
+                        }
+                    </div>
+                    <div className="col-md-6 address">
+                        <h4>Billing Address</h4>
+                        { this.state.user.address_billing ?
+                            <div>
+                                <p>{this.state.user.address_billing.last_name} {this.state.user.address_billing.first_name}</p>
+                                <p>{this.state.user.address_billing.street}</p>
+                                <p>{this.state.user.address_billing.street_add}</p>
+                                <p>{this.state.user.address_billing.city} / {this.state.user.address_billing.zipcode}</p>
+                                <p>{this.state.user.address_billing.state}</p>
+                                <p>{this.state.user.address_billing.country}</p>
+                            </div> :
+                            <Link to='/profile/edit'>Add Billing Address</Link>
+                        }
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    handleClickCheckout() {
+        if(this.state.user)
+            this.props.history.push('/checkout');
+        else
+            this.props.history.push('/login');
     }
 
     render() {
@@ -131,6 +185,7 @@ class CartPage extends Component {
                                         </table>
                                     </div>
                                 </div>
+                                { this.props.location.pathname == '/checkout' &&  this.insertUserInfos() }
                             </div>
 
                             <div className="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
@@ -156,45 +211,13 @@ class CartPage extends Component {
                                     <div className="flex-w flex-t bor12 p-t-15 p-b-30">
                                         <div className="size-208 w-full-ssm">
                                             <span className="stext-110 cl2">
-                                                Shipping:
+                                                Shipping: 
                                             </span>
                                         </div>
-
-                                        <div className="size-209 p-r-18 p-r-0-sm w-full-ssm">
-                                            <p className="stext-111 cl6 p-t-2">
-                                                There are no shipping methods available. Please double check your address, or contact us if you need any help.
-                                            </p>
-                                            
-                                            <div className="p-t-15">
-                                                <span className="stext-112 cl8">
-                                                    Calculate Shipping
-                                                </span>
-
-                                                <div className="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                                    <select className="js-select2" name="time">
-                                                        <option>Select a country...</option>
-                                                        {/*% for key, country in countries %}
-                                                            <option value="{{key}}">{{country}}</option>
-                                                        {% endfor %*/}
-                                                    </select>
-                                                    <div className="dropDownSelect2"></div>
-                                                </div>
-
-                                                <div className="bor8 bg0 m-b-12">
-                                                    <input className="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="State /  country" />
-                                                </div>
-
-                                                <div className="bor8 bg0 m-b-22">
-                                                    <input className="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip" />
-                                                </div>
-                                                
-                                                <div className="flex-w">
-                                                    <div className="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                                        Update Totals
-                                                    </div>
-                                                </div>
-                                                    
-                                            </div>
+                                        <div className="size-209">
+                                            <span className="mtext-110 cl2">
+                                                $ { this.state.shipping }
+                                            </span>
                                         </div>
                                     </div>
 
@@ -207,14 +230,16 @@ class CartPage extends Component {
 
                                         <div className="size-209 p-t-1">
                                             <span className="mtext-110 cl2">
-                                                $ { parseFloat(Math.round((this.state.subTotal) * 100) / 100).toFixed(2) }
+                                                $ { parseFloat(Math.round((this.state.subTotal + this.state.shipping) * 100) / 100).toFixed(2) }
                                             </span>
                                         </div>
                                     </div>
-
-                                    <a className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04" href="#">
-                                        Proceed to Checkout
-                                    </a>
+                                    {
+                                        this.props.location.pathname == '/cart' && 
+                                        <div className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 checkout" onClick={this.handleClickCheckout.bind(this)}>
+                                            Proceed to Checkout
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -227,7 +252,15 @@ class CartPage extends Component {
 }
 
 CartPage.propTypes = {
-    editCart: PropTypes.func.isRequired
+    editCart: PropTypes.func.isRequired,
+    history:  PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+    const { user } = state.user;
+    return { user };
 };
 
 // CONFIGURE REACT REDUX
@@ -236,7 +269,7 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({ editCart }, dispatch)
 );
 
-const hoc = connect(null, mapDispatchToProps)(CartPage);
+const hoc = connect(mapStateToProps, mapDispatchToProps)(CartPage);
 
 // EXPORT COMPONENT
 

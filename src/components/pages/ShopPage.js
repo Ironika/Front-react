@@ -71,6 +71,12 @@ class ShopPage extends Component {
         if(this.props.filters.shape != 'all') {
             products = products.filter(product => this.haveData(product.shapes, this.props.filters.shape) == this.props.filters.shape);
         }
+        if(this.props.filters.category != 'all') {
+            products = products.filter(product => product.category.id == this.props.filters.category);
+        }
+        if(this.props.filters.type != 'all') {
+            products = products.filter(product => product.category.type.id == this.props.filters.type);
+        }
 
         if(this.props.filters.sort == 'priceLowToHigh')
             products.sort((a, b) => a.price > b.price);

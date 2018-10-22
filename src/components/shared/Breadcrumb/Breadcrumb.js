@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 const Breadcrumb = (props) => (
     <div className="container">
         <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+            <NavLink to='/' className='stext-109 cl8 hov-cl1 trans-04' exact={true} title='home'>
                 Home
                 <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </NavLink>
@@ -23,7 +23,7 @@ const haveSub = (haveSub, title, subTitle) => {
     if(haveSub)
         return (
             <Fragment>
-                <NavLink to={'/' + title.toLowerCase()} className='stext-109 cl8 hov-cl1 trans-04' exact={true}>
+                <NavLink to={'/' + title.toLowerCase()} className='stext-109 cl8 hov-cl1 trans-04' exact={true} title={title.toLowerCase()}>
                     {title}
                     <i className="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
                 </NavLink>

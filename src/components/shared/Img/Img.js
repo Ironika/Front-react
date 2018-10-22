@@ -9,12 +9,13 @@ import { DOMAIN_API } from '../../App';
 // COMPONENT
 
 const Img = (props) => (
-    <img src={ DOMAIN_API + 'uploads/media/default/0001/01/' + props.imgName } className={props.className} />
+    <img src={ DOMAIN_API + 'uploads/media/default/0001/01/' + props.imgName } className={props.className} alt={props.alt}/>
 );
 
 Img.propTypes = {
     imgName: PropTypes.string.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    alt: PropTypes.string
 };
 
 export { Img };

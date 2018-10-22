@@ -8,9 +8,9 @@ import PropTypes from 'prop-types';
 
 const Banner = (props) => (
     <section className={'txt-center p-lr-15 p-tb-92 ' + props.className}>
-        <h2 className="ltext-105 cl0 txt-center">
+        <h1 className="ltext-105 cl0 txt-center">
             {props.title}
-        </h2>
+        </h1>
     </section>
 );
 

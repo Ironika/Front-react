@@ -11,6 +11,7 @@ import { CartReducer } from '../reducers/CartReducer';
 import { SearchReducer } from '../reducers/SearchReducer';
 import { UserReducer } from '../reducers/UserReducer';
 import { OrderReducer } from '../reducers/OrderReducer';
+import { TypeReducer } from '../reducers/TypeReducer';
 
 // EXPORT APP REDUCER
 
@@ -21,5 +22,6 @@ export const AppReducer = combineReducers({
     cart: CartReducer,
     search: SearchReducer,
     user: UserReducer,
-    orders: OrderReducer
+    orders: OrderReducer,
+    types: TypeReducer
 });

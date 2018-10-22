@@ -19,11 +19,13 @@ class Filters extends Component {
                 size: 'all',
                 shape: 'all',
                 material: 'all',
-                collection: 'all'
+                collection: 'all',
+                type: 'all',
+                category: 'all'
             }
         };
 
-        if(Object.keys(this.props.filters).length > 0 && this.props.filters.collection != 'all') {
+        if(Object.keys(this.props.filters).length > 0 && this.props.filters.collection != 'all' ) {
             this.state.filters = this.props.filters;
         }
         

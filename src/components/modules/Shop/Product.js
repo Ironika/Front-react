@@ -44,6 +44,21 @@ class Product extends Component {
         if(token)
             this.props.getProduct(token, this.props.slug);
 
+        // if(this.props.product && this.props.product.sizes.length > 0) {
+        //     let size = this.state.size;
+        //     size.text = this.props.product.sizes[0].name;
+        //     size.value = this.props.product.sizes[0].id;
+        //     this.setState({size : size});
+        // }
+        // if(this.props.product.shapes[0]) {
+        //     this.state.shape.text = this.props.product.shapes[0].name;
+        //     this.state.shape.value = this.props.product.shapes[0].id;
+        // }
+        // if(this.props.product.materials[0]) {
+        //     this.state.material.text = this.props.product.materials[0].name;
+        //     this.state.material.value = this.props.product.materials[0].id;
+        // }
+
         this.handleClickQuantity = this.handleClickQuantity.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
         this.handleClickCart = this.handleClickCart.bind(this);
@@ -101,10 +116,31 @@ class Product extends Component {
 
         if(this.state.size.value != null)
             orderProduct.size = this.state.size;
+        else {
+            if(this.props.product.sizes.length > 0) {
+                orderProduct.size = {};
+                orderProduct.size.text = this.props.product.sizes[0].name;
+                orderProduct.size.value = this.props.product.sizes[0].id;
+            }
+        }
         if(this.state.shape.value != null)
             orderProduct.shape = this.state.shape;
+        else {
+            if(this.props.product.shapes.length > 0) {
+                orderProduct.shape = {};
+                orderProduct.shape.text = this.props.product.shapes[0].name;
+                orderProduct.shape.value = this.props.product.shapes[0].id;
+            }
+        }
         if(this.state.material.value != null)
             orderProduct.material = this.state.material;
+        else {
+            if(this.props.product.materials.length > 0) {
+                orderProduct.material = {};
+                orderProduct.material.text = this.props.product.materials[0].name;
+                orderProduct.material.value = this.props.product.materials[0].id;
+            }
+        }
 
         console.log(orderProduct);
         this.props.addToCart(orderProduct);

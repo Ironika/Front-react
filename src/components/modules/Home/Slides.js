@@ -35,13 +35,13 @@ class Slides extends Component {
                                     </div>
                                         
                                     <div className="layer-slick1 animated" data-appear="fadeInUp" data-delay="800">
-                                        <h2 className="ltext-201 cl2 p-t-19 p-b-43 respon1 home-slider-title">
+                                        <h1 className="ltext-201 cl2 p-t-19 p-b-43 respon1 home-slider-title">
                                             { slide.title }
-                                        </h2>
+                                        </h1>
                                     </div>
                                         
                                     <div className="layer-slick1 animated" data-appear="zoomIn" data-delay="1600">
-                                        <Link to={'/shop/' + slide.product.slug} className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                        <Link to={'/shop/' + slide.product.slug} title={slide.product.slug} className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                                             Shop Now
                                         </Link>
                                     </div>

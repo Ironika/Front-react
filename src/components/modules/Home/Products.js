@@ -28,15 +28,15 @@ class Products extends Component {
                             <div className="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>
                                 <div className="block2">
                                     <div className="block2-pic hov-img0">
-                                        <Img imgName={ product.medias[0].provider_reference } />
-                                        <Link to={'/shop/' + product.slug } className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                        <Img imgName={ product.medias[0].provider_reference } alt={product.slug}/>
+                                        <Link to={'/shop/' + product.slug } title={product.slug} className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                             View
                                         </Link>
                                     </div>
 
                                     <div className="block2-txt flex-w flex-t p-t-14">
                                         <div className="block2-txt-child1 flex-col-l ">
-                                            <Link to={'/shop/' + product.slug } className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                            <Link to={'/shop/' + product.slug } title={product.slug} className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                                 { product.name }
                                             </Link>
                                         </div>
@@ -52,7 +52,7 @@ class Products extends Component {
                     </div>
                 </div>
                 <div className="flex-c-m flex-w w-full p-t-45">
-                    <Link to={'/shop'} className="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" >
+                    <Link to={'/shop'} className="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" title='shop' >
                         See more
                     </Link>
                 </div>

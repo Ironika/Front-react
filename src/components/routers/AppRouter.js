@@ -35,6 +35,7 @@ export const AppRouter = () => (
                 <Route path='/contact' component={ContactPage} />
                 <Route path='/search' component={SearchPage} />
                 <Route path='/cart' component={CartPage} />
+                <Route path='/checkout' component={CartPage} />
                 <Route path='/login' component={AccountPage} />
                 <Route path='/register' component={AccountPage} />
                 <Route path='/profile/order/:orderid' component={OrderPage} />
