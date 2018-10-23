@@ -25,8 +25,10 @@ class Filters extends Component {
             }
         };
 
-        if(Object.keys(this.props.filters).length > 0 && this.props.filters.collection != 'all' ) {
-            this.state.filters = this.props.filters;
+        if(Object.keys(this.props.filters).length > 0 ) {
+            if(this.props.filters.collection != 'all' || this.props.filters.type != 'all' || this.props.filters.category != 'all') {
+                this.state.filters = this.props.filters;
+            }
         }
         
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
