@@ -39,4 +39,14 @@
 	.filter-col1, .filter-col2, .filter-col3, .filter-col4, .filter-col5 {
 		width: 20%;
 	}
+
+	.wrap-pic-w {
+		img {
+			max-height: 585px;
+    		object-fit: cover;
+		}	
+	}
+	.img-gall {
+		height: 83px;
+	}
 }

@@ -179,11 +179,11 @@ class Product extends Component {
                                         </p>
                                         
                                         <div className="p-t-33">
-                                            <Select datas={this.props.product.sizes} label="Sizes" value={this.state.size.value} change={this.handleChangeSizes.bind(this)}/>
+                                            {this.props.product.sizes.length > 0 && <Select datas={this.props.product.sizes} label="Sizes" value={this.state.size.value} change={this.handleChangeSizes.bind(this)}/>}
 
-                                            <Select datas={this.props.product.shapes} label="Shapes" value={this.state.shape.value} change={this.handleChangeShapes.bind(this)} />
+                                            {this.props.product.shapes.length > 0 && <Select datas={this.props.product.shapes} label="Shapes" value={this.state.shape.value} change={this.handleChangeShapes.bind(this)} />}
 
-                                            <Select datas={this.props.product.materials} label="Materials" value={this.state.material.value} change={this.handleChangeMaterials.bind(this)} />
+                                            {this.props.product.materials.length > 0 && <Select datas={this.props.product.materials} label="Materials" value={this.state.material.value} change={this.handleChangeMaterials.bind(this)} />}
 
                                             <div className="flex-w flex-r-m p-b-10">
                                                 <div className="size-204 flex-w flex-m respon6-next">

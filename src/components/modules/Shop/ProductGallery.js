@@ -29,7 +29,7 @@ class ProductGallery extends Component {
                                 {this.props.medias.map(media =>
                                     <div className="item-slick3" key={media.id}>
                                         <div className="wrap-pic-w pos-relative">
-                                            <Img className="" imgName={ media.provider_reference } />
+                                            <Img className="img-gall" imgName={ media.provider_reference } />
                                         </div>
                                     </div>
                                 )}
