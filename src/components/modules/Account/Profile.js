@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { DOMAIN_API } from '../../../components/App';
 import { Day, MonthFull, Year } from '../../shared/Date/Date';
+import { LoadingIndicator } from '../../shared/LoadingIndicator/LoadingIndicator';
 
 // COMPONENT
 
@@ -29,7 +30,7 @@ export const Profile = (props) => (
                         { insertAddressBilling(props.user) }
                     </div>
                     <br/>
-                    { insertOrders(props.user) }
+                    { insertOrders(props.orders, props.fetching) }
                 </div>
 
             </div>
@@ -47,38 +48,42 @@ function isAdmin(user) {
     return isAdmin;
 }
 
-function insertOrders(user) {
-    if(user.orders && user.orders.length > 0)
-        return(
-            <Fragment>
-                <h4>Orders</h4>
-                <br/>
-                <table className="table table-stripped">
-                    <thead>
-                        <tr>
-                            <th>Number</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {user.orders.map(order =>
-                            <tr key={order.uniq_id}>
-                                <td>{order.uniq_id}</td>
-                                <td className={order.state == 'DONE' ? 'order-done' : ''}>{order.state}</td>
-                                <td><Day date={order.created_at} />&nbsp;<MonthFull date={order.created_at} />&nbsp;<Year date={order.created_at} />&nbsp;</td>
-                                <td>{order.total} €</td>
-                                <td><Link to={'/profile/order/' + order.id} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Detail</Link></td>
+function insertOrders(orders, fetching) {
+    if(fetching)
+        return (<LoadingIndicator busy={fetching} />);
+    else {
+        if(orders && orders.length > 0)
+            return(
+                <Fragment>
+                    <h4>Orders</h4>
+                    <br/>
+                    <table className="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Number</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Action</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
-            </Fragment>
-        );
-    else
-        return(<p>No orders</p>);
+                        </thead>
+                        <tbody>
+                            {orders.map(order =>
+                                <tr key={order.uniq_id}>
+                                    <td>{order.uniq_id}</td>
+                                    <td className={order.state == 'DONE' ? 'order-done' : ''}>{order.state}</td>
+                                    <td><Day date={order.created_at} />&nbsp;<MonthFull date={order.created_at} />&nbsp;<Year date={order.created_at} />&nbsp;</td>
+                                    <td>{order.total} €</td>
+                                    <td><Link to={'/profile/order/' + order.id} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Detail</Link></td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </Fragment>
+            );
+        else
+            return(<p>No orders</p>);
+    }
 }
 
 function insertAddressBilling(user) {
@@ -113,5 +118,7 @@ function insertAddressDelivery(user) {
 
 Profile.propTypes = {
     logout:         PropTypes.func.isRequired,
-    user:           PropTypes.object.isRequired
+    user:           PropTypes.object.isRequired,
+    orders:         PropTypes.array.isRequired,
+    fetching:       PropTypes.bool.isRequired
 };

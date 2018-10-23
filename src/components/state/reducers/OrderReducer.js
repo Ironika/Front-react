@@ -1,6 +1,10 @@
 import {
     GET_ORDER,
-    PENDING_ORDER
+    PENDING_ORDER,
+    POST_ORDER,
+    RESET_REDIRECT,
+    GET_USER_ORDERS,
+    PENDING_USER_ORDERS
 } from '../actions/OrderActions';
 
 
@@ -8,7 +12,11 @@ import {
 
 const initialState = {
     order: {},
-    fetching_order: true
+    posted_order: {},
+    user_orders: [],
+    fetching_order: true,
+    redirect: false,
+    fetching_user_orders: true
 };
 
 
@@ -22,10 +30,32 @@ export const OrderReducer = (state = initialState, action) => {
                 order: action.payload,
                 fetching_order: false
             };
+        case POST_ORDER:
+            return {
+                ...state,
+                posted_order: action.payload,
+                redirect: true
+            };
+        case GET_USER_ORDERS:
+            return {
+                ...state,
+                user_orders: action.payload,
+                fetching_user_orders: false
+            };
         case PENDING_ORDER:
             return {
                 ...state,
                 fetching_order: true
+            };
+        case RESET_REDIRECT:
+            return {
+                ...state,
+                redirect: false
+            };
+        case PENDING_USER_ORDERS:
+            return {
+                ...state,
+                fetching_user_orders: true
             };
         default:
             return state;

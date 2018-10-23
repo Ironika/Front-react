@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { logout, edit } from '../../services/UserService';
+import { getUserOrders, resetRedirect } from '../../services/OrderService';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 import { Profile } from '../modules/Account/Profile';
@@ -76,6 +77,11 @@ class ProfilePage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
+
+        let token = window.localStorage.getItem('token');
+        this.props.getUserOrders(token, this.state.user.id);
+        this.props.resetRedirect();
+
         this.handleClickLogout = this.handleClickLogout.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClickSubmit = this.handleClickSubmit.bind(this);
@@ -246,7 +252,7 @@ class ProfilePage extends Component {
 
                     <Breadcrumb title={'Profile'} haveSub={haveSub} subTitle={subTitle}/> 
                     {this.props.location.pathname == '/profile' ?
-                        <Profile user={this.state.user} logout={this.handleClickLogout.bind(this)} /> :
+                        <Profile user={this.state.user} logout={this.handleClickLogout.bind(this)} orders={this.props.user_orders} fetching={this.props.fetching_user_orders}/> :
                         <Edit 
                             error={this.state.error}
                             emailValue={this.state.email}
@@ -295,10 +301,14 @@ class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-    logout:             PropTypes.func.isRequired,
-    location:           PropTypes.object.isRequired,
-    edit:               PropTypes.func.isRequired,
-    history:            PropTypes.object,
+    logout:                 PropTypes.func.isRequired,
+    location:               PropTypes.object.isRequired,
+    edit:                   PropTypes.func.isRequired,
+    history:                PropTypes.object.isRequired,
+    getUserOrders:          PropTypes.func.isRequired,
+    user_orders:            PropTypes.array.isRequired,
+    fetching_user_orders:   PropTypes.bool.isRequired,
+    resetRedirect:          PropTypes.func.isRequired,
     user:               PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.string
@@ -307,11 +317,12 @@ ProfilePage.propTypes = {
 
 const mapStateToProps = state => {
     const { user } = state.user;
-    return { user };
+    const { user_orders, fetching_user_orders } = state.orders;
+    return { user, user_orders, fetching_user_orders };
 };
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ logout, edit }, dispatch)
+    bindActionCreators({ logout, edit, getUserOrders, resetRedirect }, dispatch)
 );
 
 const hoc = connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

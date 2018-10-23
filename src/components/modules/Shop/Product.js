@@ -141,8 +141,7 @@ class Product extends Component {
                 orderProduct.material.value = this.props.product.materials[0].id;
             }
         }
-
-        console.log(orderProduct);
+        
         this.props.addToCart(orderProduct);
     }
 
