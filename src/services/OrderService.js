@@ -3,7 +3,6 @@ import {
     getOrderAction,
     pendingOrderAction,
     postOrderAction,
-    resetRedirectAction,
     getUserOrdersAction,
     pendingUserOrdersAction
 } from '../components/state/actions/OrderActions';
@@ -50,11 +49,5 @@ export function getUserOrders(token, id) {
         }).then(function(response) {
             dispatch(getUserOrdersAction(response.data));
         }.bind(this));
-    };
-}
-
-export function resetRedirect() {
-    return dispatch => {
-        dispatch(resetRedirectAction());
     };
 }

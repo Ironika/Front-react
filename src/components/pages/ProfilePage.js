@@ -6,12 +6,14 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { logout, edit } from '../../services/UserService';
-import { getUserOrders, resetRedirect } from '../../services/OrderService';
+import { getUserOrders } from '../../services/OrderService';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
 import { Profile } from '../modules/Account/Profile';
 import { Edit } from '../modules/Account/Edit';
-
+import Modal from 'react-modal';
+import imgClose from '../../images/icons/icon-close.png';
+import imgUser from '../../images/icons/icon-user.png';
 
 // COMPONENT
 
@@ -44,7 +46,8 @@ class ProfilePage extends Component {
                 state: '',
                 country: ''
             },
-            error: ''
+            error: '',
+            modalIsOpen: false
         };
         let user = JSON.parse(window.localStorage.getItem('user'));
         if(user && typeof user != 'string')
@@ -80,11 +83,17 @@ class ProfilePage extends Component {
 
         let token = window.localStorage.getItem('token');
         this.props.getUserOrders(token, this.state.user.id);
-        this.props.resetRedirect();
 
         this.handleClickLogout = this.handleClickLogout.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClickSubmit = this.handleClickSubmit.bind(this);
+
+        this.closeModal = this.closeModal.bind(this);
+        Modal.setAppElement('#Profile');
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
     }
 
     handleClickLogout() {
@@ -232,6 +241,7 @@ class ProfilePage extends Component {
         let token = window.localStorage.getItem('token');
         this.props.edit(token, user);
         this.setState({user: user});
+        this.setState({modalIsOpen: true});
         this.props.history.push('/profile');
     }
 
@@ -247,7 +257,7 @@ class ProfilePage extends Component {
         }
         else {
             return (
-                <main className="profile">
+                <main className="profile" id="Profile">
                     <Banner title={'Profile'} className={'bg-img1'}/>
 
                     <Breadcrumb title={'Profile'} haveSub={haveSub} subTitle={subTitle}/> 
@@ -294,6 +304,19 @@ class ProfilePage extends Component {
                             submit={this.handleClickSubmit.bind(this)}
                         />
                     }
+                    <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
+                        <div className="container">
+                            <div className="bg0 p-lr-15-lg how-pos3-parent">
+                                <button className="how-pos3 hov3 trans-04 btn-modal" onClick={this.closeModal}>
+                                    <img src={imgClose} alt="CLOSE" />
+                                </button>
+                                <div className="modal-product">
+                                    <img src={imgUser} alt="User" className="img-cart"/>
+                                    <p>Your info have been updated !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
                 </main>
             );
         }
@@ -308,7 +331,6 @@ ProfilePage.propTypes = {
     getUserOrders:          PropTypes.func.isRequired,
     user_orders:            PropTypes.array.isRequired,
     fetching_user_orders:   PropTypes.bool.isRequired,
-    resetRedirect:          PropTypes.func.isRequired,
     user:               PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.string
@@ -322,7 +344,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ logout, edit, getUserOrders, resetRedirect }, dispatch)
+    bindActionCreators({ logout, edit, getUserOrders }, dispatch)
 );
 
 const hoc = connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
