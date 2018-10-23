@@ -112,7 +112,7 @@ class ShopPage extends Component {
             subTitle = this.props.match.params.slug;
         }
         return (
-            <main className="shop">
+            <main className="shop" id="Shop">
                 <Banner title={'Shop'} className={'bg-img1'}/>
 
                 <Breadcrumb title={'Shop'} haveSub={haveSub} subTitle={subTitle}/>

@@ -11,9 +11,10 @@ import { ProductGallery } from './ProductGallery';
 import { RelatedProducts } from './RelatedProducts';
 import { Select } from '../../shared/Select/Select';
 import { Counter } from '../../shared/Counter/Counter';
-
 import { addToCart } from '../../../services/CartService';
-
+import Modal from 'react-modal';
+import imgClose from '../../../images/icons/icon-close.png';
+import imgCart from '../../../images/icons/icon-cart.png';
 
 // COMPONENT
 
@@ -34,7 +35,8 @@ class Product extends Component {
             material: {
                 text: null,
                 value: null
-            }
+            },
+            modalIsOpen: false
         };
     }
 
@@ -44,25 +46,17 @@ class Product extends Component {
         if(token)
             this.props.getProduct(token, this.props.slug);
 
-        // if(this.props.product && this.props.product.sizes.length > 0) {
-        //     let size = this.state.size;
-        //     size.text = this.props.product.sizes[0].name;
-        //     size.value = this.props.product.sizes[0].id;
-        //     this.setState({size : size});
-        // }
-        // if(this.props.product.shapes[0]) {
-        //     this.state.shape.text = this.props.product.shapes[0].name;
-        //     this.state.shape.value = this.props.product.shapes[0].id;
-        // }
-        // if(this.props.product.materials[0]) {
-        //     this.state.material.text = this.props.product.materials[0].name;
-        //     this.state.material.value = this.props.product.materials[0].id;
-        // }
-
         this.handleClickQuantity = this.handleClickQuantity.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
         this.handleClickCart = this.handleClickCart.bind(this);
         this.handleChangeSizes = this.handleChangeSizes.bind(this);
+
+        this.closeModal = this.closeModal.bind(this);
+        Modal.setAppElement('#Shop');
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
     }
 
     handleClickQuantity(operator) {
@@ -143,12 +137,26 @@ class Product extends Component {
         }
         
         this.props.addToCart(orderProduct);
+        this.setState({modalIsOpen: true});
     }
 
     render() {
         if(!this.props.fetching_product)
             return (
                 <Fragment>
+                    <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
+                        <div className="container">
+                            <div className="bg0 p-lr-15-lg how-pos3-parent">
+                                <button className="how-pos3 hov3 trans-04 btn-modal" onClick={this.closeModal}>
+                                    <img src={imgClose} alt="CLOSE" />
+                                </button>
+                                <div className="modal-product">
+                                    <img src={imgCart} alt="Cart" className="img-cart"/>
+                                    <p>You have add <span className="product-name">{ '"' + this.props.product.name + '"' }</span> to your cart !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
                     <section className="sec-product-detail bg0 p-t-65 p-b-60">
                         <div className="container">
                             <div className="row">
