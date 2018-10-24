@@ -81,8 +81,10 @@ class ProfilePage extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
 
-        let token = window.localStorage.getItem('token');
-        this.props.getUserOrders(token, this.state.user.id);
+        if(this.state.user.id) {
+            let token = window.localStorage.getItem('token');
+            this.props.getUserOrders(token, this.state.user.id);
+        }
 
         this.handleClickLogout = this.handleClickLogout.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -252,7 +254,7 @@ class ProfilePage extends Component {
             subTitle = 'Edit';
         }
         if(this.state.user == null || typeof this.state.user == 'string' || Object.keys(this.state.user).length == 0) {
-            return (<Redirect to='/login' />);
+            return (<main className="profile" id="Profile"><Redirect to='/login'/></main>);
         }
         else {
             return (
