@@ -12,6 +12,7 @@ import { SearchReducer } from '../reducers/SearchReducer';
 import { UserReducer } from '../reducers/UserReducer';
 import { OrderReducer } from '../reducers/OrderReducer';
 import { TypeReducer } from '../reducers/TypeReducer';
+import { NewsletterReducer } from '../reducers/NewsletterReducer';
 
 // EXPORT APP REDUCER
 
@@ -23,5 +24,6 @@ export const AppReducer = combineReducers({
     search: SearchReducer,
     user: UserReducer,
     orders: OrderReducer,
-    types: TypeReducer
+    types: TypeReducer,
+    newsletter: NewsletterReducer
 });
