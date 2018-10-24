@@ -33,11 +33,15 @@
 	}
 	.wrap-filter {
 		.select2-container {
-			min-width: 100px;
+			width: 100% !important;
 		}
 	}
-	.filter-col1, .filter-col2, .filter-col3, .filter-col4, .filter-col5 {
-		width: 20%;
+	.filter-col1 {
+		width: 15%;
+	}
+
+	.filter-col2, .filter-col3, .filter-col4, .filter-col5 {
+		width: 28.33%;
 	}
 
 	.wrap-pic-w {

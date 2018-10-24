@@ -13,13 +13,13 @@ export const Edit = (props) => (
                 <div className="flex-w flex-tr">
                     <div className="size-420 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full">
                         <h3 className="mtext-105 cl2 txt-center p-b-30">Update infos</h3>
-                        {props.error != '' && <p>{props.error}</p>}
+                        {props.error != '' && <p className='login-error'>{props.error}</p>}
                         <div className="bor8 m-b-20 how-pos4-parent">
                             <input type="text" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" placeholder="Email" value={props.emailValue} onChange={props.emailChange}/>
                         </div>
-                        <div>
-                            <label style={{'display': 'inline-block'}}>Subscribe to the newsletter</label>
-                            <input type="checkbox" style={{'display': 'inline-block', 'marginLeft': '10px'}} value={props.newsletterValue} defaultChecked={props.newsletterValue} onChange={props.newsletterChange}/>
+                        <div className="newsletter">
+                            <label>Subscribe to the newsletter</label>
+                            <input type="checkbox" value={props.newsletterValue} defaultChecked={props.newsletterValue} onChange={props.newsletterChange}/>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export const Edit = (props) => (
                         </div>
 
                         <div className="bor8 m-b-20 how-pos4-parent">
-                            <input type="text" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" placeholder="State" value={props.adStateValue} onChange={props.adStateValue}/>
+                            <input type="text" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" placeholder="State" value={props.adStateValue} onChange={props.adStateChange}/>
                         </div>
 
                         <div className="bor8 m-b-20 how-pos4-parent">
@@ -94,7 +94,7 @@ export const Edit = (props) => (
                             <input type="text" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" placeholder="Country *" value={props.abCountryValue} onChange={props.abCountryChange}/>
                         </div>
                     </div>
-                    <div style={{'width': '50%', 'margin': 'auto', 'marginTop': '20px'}}>
+                    <div className="submit-edit">
                         <input type="submit" value="Submit" className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" onClick={props.submit} />
                     </div>
                 </div>
@@ -106,7 +106,7 @@ export const Edit = (props) => (
 Edit.propTypes = {
     emailValue:         PropTypes.string.isRequired,
     emailChange:        PropTypes.func.isRequired,
-    newsletterValue:    PropTypes.string.isRequired,
+    newsletterValue:    PropTypes.bool.isRequired,
     newsletterChange:   PropTypes.func.isRequired,
     adFirstnameValue:   PropTypes.string.isRequired,
     adFirstnameChange:  PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 export const Login = (props) => (
     <div className="login-container size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
         <h2 className="mtext-105 cl2 txt-center p-b-30">Login to Your Account</h2><br/>
-        {props.user && typeof props.user == 'string' ? <p className='login-error'>{props.user}</p> : ''}
+        {props.user && typeof props.user == 'string' && <p className='login-error'>{props.user}</p>}
         {props.error != '' ? <p className='login-error'>{props.error}</p> : ''}
         <div className="form-signin">
             <div className="bor8 m-b-20 how-pos4-parent">

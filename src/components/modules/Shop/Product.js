@@ -36,6 +36,10 @@ class Product extends Component {
                 text: null,
                 value: null
             },
+            color: {
+                text: null,
+                value: null
+            },
             modalIsOpen: false
         };
     }
@@ -50,6 +54,9 @@ class Product extends Component {
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
         this.handleClickCart = this.handleClickCart.bind(this);
         this.handleChangeSizes = this.handleChangeSizes.bind(this);
+        this.handleChangeMaterials = this.handleChangeMaterials.bind(this);
+        this.handleChangeShapes = this.handleChangeShapes.bind(this);
+        this.handleChangeColors = this.handleChangeColors.bind(this);
 
         this.closeModal = this.closeModal.bind(this);
         Modal.setAppElement('#Shop');
@@ -94,6 +101,14 @@ class Product extends Component {
             value: event.target.value
         };
         this.setState({material: material});
+    }
+
+    handleChangeColors(event) {
+        let color = {
+            text: event.target.textContent,
+            value: event.target.value
+        };
+        this.setState({color: color});
     }
 
     handleClickCart() {
@@ -184,6 +199,8 @@ class Product extends Component {
                                             {this.props.product.shapes.length > 0 && <Select datas={this.props.product.shapes} label="Shapes" value={this.state.shape.value} change={this.handleChangeShapes.bind(this)} />}
 
                                             {this.props.product.materials.length > 0 && <Select datas={this.props.product.materials} label="Materials" value={this.state.material.value} change={this.handleChangeMaterials.bind(this)} />}
+
+                                            {this.props.product.colors.length > 0 && <Select datas={this.props.product.colors} label="Colors" value={this.state.color.value} change={this.handleChangeColors.bind(this)} />}
 
                                             <div className="flex-w flex-r-m p-b-10">
                                                 <div className="size-204 flex-w flex-m respon6-next">

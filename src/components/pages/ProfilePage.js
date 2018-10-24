@@ -94,6 +94,7 @@ class ProfilePage extends Component {
 
     closeModal() {
         this.setState({modalIsOpen: false});
+        this.props.history.push('/profile');
     }
 
     handleClickLogout() {
@@ -211,7 +212,7 @@ class ProfilePage extends Component {
             if(this.isFill(this.state.address_delivery))
                 user.address_delivery = this.state.address_delivery;
             else 
-                this.setState({error: 'You must fill your address delivery'});
+                return this.setState({error: 'You must fill your address delivery'});
         }
 
         if(user.address_billing) {
@@ -235,14 +236,12 @@ class ProfilePage extends Component {
             if(this.isFill(this.state.address_billing))
                 user.address_billing = this.state.address_billing;
             else 
-                this.setState({error: 'You must fill your address billing'});
+                return this.setState({error: 'You must fill your address billing'});
         }
 
         let token = window.localStorage.getItem('token');
         this.props.edit(token, user);
-        this.setState({user: user});
-        this.setState({modalIsOpen: true});
-        this.props.history.push('/profile');
+        this.setState({user: user, modalIsOpen: true});
     }
 
     render() {

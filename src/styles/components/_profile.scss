@@ -13,4 +13,22 @@
 	.order-done {
 		color: green;
 	}
+	.login-error {
+		text-align:center;
+		color: red;
+	}
+	.newsletter {
+		label {
+			display: inline-block;
+		}
+		input {
+			display: inline-block;
+			margin-left: 10px;
+		}
+	}
+	.submit-edit {
+		width: 50%;
+		margin: auto;
+		margin-top: 20px;
+	}
 }

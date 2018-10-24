@@ -7,6 +7,7 @@ export const GET_MATERIALS = 'GET_MATERIALS';
 export const GET_SIZES = 'GET_SIZES';
 export const GET_SHAPES = 'GET_SHAPES';
 export const GET_COLLECTIONS = 'GET_COLLECTIONS';
+export const GET_COLORS = 'GET_COLORS';
 
 // ACTION GENERATORS
 
@@ -50,5 +51,10 @@ export const getShapesAction = (response) => ({
 
 export const getCollectionsAction = (response) => ({
     type: GET_COLLECTIONS,
+    payload: response
+});
+
+export const getColorsAction = (response) => ({
+    type: GET_COLORS,
     payload: response
 });

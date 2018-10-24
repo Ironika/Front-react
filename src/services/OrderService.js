@@ -44,7 +44,7 @@ export function getUserOrders(token, id) {
         dispatch(pendingUserOrdersAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/user/' + id + '/order',
+            url: DOMAIN_API + 'api/user/' + id + '/orders',
             headers: {'Authorization': 'Bearer ' + token},
         }).then(function(response) {
             dispatch(getUserOrdersAction(response.data));

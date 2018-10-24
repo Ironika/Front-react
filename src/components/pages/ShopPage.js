@@ -71,6 +71,9 @@ class ShopPage extends Component {
         if(this.props.filters.shape != 'all') {
             products = products.filter(product => this.haveData(product.shapes, this.props.filters.shape) == this.props.filters.shape);
         }
+        if(this.props.filters.color != 'all') {
+            products = products.filter(product => this.haveData(product.colors, this.props.filters.color) == this.props.filters.color);
+        }
         if(this.props.filters.category != 'all') {
             products = products.filter(product => product.category.id == this.props.filters.category);
         }

@@ -19,6 +19,7 @@ class Filters extends Component {
                 size: 'all',
                 shape: 'all',
                 material: 'all',
+                color: 'all',
                 collection: 'all',
                 type: 'all',
                 category: 'all'
@@ -51,6 +52,8 @@ class Filters extends Component {
             filters.size = event.target.value;
         else if(filter == 'shape')
             filters.shape = event.target.value;
+        else if(filter == 'color')
+            filters.color = event.target.value;
         else if(filter == 'collection' && event.target.value != '')
             filters.collection = event.target.value;
         else
@@ -122,28 +125,29 @@ class Filters extends Component {
                         </div>
 
                         <div className="filter-col2 p-r-15 p-b-27">
-                            <div className="mtext-102 cl2 p-b-15">
+                            <div className="mtext-102 cl2">
                                 Materials
                             </div>
                             { this.insertFilters(this.props.materials, this.state.filters.material, this.handleChangeSelect.bind(this, 'material')) }
-                        </div>
-
-                        <div className="filter-col3 p-r-15 p-b-27">
-                            <div className="mtext-102 cl2 p-b-15">
+                            <div className="mtext-102 cl2 p-t-15">
                                 Sizes
                             </div>
                             { this.insertFilters(this.props.sizes, this.state.filters.size, this.handleChangeSelect.bind(this, 'size')) }
                         </div>
 
-                        <div className="filter-col4 p-r-15 p-b-27">
-                            <div className="mtext-102 cl2 p-b-15">
+                        <div className="filter-col3 p-r-15 p-b-27">
+                            <div className="mtext-102 cl2">
                                 Shapes
                             </div>
                             { this.insertFilters(this.props.shapes, this.state.filters.shape, this.handleChangeSelect.bind(this, 'shape')) }
+                            <div className="mtext-102 cl2 p-t-15">
+                                Colors
+                            </div>
+                            { this.insertFilters(this.props.colors, this.state.filters.color, this.handleChangeSelect.bind(this, 'color')) }
                         </div>
 
-                        <div className="filter-col5 p-b-27">
-                            <div className="mtext-102 cl2 p-b-15">
+                        <div className="filter-col4 p-r-15 p-b-27">
+                            <div className="mtext-102 cl2">
                                 Collections
                             </div>
                             { this.insertFilters(this.props.collections, this.state.filters.collection, this.handleChangeSelect.bind(this, 'collection')) }
@@ -156,20 +160,21 @@ class Filters extends Component {
 }
 
 Filters.propTypes = {
-    setFilters: PropTypes.func,
-    getFilters: PropTypes.func,
-    materials: PropTypes.array,
-    sizes: PropTypes.array,
-    shapes: PropTypes.array,
-    collections: PropTypes.array,
-    filters: PropTypes.object
+    setFilters: PropTypes.func.isRequired,
+    getFilters: PropTypes.func.isRequired,
+    materials: PropTypes.array.isRequired,
+    sizes: PropTypes.array.isRequired,
+    shapes: PropTypes.array.isRequired,
+    colors: PropTypes.array.isRequired,
+    collections: PropTypes.array.isRequired,
+    filters: PropTypes.object.isRequired
 };
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { materials, sizes, shapes, collections, filters } = state.products;
-    return { materials, sizes, shapes, collections, filters };
+    const { materials, sizes, shapes, colors, collections, filters } = state.products;
+    return { materials, sizes, shapes, colors, collections, filters };
 };
 
 

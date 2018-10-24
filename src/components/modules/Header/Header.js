@@ -71,6 +71,7 @@ class Header extends Component {
             return(
                 <Fragment>
                     {this.props.types.length > 0 && this.props.types.map(type => 
+                        type.categories.length > 0 &&
                         <div className="column" key={type.id}>
                             <p onClick={this.handleClick.bind(this, type.id, 'type')}>{type.name}</p>
                             {type.categories.map(category =>
