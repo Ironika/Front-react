@@ -13,7 +13,7 @@ function insertProducts(products) {
             <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" key={product.id}>
                 <div className="block2">
                     <div className="block2-pic hov-img0">
-                        { product.state && <span>{product.state.name}</span>}
+                        { product.state && <span className="product-state">{product.state.name}</span>}
                         <Img className="" imgName={ product.medias[0].provider_reference } />
                         <Link to={'/shop/' + product.slug } className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15">View</Link>
                     </div>

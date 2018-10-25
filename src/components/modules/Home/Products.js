@@ -28,7 +28,7 @@ class Products extends Component {
                             <div className="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>
                                 <div className="block2">
                                     <div className="block2-pic hov-img0">
-                                        { product.state && <span>{product.state.name}</span>}
+                                        { product.state && <span className="product-state">{product.state.name}</span>}
                                         <Img imgName={ product.medias[0].provider_reference } alt={product.slug}/>
                                         <Link to={'/shop/' + product.slug } title={product.slug} className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                             View
