@@ -1,19 +1,31 @@
-.bg-img1 {
-	background-image: url('../images/bg-01.jpg');
-}
-.list-blog-img {
-	height: 500px;
-    object-fit: cover;
-}
+.blog {
+	.bg-img1 {
+		background-image: url('../images/bg-01.jpg');
+	}
+	.list-blog-img {
+		height: 500px;
+	    object-fit: cover;
+	}
 
-.img-last-products {
-	width: 100px;
-}
+	.img-last-products {
+		width: 100px;
+	}
 
-.tags {
-	min-height: 175px;
-}
+	.tags {
+		min-height: 175px;
+	}
 
-.blogs {
-	min-height: 500px;
+	.blogs {
+		min-height: 500px;
+	}
+
+	.product-state {
+	  	background-color: black;
+	  	color: white;
+	  	padding: 10px;
+	  	position: absolute;
+	  	right: -10px;
+	  	top: 0;
+	  	z-index: 2;
+	}
 }

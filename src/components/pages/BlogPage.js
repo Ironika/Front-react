@@ -74,7 +74,7 @@ class BlogPage extends Component {
             subTitle = this.props.match.params.slug;
         }
         return (
-            <main>
+            <main className="blog">
                 <Banner title={'Blog'} className={'bg-img2'}/>
                 
                 <Breadcrumb title={'Blog'} haveSub={haveSub} subTitle={subTitle}/>

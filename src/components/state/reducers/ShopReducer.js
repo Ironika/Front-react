@@ -8,7 +8,8 @@ import {
     GET_SIZES,
     GET_SHAPES,
     GET_COLLECTIONS,
-    GET_COLORS
+    GET_COLORS,
+    GET_STATES
 } from '../actions/ShopActions';
 
 
@@ -24,7 +25,8 @@ const initialState = {
     sizes: [],
     shapes: [],
     collections: [],
-    colors: []
+    colors: [],
+    states: []
 };
 
 
@@ -83,6 +85,11 @@ export const ShopReducer = (state = initialState, action) => {
             return {
                 ...state,
                 colors: action.payload,
+            };
+        case GET_STATES:
+            return {
+                ...state,
+                states: action.payload,
             };
         default:
             return state;

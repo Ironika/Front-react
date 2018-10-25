@@ -8,6 +8,7 @@ export const GET_SIZES = 'GET_SIZES';
 export const GET_SHAPES = 'GET_SHAPES';
 export const GET_COLLECTIONS = 'GET_COLLECTIONS';
 export const GET_COLORS = 'GET_COLORS';
+export const GET_STATES = 'GET_STATES';
 
 // ACTION GENERATORS
 
@@ -56,5 +57,10 @@ export const getCollectionsAction = (response) => ({
 
 export const getColorsAction = (response) => ({
     type: GET_COLORS,
+    payload: response
+});
+
+export const getStatesAction = (response) => ({
+    type: GET_STATES,
     payload: response
 });

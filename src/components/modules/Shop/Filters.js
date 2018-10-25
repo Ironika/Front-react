@@ -20,6 +20,7 @@ class Filters extends Component {
                 shape: 'all',
                 material: 'all',
                 color: 'all',
+                state: 'all',
                 collection: 'all',
                 type: 'all',
                 category: 'all'
@@ -56,6 +57,8 @@ class Filters extends Component {
             filters.color = event.target.value;
         else if(filter == 'collection' && event.target.value != '')
             filters.collection = event.target.value;
+        else if(filter == 'state' && event.target.value != '')
+            filters.state = event.target.value;
         else
             return;
 
@@ -151,6 +154,10 @@ class Filters extends Component {
                                 Collections
                             </div>
                             { this.insertFilters(this.props.collections, this.state.filters.collection, this.handleChangeSelect.bind(this, 'collection')) }
+                            <div className="mtext-102 cl2 p-t-15">
+                                State
+                            </div>
+                            { this.insertFilters(this.props.states, this.state.filters.state, this.handleChangeSelect.bind(this, 'state')) }
                         </div>
                     </div>
                 </div>
@@ -166,6 +173,7 @@ Filters.propTypes = {
     sizes: PropTypes.array.isRequired,
     shapes: PropTypes.array.isRequired,
     colors: PropTypes.array.isRequired,
+    states: PropTypes.array.isRequired,
     collections: PropTypes.array.isRequired,
     filters: PropTypes.object.isRequired
 };
@@ -173,8 +181,8 @@ Filters.propTypes = {
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { materials, sizes, shapes, colors, collections, filters } = state.products;
-    return { materials, sizes, shapes, colors, collections, filters };
+    const { materials, sizes, shapes, colors, states, collections, filters } = state.products;
+    return { materials, sizes, shapes, colors, states, collections, filters };
 };
 
 

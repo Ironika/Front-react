@@ -9,7 +9,8 @@ import {
     getSizesAction,
     getShapesAction,
     getCollectionsAction,
-    getColorsAction  
+    getColorsAction,
+    getStatesAction  
 } from '../components/state/actions/ShopActions';
 
 import axios from 'axios';
@@ -84,6 +85,13 @@ export function getFilters(token) {
             headers: {'Authorization': 'Bearer ' + token},
         }).then(function(response) {
             dispatch(getColorsAction(response.data));
+        }.bind(this));
+        axios({
+            method: 'get',
+            url: DOMAIN_API + 'api/states',
+            headers: {'Authorization': 'Bearer ' + token},
+        }).then(function(response) {
+            dispatch(getStatesAction(response.data));
         }.bind(this));
     };
 }

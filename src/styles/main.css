@@ -3064,6 +3064,15 @@ input.num-product::-webkit-inner-spin-button {
   overflow: hidden;
 }
 
+.hov-img0 span {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
 .hov-img0 img{
   width: 100%;
   -webkit-transition: transform 0.9s ease;

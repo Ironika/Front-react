@@ -14,6 +14,7 @@ function insertProducts(products) {
             <li key={product.id} className="flex-w flex-t p-b-30">
                 <Link to={'/shop/' + product.slug } className="wrao-pic-w size-214 hov-ovelay1 m-r-20">
                     <Img className="img-last-products" imgName={ product.medias[0].provider_reference } />
+                    { product.state && <span className="product-state">{product.state.name}</span>}
                 </Link>
 
                 <div className="size-215 flex-col-t p-t-8">
