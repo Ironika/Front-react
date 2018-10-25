@@ -13,6 +13,7 @@ import { UserReducer } from '../reducers/UserReducer';
 import { OrderReducer } from '../reducers/OrderReducer';
 import { TypeReducer } from '../reducers/TypeReducer';
 import { NewsletterReducer } from '../reducers/NewsletterReducer';
+import { ContactReducer } from '../reducers/ContactReducer';
 
 // EXPORT APP REDUCER
 
@@ -25,5 +26,6 @@ export const AppReducer = combineReducers({
     user: UserReducer,
     orders: OrderReducer,
     types: TypeReducer,
-    newsletter: NewsletterReducer
+    newsletter: NewsletterReducer,
+    contact: ContactReducer
 });
