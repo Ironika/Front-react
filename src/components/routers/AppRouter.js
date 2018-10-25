@@ -1,7 +1,7 @@
 // IMPORT PACKAGE REFERENCES
 
 import React, { Fragment } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // IMPORT PROJECT REFERENCES
 
@@ -17,6 +17,7 @@ import { SearchPage } from '../pages/SearchPage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { AccountPage } from '../pages/AccountPage';
 import { OrderPage } from '../pages/OrderPage';
+import { NotFoundPage } from '../pages/404Page';
 
 // COMPONENT
 
@@ -41,7 +42,7 @@ export const AppRouter = () => (
                 <Route path='/profile/order/:orderid' component={OrderPage} />
                 <Route path='/profile/edit' component={ProfilePage} />
                 <Route path='/profile' component={ProfilePage} />
-                <Redirect to="/" />
+                <Route component={NotFoundPage} />
             </Switch>
             <Footer />
         </Fragment>
