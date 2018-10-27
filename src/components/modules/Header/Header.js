@@ -51,13 +51,15 @@ class Header extends Component {
             sort: 'newness',
             size: 'all',
             shape: 'all',
+            state: 'all',
+            color: 'all',
             material: 'all',
             collection: 'all',
             type: 'all',
             category: 'all'
         };
 
-        if( link == 'category')
+        if(link == 'category')
             filters.category = id.toString();
         else
             filters.type = id.toString();

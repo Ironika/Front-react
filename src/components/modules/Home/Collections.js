@@ -27,6 +27,10 @@ class Collections extends Component {
             sort: 'newness',
             size: 'all',
             shape: 'all',
+            state: 'all',
+            color: 'all',
+            type: 'all',
+            category: 'all',
             material: 'all',
             collection: id.toString()
         };
