@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 import { Filters } from '../modules/Shop/Filters';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
-
+import LazyLoad from 'react-lazyload';
 
 // COMPONENT
 
@@ -24,11 +24,8 @@ class ShopPage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        let token = window.localStorage.getItem('token');
-        if(token) {
-            if(this.props.products.length < 1)
-                this.props.getProducts(token);
-        }
+        if(this.props.products.length < 1)
+            this.props.getProducts();
     }
 
     breadCrumb() {
@@ -123,11 +120,13 @@ class ShopPage extends Component {
 
                 <Breadcrumb title={'Shop'} haveSub={haveSub} subTitle={subTitle}/>
 
-                <div className="bg0 m-t-23 p-b-140">
-                    <div className="container">
-                        {this.productsOrLoading()}
+                <LazyLoad height={600} once>
+                    <div className="bg0 m-t-23 p-b-140">
+                        <div className="container">
+                            {this.productsOrLoading()}
+                        </div>
                     </div>
-                </div>
+                </LazyLoad>
 
             </main>
         );

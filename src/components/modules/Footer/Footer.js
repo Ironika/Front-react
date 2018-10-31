@@ -34,8 +34,7 @@ class Footer extends Component {
     }
 
     handleClickNewsletter() {
-        let token = window.localStorage.getItem('token');
-        this.props.subscribeNewsletter(token, this.state.email);
+        this.props.subscribeNewsletter(this.state.email);
     }
 
     handleChange(event) {

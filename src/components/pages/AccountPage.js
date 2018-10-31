@@ -24,7 +24,6 @@ class AccountPage extends Component {
             email: '',
             password: '',
             plainPassword: '',
-            token: window.localStorage.getItem('token'),
             error: ''
         };
     }
@@ -50,8 +49,7 @@ class AccountPage extends Component {
         window.scrollTo(0, 0);
         if(this.state.username != '' && this.state.password != '') {
             this.setState({error: ''});
-            let token = window.localStorage.getItem('token');
-            this.props.login(token, this.state.username, this.state.password);
+            this.props.login(this.state.username, this.state.password);
         } else {
             this.setState({error: 'You must fill all fields'});
         }
@@ -61,8 +59,7 @@ class AccountPage extends Component {
         window.scrollTo(0, 0);
         if(this.state.username != '' && this.state.password != '' && this.state.email != '' && this.state.plainPassword != '') {
             this.setState({error: ''});
-            let token = window.localStorage.getItem('token');
-            this.props.register(token, this.state.email, this.state.username, this.state.password, this.state.plainPassword);
+            this.props.register(this.state.email, this.state.username, this.state.password, this.state.plainPassword);
         } else {
             this.setState({error: 'You must fill all fields'});
         }

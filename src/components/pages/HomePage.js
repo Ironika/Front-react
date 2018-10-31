@@ -10,6 +10,7 @@ import { Blogs } from '../modules/Home/Blogs';
 import { Products } from '../modules/Home/Products';
 import { Collections } from '../modules/Home/Collections';
 import { Slides } from '../modules/Home/Slides';
+import LazyLoad from 'react-lazyload';
 
 // COMPONENT
 
@@ -21,17 +22,14 @@ class HomePage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        let token = window.localStorage.getItem('token');
-        if(token) {
-            if(this.props.blogs.length < 1)
-                this.props.getHomeBlogs(token);
-            if(this.props.products.length < 1)
-                this.props.getHomeProducts(token);
-            if(this.props.collections.length < 1)
-                this.props.getHomeCollections(token);
-            if(this.props.slides.length < 1)
-                this.props.getHomeSlides(token);
-        }
+        if(this.props.blogs.length < 1)
+            this.props.getHomeBlogs();
+        if(this.props.products.length < 1)
+            this.props.getHomeProducts();
+        if(this.props.collections.length < 1)
+            this.props.getHomeCollections();
+        if(this.props.slides.length < 1)
+            this.props.getHomeSlides();
     }
 
     slidesOrLoading() {
@@ -73,21 +71,26 @@ class HomePage extends Component {
     render() {
         return (
             <main className="home">
-                <section className="section-slide">
-                    { this.slidesOrLoading() }
-                </section>
-
-                <section className="section-collection">
-                    { this.collectionsOrLoading() }
-                </section>
-
-                <section className="sec-product bg0 p-t-30 p-b-50">
-                    { this.productsOrLoading() }
-                </section>
-
-                <section className="sec-blog bg0 p-t-60 p-b-90">
-                    { this.blogsOrLoading() }
-                </section>
+                <LazyLoad height={600} once>
+                    <section className="section-slide">
+                        { this.slidesOrLoading() }
+                    </section>
+                </LazyLoad>
+                <LazyLoad height={600} once>
+                    <section className="section-collection">
+                        { this.collectionsOrLoading() }
+                    </section>
+                </LazyLoad>
+                <LazyLoad height={600} once>
+                    <section className="sec-product bg0 p-t-30 p-b-50">
+                        { this.productsOrLoading() }
+                    </section>
+                </LazyLoad>
+                <LazyLoad height={600} once>
+                    <section className="sec-blog bg0 p-t-60 p-b-90">
+                        { this.blogsOrLoading() }
+                    </section>
+                </LazyLoad>
             </main>
         );
     }

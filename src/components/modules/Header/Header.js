@@ -22,25 +22,30 @@ class Header extends Component {
         this.state = {
             open: false,
             search: '',
-            token: window.localStorage.getItem('token')
+            openBurger: false
         };
     }
 
     componentDidMount() {
-        this.props.getTypes(this.state.token);
+        this.props.getTypes();
         this.handleClick = this.handleClick.bind(this);
         this.handleClickSearch = this.handleClickSearch.bind(this);
         this.handleChangeSearch = this.handleChangeSearch.bind(this);
+        this.handleClickBurger = this.handleClickBurger.bind(this);
     }
 
     handleClickSearch() {
         this.setState({open: !this.state.open});
     }
 
+    handleClickBurger() {
+        this.setState({openBurger: !this.state.openBurger});
+    }
+
     handleChangeSearch(event) {
         this.props.setSearch(event.target.value);
         this.setState({search: event.target.value});
-        this.props.getSearch(this.state.token, event.target.value);
+        this.props.getSearch(event.target.value);
         if(this.props.location.pathname != '/search') {
             this.props.history.push('/search');
         }
@@ -145,6 +150,68 @@ class Header extends Component {
                             </div>
                         </nav>
                     </div>  
+                </div>
+                <div className="wrap-header-mobile">      
+                    <div className="logo-mobile">
+                        <NavLink to='/' title="Home">
+                            <img src={logo} width="250" alt="Ineluctable" />
+                        </NavLink>
+                    </div>
+
+                    <div className="wrap-icon-header flex-w flex-r-m h-full">
+                        <div className="flex-c-m h-full p-r-10">
+                            { this.state.open ? <input type="text" className="search" value={this.state.search} onChange={this.handleChangeSearch.bind(this)}/> : ''}
+                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={this.handleClickSearch.bind(this)}>
+                                <i className={'zmdi zmdi-search ' + ((this.props.location.pathname == '/search') ? 'active-menu' : '')}></i>
+                            </div>
+                        </div>
+
+                        <div className="flex-c-m h-full p-lr-10 bor5">
+                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={JSON.parse(window.localStorage.getItem('cart')) ? JSON.parse(window.localStorage.getItem('cart')).length : this.props.cart.length}>
+                                <NavLink to='/cart' activeClassName='active-menu' title="Cart">
+                                    <i className="zmdi zmdi-shopping-cart icon-cart"></i>
+                                </NavLink>
+                            </div>
+                        </div>
+
+                        <div className="flex-c-m h-full p-lr-10 bor5">
+                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
+                                <NavLink to='/profile' activeClassName='active-menu' title="Profile">
+                                    <i className="zmdi zmdi-account icon-account"></i>
+                                </NavLink>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="btn-show-menu-mobile hamburger hamburger--squeeze" onClick={this.handleClickBurger.bind(this)}>
+                        <span className="hamburger-box">
+                            <span className="hamburger-inner"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className={this.state.openBurger ? 'menu-mobile menu-mobile-show' : 'menu-mobile'}>
+                    <ul className="main-menu-m">
+                        <li>
+                            <NavLink to='/' activeClassName='active-menu' title="Home" onClick={this.handleClickBurger.bind(this)}>Home</NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/shop' activeClassName='active-menu' title="Shop" onClick={this.handleClickBurger.bind(this)}>Shop</NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/blog' activeClassName='active-menu' title="Blog" onClick={this.handleClickBurger.bind(this)}>Blog</NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/about' activeClassName='active-menu' title="About" onClick={this.handleClickBurger.bind(this)}>About</NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/contact' activeClassName='active-menu' title="Contact" onClick={this.handleClickBurger.bind(this)}>Contact</NavLink>
+                        </li>
+                    </ul>
                 </div>
             </header>
         );

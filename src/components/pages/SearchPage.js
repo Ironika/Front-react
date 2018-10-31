@@ -8,7 +8,7 @@ import { Img } from '../shared/Img/Img';
 import { Day, MonthFull, Year } from '../shared/Date/Date';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
-
+import LazyLoad from 'react-lazyload';
 
 // COMPONENT
 
@@ -163,10 +163,12 @@ class SearchPage extends Component {
                         </div>
                     </div>
                 </section>
-
-                { this.insertProducts() }
-
-                { this.insertBlogs() }
+                <LazyLoad height={600} once>
+                    { this.insertProducts() }
+                </LazyLoad>
+                <LazyLoad height={600} once>
+                    { this.insertBlogs() }
+                </LazyLoad>
   
             </main>
         );

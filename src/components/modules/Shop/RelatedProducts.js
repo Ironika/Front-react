@@ -20,7 +20,7 @@ class RelatedProducts extends Component {
         });
         products.length = 4;
         return (products.map(product =>
-            <div className="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>
+            <div className="col-sm-6 col-md-4 col-lg-3 p-l-15 p-r-15 p-t-15 p-b-15" key={product.id}>
                 <div className="block2">
                     <div className="block2-pic hov-img0">
                         { product.state && <span className="product-state">{product.state.name}</span>}

@@ -12,51 +12,47 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function getBlogs(token) {
+export function getBlogs() {
     return dispatch => {
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/blogs',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/blogs'
         }).then(function(response) {
             dispatch(getBlogsAction(response.data));
         }.bind(this));
     };
 }
 
-export function getBlog(token, slug) {
+export function getBlog(slug) {
     return dispatch => {
         dispatch(pendingBlogAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/blog/' + slug,
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/blog/' + slug
         }).then(function(response) {
             dispatch(getBlogAction(response.data));
         }.bind(this));
     };
 }
 
-export function getTags(token) {
+export function getTags() {
     return dispatch => {
         dispatch(pendingAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/tags',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/tags'
         }).then(function(response) {
             dispatch(getTagsAction(response.data));
         }.bind(this));
     };
 }
 
-export function getProducts(token) {
+export function getProducts() {
     return dispatch => {
         dispatch(pendingAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/products',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/products'
         }).then(function(response) {
             dispatch(getProductsAction(response.data));
         }.bind(this));

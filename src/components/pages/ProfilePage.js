@@ -14,6 +14,7 @@ import { Edit } from '../modules/Account/Edit';
 import Modal from 'react-modal';
 import imgClose from '../../images/icons/icon-close.png';
 import imgUser from '../../images/icons/icon-user.png';
+import LazyLoad from 'react-lazyload';
 
 // COMPONENT
 
@@ -82,8 +83,7 @@ class ProfilePage extends Component {
         window.scrollTo(0, 0);
 
         if(this.state.user.id) {
-            let token = window.localStorage.getItem('token');
-            this.props.getUserOrders(token, this.state.user.id);
+            this.props.getUserOrders(this.state.user.id);
         }
 
         this.handleClickLogout = this.handleClickLogout.bind(this);
@@ -241,8 +241,7 @@ class ProfilePage extends Component {
                 return this.setState({error: 'You must fill your address billing'});
         }
 
-        let token = window.localStorage.getItem('token');
-        this.props.edit(token, user);
+        this.props.edit(user);
         this.setState({user: user, modalIsOpen: true});
     }
 
@@ -263,47 +262,51 @@ class ProfilePage extends Component {
 
                     <Breadcrumb title={'Profile'} haveSub={haveSub} subTitle={subTitle}/> 
                     {this.props.location.pathname == '/profile' ?
-                        <Profile user={this.state.user} logout={this.handleClickLogout.bind(this)} orders={this.props.user_orders} fetching={this.props.fetching_user_orders}/> :
-                        <Edit 
-                            error={this.state.error}
-                            emailValue={this.state.email}
-                            emailChange={this.handleChange.bind(this, 'email')}
-                            newsletterValue={this.state.newsletter}
-                            newsletterChange={this.handleChange.bind(this, 'newsletter')}
-                            adFirstnameValue={this.state.address_delivery.first_name}
-                            adFirstnameChange={this.handleChange.bind(this, 'adfirst_name')}
-                            adLastnameValue={this.state.address_delivery.last_name}
-                            adLastnameChange={this.handleChange.bind(this, 'adlast_name')}
-                            adStreetValue={this.state.address_delivery.street}
-                            adStreetChange={this.handleChange.bind(this, 'adstreet')}
-                            adStreetAddValue={this.state.address_delivery.street_add}
-                            adStreetAddChange={this.handleChange.bind(this, 'adstreet_add')}
-                            adCityValue={this.state.address_delivery.city}
-                            adCityChange={this.handleChange.bind(this, 'adcity')}
-                            adZipcodeValue={this.state.address_delivery.zipcode}
-                            adZipcodeChange={this.handleChange.bind(this, 'adzipcode')}
-                            adStateValue={this.state.address_delivery.state}
-                            adStateChange={this.handleChange.bind(this, 'adstate')}
-                            adCountryValue={this.state.address_delivery.country}
-                            adCountryChange={this.handleChange.bind(this, 'adcountry')}
-                            abFirstnameValue={this.state.address_billing.first_name}
-                            abFirstnameChange={this.handleChange.bind(this, 'abfirst_name')}
-                            abLastnameValue={this.state.address_billing.last_name}
-                            abLastnameChange={this.handleChange.bind(this, 'ablast_name')}
-                            abStreetValue={this.state.address_billing.street}
-                            abStreetChange={this.handleChange.bind(this, 'abstreet')}
-                            abStreetAddValue={this.state.address_billing.street_add}
-                            abStreetAddChange={this.handleChange.bind(this, 'abstreet_add')}
-                            abCityValue={this.state.address_billing.city}
-                            abCityChange={this.handleChange.bind(this, 'abcity')}
-                            abZipcodeValue={this.state.address_billing.zipcode}
-                            abZipcodeChange={this.handleChange.bind(this, 'abzipcode')}
-                            abStateValue={this.state.address_billing.state}
-                            abStateChange={this.handleChange.bind(this, 'abstate')}
-                            abCountryValue={this.state.address_billing.country}
-                            abCountryChange={this.handleChange.bind(this, 'abcountry')}
-                            submit={this.handleClickSubmit.bind(this)}
-                        />
+                        <LazyLoad height={600} once>
+                            <Profile user={this.state.user} logout={this.handleClickLogout.bind(this)} orders={this.props.user_orders} fetching={this.props.fetching_user_orders}/>
+                        </LazyLoad> :
+                        <LazyLoad height={600} once>
+                            <Edit 
+                                error={this.state.error}
+                                emailValue={this.state.email}
+                                emailChange={this.handleChange.bind(this, 'email')}
+                                newsletterValue={this.state.newsletter}
+                                newsletterChange={this.handleChange.bind(this, 'newsletter')}
+                                adFirstnameValue={this.state.address_delivery.first_name}
+                                adFirstnameChange={this.handleChange.bind(this, 'adfirst_name')}
+                                adLastnameValue={this.state.address_delivery.last_name}
+                                adLastnameChange={this.handleChange.bind(this, 'adlast_name')}
+                                adStreetValue={this.state.address_delivery.street}
+                                adStreetChange={this.handleChange.bind(this, 'adstreet')}
+                                adStreetAddValue={this.state.address_delivery.street_add}
+                                adStreetAddChange={this.handleChange.bind(this, 'adstreet_add')}
+                                adCityValue={this.state.address_delivery.city}
+                                adCityChange={this.handleChange.bind(this, 'adcity')}
+                                adZipcodeValue={this.state.address_delivery.zipcode}
+                                adZipcodeChange={this.handleChange.bind(this, 'adzipcode')}
+                                adStateValue={this.state.address_delivery.state}
+                                adStateChange={this.handleChange.bind(this, 'adstate')}
+                                adCountryValue={this.state.address_delivery.country}
+                                adCountryChange={this.handleChange.bind(this, 'adcountry')}
+                                abFirstnameValue={this.state.address_billing.first_name}
+                                abFirstnameChange={this.handleChange.bind(this, 'abfirst_name')}
+                                abLastnameValue={this.state.address_billing.last_name}
+                                abLastnameChange={this.handleChange.bind(this, 'ablast_name')}
+                                abStreetValue={this.state.address_billing.street}
+                                abStreetChange={this.handleChange.bind(this, 'abstreet')}
+                                abStreetAddValue={this.state.address_billing.street_add}
+                                abStreetAddChange={this.handleChange.bind(this, 'abstreet_add')}
+                                abCityValue={this.state.address_billing.city}
+                                abCityChange={this.handleChange.bind(this, 'abcity')}
+                                abZipcodeValue={this.state.address_billing.zipcode}
+                                abZipcodeChange={this.handleChange.bind(this, 'abzipcode')}
+                                abStateValue={this.state.address_billing.state}
+                                abStateChange={this.handleChange.bind(this, 'abstate')}
+                                abCountryValue={this.state.address_billing.country}
+                                abCountryChange={this.handleChange.bind(this, 'abcountry')}
+                                submit={this.handleClickSubmit.bind(this)}
+                            />
+                        </LazyLoad>
                     }
                     <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
                         <div className="container">

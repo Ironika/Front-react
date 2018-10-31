@@ -8,13 +8,12 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function getTypes(token) {
+export function getTypes() {
     return dispatch => {
         dispatch(pendingTypesAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/types',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/types'
         }).then(function(response) {
             dispatch(getTypesAction(response.data));
         }.bind(this));

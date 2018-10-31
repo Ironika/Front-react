@@ -10,6 +10,7 @@ import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { Img } from '../shared/Img/Img';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
+import LazyLoad from 'react-lazyload';
 
 
 // COMPONENT
@@ -24,9 +25,8 @@ class OrderPage extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.handleClickLogout = this.handleClickLogout.bind(this);
-        let token = window.localStorage.getItem('token');
-        if(token && this.props.match.params.orderid)
-            this.props.getOrder(token, this.props.match.params.orderid);
+        if(this.props.match.params.orderid)
+            this.props.getOrder(this.props.match.params.orderid);
     }
 
     handleClickLogout() {
@@ -116,8 +116,9 @@ class OrderPage extends Component {
                 <div className="actions">
                     <span onClick={this.handleClickLogout.bind(this)} className="cl0 size-103 bg3 bor1 hov-btn2 p-lr-15 trans-04 logout">Logout</span>
                 </div>
-
-                { this.orderOrLoading() } 
+                <LazyLoad height={600} once>
+                    { this.orderOrLoading() } 
+                </LazyLoad>
 
             </main>
         );

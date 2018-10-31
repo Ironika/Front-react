@@ -2,7 +2,7 @@ import {
     LOGIN,
     LOGOUT,
     REGISTER,
-    PENDING,
+    PENDING_ACCOUNT,
     EDIT
 } from '../actions/UserActions';
 
@@ -43,7 +43,7 @@ export const UserReducer = (state = initialState, action) => {
                 user: {},
                 fetching: false
             };
-        case PENDING:
+        case PENDING_ACCOUNT:
             return {
                 ...state,
                 fetching: true

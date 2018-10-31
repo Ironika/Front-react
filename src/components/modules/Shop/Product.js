@@ -46,9 +46,7 @@ class Product extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        let token = window.localStorage.getItem('token');
-        if(token)
-            this.props.getProduct(token, this.props.slug);
+        this.props.getProduct(this.props.slug);
 
         this.handleClickQuantity = this.handleClickQuantity.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);

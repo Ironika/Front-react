@@ -17,26 +17,24 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function getProducts(token) {
+export function getProducts() {
     return dispatch => {
         dispatch(pendingProductsAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/products',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/products'
         }).then(function(response) {
             dispatch(getProductsAction(response.data));
         }.bind(this));
     };
 }
 
-export function getProduct(token, slug) {
+export function getProduct(slug) {
     return dispatch => {
         dispatch(pendingProductAction());
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/product/' + slug,
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/product/' + slug
         }).then(function(response) {
             dispatch(getProductAction(response.data));
         }.bind(this));
@@ -49,47 +47,41 @@ export function setFilters(filters) {
     };
 }
 
-export function getFilters(token) {
+export function getFilters() {
     return dispatch => {
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/materials',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/materials'
         }).then(function(response) {
             dispatch(getMaterialsAction(response.data));
         }.bind(this));
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/sizes',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/sizes'
         }).then(function(response) {
             dispatch(getSizesAction(response.data));
         }.bind(this));
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/shapes',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/shapes'
         }).then(function(response) {
             dispatch(getShapesAction(response.data));
         }.bind(this));
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/collections',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/collections'
         }).then(function(response) {
             dispatch(getCollectionsAction(response.data));
         }.bind(this));
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/colors',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/colors'
         }).then(function(response) {
             dispatch(getColorsAction(response.data));
         }.bind(this));
         axios({
             method: 'get',
-            url: DOMAIN_API + 'api/states',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'api/states'
         }).then(function(response) {
             dispatch(getStatesAction(response.data));
         }.bind(this));

@@ -24,10 +24,8 @@ class Blogs extends Component {
     }
 
     componentDidMount() {
-        let token = window.localStorage.getItem('token');
-        if(token)
-            if(this.props.blogs < 1)
-                this.props.getBlogs(token);
+        if(this.props.blogs < 1)
+            this.props.getBlogs();
     }
 
     handleClick(event) {

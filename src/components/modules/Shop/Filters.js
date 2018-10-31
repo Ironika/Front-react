@@ -37,11 +37,8 @@ class Filters extends Component {
     }
 
     componentDidMount() {
-        let token = window.localStorage.getItem('token');
-        if(token) {
-            if(this.props.materials.length < 1 || this.props.sizes.length < 1 || this.props.shapes.length < 1 || this.props.collections.length < 1)
-                this.props.getFilters(token);
-        }
+        if(this.props.materials.length < 1 || this.props.sizes.length < 1 || this.props.shapes.length < 1 || this.props.collections.length < 1)
+            this.props.getFilters();
     }
 
     handleChangeSelect(filter, event){

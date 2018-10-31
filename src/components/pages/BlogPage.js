@@ -11,6 +11,7 @@ import { getTags, getProducts } from '../../services/BlogService';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { Banner } from '../shared/Banner/Banner';
 import { Breadcrumb } from '../shared/Breadcrumb/Breadcrumb';
+import LazyLoad from 'react-lazyload';
 
 
 // COMPONENT
@@ -23,13 +24,10 @@ class BlogPage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        let token = window.localStorage.getItem('token');
-        if(token) {
-            if(this.props.tags.length < 1)
-                this.props.getTags(token);
-            if(this.props.products.length < 1)
-                this.props.getProducts(token);
-        }
+        if(this.props.tags.length < 1)
+            this.props.getTags();
+        if(this.props.products.length < 1)
+            this.props.getProducts();
     }
 
     blogOrBlogs() {
@@ -82,13 +80,16 @@ class BlogPage extends Component {
                 <section className="bg0 p-t-62 p-b-60">
                     <div className="container">
                         <div className="row layout-blog">
-                            <div className="col-md-8 col-lg-9 p-b-80 blogs">
-                                { this.blogOrBlogs() }
-                            </div>
-
-                            <div className="col-md-4 col-lg-3 p-b-80 blog-side-menu">
-                                {this.sideMenuOrLoading()}
-                            </div>
+                            <LazyLoad height={600} once>
+                                <div className="col-md-8 col-lg-9 p-b-80 blogs">
+                                    { this.blogOrBlogs() }
+                                </div>
+                            </LazyLoad>
+                            <LazyLoad height={600} once>
+                                <div className="col-md-4 col-lg-3 p-b-80 blog-side-menu">
+                                    {this.sideMenuOrLoading()}
+                                </div>
+                            </LazyLoad>
                         </div>
                     </div>
                 </section>  

@@ -9,13 +9,12 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function subscribeNewsletter(token, email) {
+export function subscribeNewsletter(email) {
     return dispatch => {
         dispatch(pendingNewsletterAction());
         axios({
             method: 'post',
             url: DOMAIN_API + 'api/newsletter',
-            headers: {'Authorization': 'Bearer ' + token},
             data: {
                 email: email
             }

@@ -19,9 +19,7 @@ class Blog extends Component {
     }
 
     componentDidMount() {
-        let token = window.localStorage.getItem('token');
-        if(token)
-            this.props.getBlog(token, this.props.slug);
+        this.props.getBlog(this.props.slug);
     }
 
     blogOrLoading() {

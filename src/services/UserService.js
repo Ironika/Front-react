@@ -1,10 +1,10 @@
-import { DOMAIN_API } from '../components/App';
+import { DOMAIN_API, CLIENT_ID, CLIENT_SECRET } from '../components/App';
 import { 
     loginAction,
     registerAction,
     logoutAction,
     editAction,
-    pendingAction,
+    pendingAccountAction,
     removeRedirectAction
 } from '../components/state/actions/UserActions';
 
@@ -12,13 +12,12 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function login(token, username, password) {
+export function login(username, password) {
     return dispatch => {
-        dispatch(pendingAction());
+        dispatch(pendingAccountAction());
         axios({
             method: 'post',
             url: DOMAIN_API + 'api/login',
-            headers: {'Authorization': 'Bearer ' + token},
             data: {
                 username: username,
                 password: password
@@ -30,39 +29,63 @@ export function login(token, username, password) {
     };
 }
 
-export function register(token, email, username, password, plainPassword) {
+export function register(email, username, password, plainPassword) {
     return dispatch => {
-        dispatch(pendingAction());
+        dispatch(pendingAccountAction());
         axios({
             method: 'post',
-            url: DOMAIN_API + 'api/register',
-            headers: {'Authorization': 'Bearer ' + token},
+            url: DOMAIN_API + 'oauth/v2/token',
+            headers: {'Content-Type': 'application/json'},
             data: {
-                email: email,
-                username: username,
-                password: password,
-                plainPassword: plainPassword
+                grant_type: 'client_credentials',
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
             }
         }).then(function(response) {
-            dispatch(registerAction(response.data));
-            window.localStorage.setItem('user', JSON.stringify(response.data));
+            let token = response.data.access_token;
+            axios({
+                method: 'post',
+                url: DOMAIN_API + 'api/register',
+                headers: {'Authorization': 'Bearer ' + token},
+                data: {
+                    email: email,
+                    username: username,
+                    password: password,
+                    plainPassword: plainPassword
+                }
+            }).then(function(response) {
+                dispatch(registerAction(response.data));
+                window.localStorage.setItem('user', JSON.stringify(response.data));
+            }.bind(this));
         }.bind(this));
     };
 }
 
-export function edit(token, user) {
+export function edit(user) {
     return dispatch => {
-        dispatch(pendingAction());
+        dispatch(pendingAccountAction());
         axios({
-            method: 'put',
-            url: DOMAIN_API + 'api/user/update',
-            headers: {'Authorization': 'Bearer ' + token},
+            method: 'post',
+            url: DOMAIN_API + 'oauth/v2/token',
+            headers: {'Content-Type': 'application/json'},
             data: {
-                user: user,
+                grant_type: 'client_credentials',
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET
             }
         }).then(function(response) {
-            dispatch(editAction(response.data));
-            window.localStorage.setItem('user', JSON.stringify(response.data));
+            let token = response.data.access_token;
+            axios({
+                method: 'put',
+                url: DOMAIN_API + 'api/user/update',
+                headers: {'Authorization': 'Bearer ' + token},
+                data: {
+                    user: user,
+                }
+            }).then(function(response) {
+                dispatch(editAction(response.data));
+                window.localStorage.setItem('user', JSON.stringify(response.data));
+            }.bind(this));
         }.bind(this));
     };
 }

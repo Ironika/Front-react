@@ -9,13 +9,12 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function sendContact(token, email, msg) {
+export function sendContact(email, msg) {
     return dispatch => {
         dispatch(pendingContactAction());
         axios({
             method: 'post',
             url: DOMAIN_API + 'api/contact',
-            headers: {'Authorization': 'Bearer ' + token},
             data: {
                 email: email,
                 msg: msg

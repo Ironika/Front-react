@@ -9,13 +9,12 @@ import axios from 'axios';
 
 // EXPORT FUNCTION
 
-export function getSearch(token, search) {
+export function getSearch(search) {
     return dispatch => {
         dispatch(pendingAction());
         axios({
             method: 'get',
             url: DOMAIN_API + 'api/search',
-            headers: {'Authorization': 'Bearer ' + token},
             params: {
                 search: search
             }

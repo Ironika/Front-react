@@ -45,8 +45,7 @@ class ContactPage extends Component {
     }
 
     handleClick() {
-        let token = window.localStorage.getItem('token');
-        this.props.sendContact(token, this.state.email, this.state.msg);
+        this.props.sendContact(this.state.email, this.state.msg);
     }
 
     render () {

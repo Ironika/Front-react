@@ -1,7 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
-export const PENDING = 'PENDING';
+export const PENDING_ACCOUNT = 'PENDING_ACCOUNT';
 export const EDIT = 'EDIT';
 
 // ACTION GENERATORS
@@ -25,6 +25,6 @@ export const logoutAction = () => ({
     type: LOGOUT
 });
 
-export const pendingAction = () => ({
-    type: PENDING,
+export const pendingAccountAction = () => ({
+    type: PENDING_ACCOUNT,
 });
